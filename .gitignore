@@ -1,0 +1,12 @@
+.idea
+.project
+.settings
+*.iml
+target
+.svn
+*.classpath
+.metadata/
+.recommenders/
+Servers/
+
+
