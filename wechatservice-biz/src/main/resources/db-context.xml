@@ -75,7 +75,7 @@
 	<bean name="weChatScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.mk.wechatservice.biz.mapper"/>
 
-		<property name="sqlSessionFactoryBeanName" value="blackListSqlSessionFactory"></property>
+		<property name="sqlSessionFactoryBeanName" value="weChatSqlSessionFactory"></property>
 	</bean>
 
 

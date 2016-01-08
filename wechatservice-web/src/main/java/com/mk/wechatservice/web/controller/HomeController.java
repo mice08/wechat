@@ -1,14 +1,7 @@
 package com.mk.wechatservice.web.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import com.mk.wechatservice.biz.module.UMember;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,16 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mk.wechatservice.biz.module.HotelDetail;
-import com.mk.wechatservice.biz.module.UMember;
-import com.mk.wechatservice.biz.servcie.impl.HotelDetailCrawlServiceImpl;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class HomeController {
 	private final Logger logger = Logger.getLogger(HomeController.class);
 
-	@Autowired
-	private HotelDetailCrawlServiceImpl hotelDetailService;
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	@ResponseBody
@@ -36,22 +27,5 @@ public class HomeController {
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/crawl/hoteldetail", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<Map<String, Object>> hoteldetail(HttpSession httpSession, HotelDetail hotelDetail) {
-		HashMap<String, Object> result = new HashMap<String, Object>();
-
-		List<String> hotelIdList = new ArrayList<String>();
-		hotelIdList.add(hotelDetail.getHotelIds());
-
-		try {
-			hotelDetailService.crawl(hotelIdList, hotelDetail.getCity(), hotelDetail.getCityUrl());
-		} catch (Exception ex) {
-			logger.error("failed to do hotelDetailService.crawl", ex);
-		}
-
-		result.put("check", "123");
-		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
-	}
 
 }

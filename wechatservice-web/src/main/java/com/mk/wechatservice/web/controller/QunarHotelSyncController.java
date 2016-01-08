@@ -1,9 +1,7 @@
 package com.mk.wechatservice.web.controller;
 
 
-import com.mk.wechatservice.api.QunarHotelSyncService;
 import com.mk.wechatservice.biz.module.UMember;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,15 +16,13 @@ import java.util.Map;
 @Controller
 public class QunarHotelSyncController {
 
-    @Autowired
-    private QunarHotelSyncService qunarHotelSyncService;
 
     @RequestMapping(value = "/qunarHotelSync", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> qunarHotelSync(HttpSession httpSession,UMember userCheckDto) {
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result=qunarHotelSyncService.qunarHotelSync();
+        result.put("info","1234");
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
