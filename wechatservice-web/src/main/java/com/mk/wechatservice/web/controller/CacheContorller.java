@@ -3,15 +3,10 @@ package com.mk.wechatservice.web.controller;
 import com.dianping.cat.Cat;
 import com.mk.wechatservice.api.dtos.UserCheckDto;
 import com.mk.wechatservice.api.enums.BlackUserEnum;
-import com.mk.wechatservice.biz.mapper.blacklist.BlackListMapper;
-import com.mk.wechatservice.biz.mapper.blacklist.PassSwitchMapper;
-import com.mk.wechatservice.biz.module.BlackList;
-import com.mk.wechatservice.biz.module.PassSwitch;
 import com.mk.wechatservice.biz.utils.ServiceOutput;
 import com.mk.wechatservice.task.ReFreshBlackListTask;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,11 +24,7 @@ import java.util.Map;
 @Controller
 public class CacheContorller {
 
-    @Autowired
-    private BlackListMapper blackListMapper;
 
-    @Autowired
-    private PassSwitchMapper passSwitchMapper;
 
     public static Logger log = org.slf4j.LoggerFactory.getLogger(CacheContorller.class);
 
@@ -105,14 +95,8 @@ public class CacheContorller {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
         ReFreshBlackListTask reFreshBlackListTask = new ReFreshBlackListTask();
-        ArrayList<BlackList> blackListArrayList = blackListMapper.query();
-        ReFreshBlackListTask.phoneBlackMap.clear();
-        ReFreshBlackListTask.midBlackMap.clear();
-        ReFreshBlackListTask.cardIdBlackMap.clear();
-        reFreshBlackListTask.passSwitchMap.clear();
 
-        PassSwitch passSwitch = passSwitchMapper.isClose();
-        reFreshBlackListTask.initCache(blackListArrayList, passSwitch);
+        reFreshBlackListTask.initCache();
 
         result.put(ServiceOutput.STR_MSG_SUCCESS, true);
         result.put(ServiceOutput.STR_MSG_ERRCODE, ReFreshBlackListTask.phoneBlackMap.size());

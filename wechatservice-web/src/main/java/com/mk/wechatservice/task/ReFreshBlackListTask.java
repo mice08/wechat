@@ -1,17 +1,9 @@
 package com.mk.wechatservice.task;
 
 import com.mk.wechatservice.api.enums.BlackUserEnum;
-import com.mk.wechatservice.biz.mapper.blacklist.BlackListMapper;
-import com.mk.wechatservice.biz.mapper.blacklist.PassSwitchMapper;
-import com.mk.wechatservice.biz.module.BlackList;
-import com.mk.wechatservice.biz.module.PassSwitch;
-
-import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,11 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class ReFreshBlackListTask {
     public static Logger log = org.slf4j.LoggerFactory.getLogger(ReFreshBlackListTask.class);
-    @Autowired
-    private BlackListMapper blackListMapper;
 
-    @Autowired
-    private PassSwitchMapper passSwitchMapper;
 
     public static ConcurrentHashMap<Integer, BlackUserEnum> midBlackMap = new ConcurrentHashMap<Integer, BlackUserEnum>();
     public static ConcurrentHashMap<String, BlackUserEnum> phoneBlackMap = new ConcurrentHashMap<String, BlackUserEnum>();
@@ -42,34 +30,16 @@ public class ReFreshBlackListTask {
         cardIdBlackMap.clear();
         passSwitchMap.clear();
 
-        ArrayList<BlackList> blackListArrayList = blackListMapper.query();
 
-        PassSwitch passSwitch = passSwitchMapper.isClose();
 
-        initCache(blackListArrayList, passSwitch);
+        initCache();
     }
 
 
-    public void initCache(ArrayList<BlackList> blackListArrayList, PassSwitch passSwitch) {
+    public void initCache() {
 
-        passSwitchMap.put("isClose", passSwitch.getIsClose());
+        log.info("\n++++++++++++++++++++++ pass switch refresh {} ++++++++++++++++++++++\n" );
 
-        log.info("\n++++++++++++++++++++++ pass switch refresh {} ++++++++++++++++++++++\n",passSwitch.getIsClose() );
-
-        for (BlackList blackList : blackListArrayList) {
-            if (StringUtils.isNotBlank(blackList.getPhone())){
-                phoneBlackMap.put(blackList.getPhone(), BlackUserEnum.INVALID);
-            }
-            if (blackList.getMid() != null){
-                midBlackMap.put(blackList.getMid(), BlackUserEnum.INVALID);
-            }
-
-
-            if (StringUtils.isNotBlank(blackList.getIdcard())) {
-                cardIdBlackMap.put(blackList.getIdcard(), BlackUserEnum.INVALID);
-            }
-
-        }
     }
 
 
