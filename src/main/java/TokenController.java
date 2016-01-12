@@ -7,7 +7,7 @@ import com.jfinal.core.Controller;
 public class TokenController extends Controller {
 
     @ActionKey("/")
-    public void login () {
+    public void token () {
         renderJson("echostr",getPara("echostr"));
     }
 }
