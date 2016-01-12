@@ -38,4 +38,8 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>wechat</finalName>
+    </build>
+
 </project>
