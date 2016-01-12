@@ -8,6 +8,6 @@ public class TokenController extends Controller {
 
     @ActionKey("/")
     public void token () {
-        renderJson("echostr",getPara("echostr"));
+        renderText(getPara("echostr"));
     }
 }
