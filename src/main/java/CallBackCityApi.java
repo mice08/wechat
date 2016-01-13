@@ -10,7 +10,7 @@ public class CallBackCityApi {
     public CallBackCityApi() {
     }
 
-    public static ApiResult getCallBackCity(double longitude,double latitude) {
+    public static ApiResult getCallBackCity(String longitude,String latitude) {
         String jsonResult = HttpUtils.get(apiUrl + longitude + "," +latitude);
         return new ApiResult(jsonResult);
     }

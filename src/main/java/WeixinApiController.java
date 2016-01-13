@@ -175,7 +175,7 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getCallbackCity()
 	{
-		ApiResult apiResult = CallBackCityApi.getCallBackCity(123,321);
+		ApiResult apiResult = CallBackCityApi.getCallBackCity(getPara("longitude"),getPara("latitude"));
 		renderText(apiResult.getJson());
 	}
 }
