@@ -168,5 +168,15 @@ public class WeixinApiController extends ApiController {
 		ApiResult apiResult = CallbackIpApi.getCallbackIp();
 		renderText(apiResult.getJson());
 	}
+
+
+	/**
+	 * 获取城市名和城市Code
+	 */
+	public void getCallbackCity()
+	{
+		ApiResult apiResult = CallBackCityApi.getCallBackCity(123,321);
+		renderText(apiResult.getJson());
+	}
 }
 
