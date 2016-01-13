@@ -17,7 +17,7 @@ import com.jfinal.weixin.sdk.api.ApiConfigKit;
 public class WeixinConfig extends JFinalConfig {
 
 	public void configConstant(Constants me) {
-		PropKit.use("a_little_config.txt");
+		PropKit.use("weixin_config.txt");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
 		
 		// ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
@@ -25,13 +25,17 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/", TokenController.class);
 		me.add("/msg", WeixinMsgController.class);
 		me.add("/api", WeixinApiController.class);
 		me.add("/pay", WeixinPayController.class);
 	}
 	
 	public void configPlugin(Plugins me) {
+//		//定时任务
+//		QuartzPlugin quzrtz = new QuartzPlugin();
+//		quzrtz.setJobs("quartzJob.properties");
+//		me.add(quzrtz);
+
 		// C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
 		// me.add(c3p0Plugin);
 		

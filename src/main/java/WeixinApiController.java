@@ -1,4 +1,5 @@
 
+import api.CallBackCityApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
@@ -125,10 +126,12 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getQrcode()
 	{
+		//临时二维码
 		String str = "{\"expire_seconds\": 604800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": 123}}}";
 		ApiResult apiResult = QrcodeApi.create(str);
 		renderText(apiResult.getJson());
 
+		//永久二维码
 //        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"123\"}}}";
 //        ApiResult apiResult = QrcodeApi.create(str);
 //        renderText(apiResult.getJson());
@@ -169,9 +172,11 @@ public class WeixinApiController extends ApiController {
 		renderText(apiResult.getJson());
 	}
 
-
 	/**
 	 * 获取城市名和城市Code
+	 * 入参
+	 * longitude 经度
+	 * latitude 维度
 	 */
 	public void getCallbackCity()
 	{
