@@ -1,8 +1,8 @@
 #jdbcUrl = jdbc:mysql://127.0.0.1/jfinal_weixin?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 #user = root
 #password =
-#devMode = true
 
+devMode = true
 token=ddc5f5e86d2f85e1b1ff763aff13ce0a
 
 appId=wxb0f8a61e80048f38

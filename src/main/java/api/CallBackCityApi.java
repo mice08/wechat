@@ -34,13 +34,15 @@ public class CallBackCityApi {
         infoCode = geocodeJsonResult.getStr("infocode");
         Map<String,Object> regeocode = geocodeJsonResult.getMap("regeocode");
         Map<String,Object> addressComponent = (Map<String,Object> )regeocode.get("addressComponent");
-//        List<String> cityList = (List<String>) addressComponent.get("city");
         Object city = addressComponent.get("city");
+        Object province = addressComponent.get("province");
         //直辖市处理
         if (city instanceof String){
-            cityName = (String) addressComponent.get("city");
+            cityName = (String) city;
         }else{
-            cityName = (String) addressComponent.get("province");
+            if (province instanceof String ){
+                cityName = (String) province;
+            }
         }
         //无城市名称
         if (cityName.length()==0){
