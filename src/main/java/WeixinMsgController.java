@@ -102,7 +102,12 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	protected void processInCustomEvent(InCustomEvent inCustomEvent)
 	{
 		logger.debug("测试方法：processInCustomEvent()");
-		renderNull();
+//		renderNull();
+		if(inCustomEvent.getEvent().equals("subscribe")) {
+			renderOutTextMsg("亲你好");
+		}else{
+			renderNull();
+		}
 	}
 
 	protected void processInImageMsg(InImageMsg inImageMsg)
