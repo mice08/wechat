@@ -7,6 +7,7 @@
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiConfig;
+import com.jfinal.weixin.sdk.api.ApiConfigKit;
 import com.jfinal.weixin.sdk.jfinal.MsgControllerAdapter;
 import com.jfinal.weixin.sdk.msg.in.InImageMsg;
 import com.jfinal.weixin.sdk.msg.in.InLinkMsg;
@@ -47,6 +48,8 @@ public class WeixinMsgController extends MsgControllerAdapter {
 
 		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage"));
 		ac.setEncodingAesKey(PropKit.get("encodingAesKey"));
+
+        ApiConfigKit.setDevMode(true);
 		return ac;
 	}
 
