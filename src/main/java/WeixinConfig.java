@@ -25,8 +25,8 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/", TokenController.class);
-		me.add("/msg", WeixinMsgController.class);
+//		me.add("/", TokenController.class);
+		me.add("/", WeixinMsgController.class);
 		me.add("/api", WeixinApiController.class);
 		me.add("/pay", WeixinPayController.class);
 	}
