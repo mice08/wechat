@@ -5,24 +5,13 @@ import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 
 public class WeixinApiController extends ApiController {
-	
-	/**
-	 * 如果要支持多公众账号，只需要在此返回各个公众号对应的  ApiConfig 对象即可
-	 * 可以通过在请求 url 中挂参数来动态从数据库中获取 ApiConfig 属性值
-	 */
+
 	public ApiConfig getApiConfig() {
 		ApiConfig ac = new ApiConfig();
-		
 		// 配置微信 API 相关常量
 		ac.setToken(PropKit.get("token"));
 		ac.setAppId(PropKit.get("appId"));
 		ac.setAppSecret(PropKit.get("appSecret"));
-		
-		/**
-		 *  是否对消息进行加密，对应于微信平台的消息加解密方式：
-		 *  1：true进行加密且必须配置 encodingAesKey
-		 *  2：false采用明文模式，同时也支持混合模式
-		 */
 		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage", false));
 		ac.setEncodingAesKey(PropKit.get("encodingAesKey", "setting it in config file"));
 		return ac;
@@ -33,10 +22,12 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getMenu() {
 		ApiResult apiResult = MenuApi.getMenu();
-		if (apiResult.isSucceed())
+		if (apiResult.isSucceed()) {
 			renderText(apiResult.getJson());
-		else
+		}
+		else {
 			renderText(apiResult.getErrorMsg());
+		}
 	}
 
 	/**
@@ -47,7 +38,7 @@ public class WeixinApiController extends ApiController {
 		String str = "{\n" +
 				"    \"button\": [\n" +
 				"        {\n" +
-				"            \"name\": \"进入理财\",\n" +
+				"            \"name\": \"进入\",\n" +
 				"            \"url\": \"http://m.bajie8.com/bajie/enter\",\n" +
 				"            \"type\": \"view\"\n" +
 				"        },\n" +
@@ -122,19 +113,25 @@ public class WeixinApiController extends ApiController {
 	}
 
 	/**
-	 * 获取参数二维码
+	 * 获取临时参数二维码
 	 */
-	public void getQrcode()
+	public void getExpireQrcode()
 	{
 		//临时二维码
 		String str = "{\"expire_seconds\": 604800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": 123}}}";
 		ApiResult apiResult = QrcodeApi.create(str);
 		renderText(apiResult.getJson());
+	}
 
+	/**
+	 * 获取永久参数二维码
+	 */
+	public void getQrcode()
+	{
 		//永久二维码
-//        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"123\"}}}";
-//        ApiResult apiResult = QrcodeApi.create(str);
-//        renderText(apiResult.getJson());
+        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"123\"}}}";
+        ApiResult apiResult = QrcodeApi.create(str);
+        renderText(apiResult.getJson());
 	}
 
 	/**

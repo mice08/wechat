@@ -21,22 +21,26 @@ public class CallBackCityApi {
 
     public static ApiResult getCallBackCity(String longitude,String latitude) {
         Coordinate coordinate= LocationConvert.wgsTogcj(new Coordinate(Double.valueOf(latitude),Double.valueOf(longitude)));
+        //初始化
+        String status="0";
+        String infoCode="0";
+        String cityName="";
+        String cityCode="";
         //逆地理位置编码
         String geocodeStringResult = HttpUtils.get(geocodeApiUrl + coordinate.longitude + "," +coordinate.latitude);
         ApiResult geocodeJsonResult= new ApiResult(geocodeStringResult);
         //数据处理
-        String status = geocodeJsonResult.getStr("status");
-        String infoCode = geocodeJsonResult.getStr("infocode");
+        status = geocodeJsonResult.getStr("status");
+        infoCode = geocodeJsonResult.getStr("infocode");
         Map<String,Object> regeocode = geocodeJsonResult.getMap("regeocode");
         Map<String,Object> addressComponent = (Map<String,Object> )regeocode.get("addressComponent");
-        List<String> cityList = (List<String>) addressComponent.get("city");
+//        List<String> cityList = (List<String>) addressComponent.get("city");
+        Object city = addressComponent.get("city");
         //直辖市处理
-        String cityName="";
-        String cityCode="";
-        if (cityList.size()==0){
+        if (city instanceof String){
+            cityName = (String) addressComponent.get("city");
+        }else{
             cityName = (String) addressComponent.get("province");
-        }else {
-            cityName = cityList.get(0);
         }
         //无城市名称
         if (cityName.length()==0){
