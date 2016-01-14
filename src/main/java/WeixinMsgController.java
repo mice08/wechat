@@ -40,16 +40,12 @@ public class WeixinMsgController extends MsgControllerAdapter {
 
 	public ApiConfig getApiConfig() {
 		ApiConfig ac = new ApiConfig();
-
 		// 配置微信 API 相关常量
 		ac.setToken(PropKit.get("token"));
 		ac.setAppId(PropKit.get("appId"));
 		ac.setAppSecret(PropKit.get("appSecret"));
-
 		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage"));
 		ac.setEncodingAesKey(PropKit.get("encodingAesKey"));
-
-        ApiConfigKit.setDevMode(true);
 		return ac;
 	}
 
