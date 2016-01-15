@@ -17,7 +17,7 @@ import com.jfinal.weixin.sdk.api.ApiConfigKit;
 public class WeixinConfig extends JFinalConfig {
 
 	public void configConstant(Constants me) {
-		PropKit.use("weixin_config.txt");
+		PropKit.use("weixin_config.properties");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
 		
 		// ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
