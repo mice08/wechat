@@ -239,6 +239,25 @@ public class DateUtil {
         return Integer.parseInt(String.valueOf(between_days));
     }
 
+
+    /*
+     获取两日期的天数差
+     */
+    public static int daysBetween(String bdate, String smdate,String exmple) throws ParseException {
+        if(StringUtils.isEmpty(exmple)){
+            exmple = "yyyy-MM-dd";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(exmple);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(smdate));
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(sdf.parse(bdate));
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 * 24);
+
+        return Integer.parseInt(String.valueOf(between_days));
+    }
+
     /**
      * @param lastDayǰ����lastDay��
      * @param day��ǰʱ��
@@ -269,7 +288,9 @@ public class DateUtil {
 
     public static void main(String[] args) throws ParseException {
         DateUtil dh = new DateUtil();
-        System.out.println(dh.getLastDayStr(-1, "yyyy-MM-dd"));
+//        System.out.println(dh.getLastDayStr(-1, "yyyy-MM-dd"));
+        System.out.println(dh.daysBetween("20160109007","20160109006"));
+
     }
 
 }

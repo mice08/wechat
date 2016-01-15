@@ -2,9 +2,7 @@ package com.mk.order.handle;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mk.common.toolutils.BaseData;
-import com.mk.common.toolutils.SmsHttpClient;
-import com.mk.common.toolutils.UrlUtil;
+import com.mk.common.toolutils.*;
 import com.mk.enums.CallMethodEnum;
 import com.mk.enums.OrderTypenum;
 import com.mk.enums.PayTypeEnum;
@@ -99,7 +97,7 @@ public class OrderHandle {
         }
 
         if ("true".equals(debug)) {
-            token = "93bb2aae-7e75-4d01-abea-0fc76bc0d763";
+            token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         }
         if (StringUtils.isEmpty(token)) {
             return null;
@@ -140,6 +138,10 @@ public class OrderHandle {
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
         String backStr = SmsHttpClient.post(url, parmeter);
+
+
+
+
 //        if ("true".equals(debug)) {
 //            request.setAttribute("orderid", "orderid");
 //            request.setAttribute("hotelname", "hotelname33");
@@ -179,19 +181,23 @@ public class OrderHandle {
             Object roomtypename = roomOrder.get("roomtypename");
 
             //
-            request.setAttribute("orderid", orderid);
-            request.setAttribute("hotelname", hotelname);
-            request.setAttribute("begintime", begintime);
-            request.setAttribute("endtime", endtime);
-            request.setAttribute("orderday", orderday);
-            request.setAttribute("roomtypename", roomtypename);
-            request.setAttribute("contacts", contacts);
-            request.setAttribute("contactsphone", contactsphone);
-            request.setAttribute("usermessage", usermessage);
-            request.setAttribute("onlinepay", onlinepay);
-            request.setAttribute("payprice", payprice);
-            request.setAttribute("redpacket", redpacket);
-            request.setAttribute("timeouttime", timeouttime);
+            request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
+            request.setAttribute("hotelname",DataHander.checkStringNull(object,"hotelname",""));
+            request.setAttribute("begintime",DataHander.checkStringNull(object,"begintime",""));
+            request.setAttribute("endtime", DataHander.checkStringNull(object,"endtime",""));
+            try{
+                request.setAttribute("orderday", DateUtil.daysBetween(DataHander.checkStringNull(object,"endtime",""),DataHander.checkStringNull(object,"begintime",""),"yyyyMMdd"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
+            request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
+            request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
+            request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
+     //       request.setAttribute("redpacket", redpacket);
+            request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
 
             return object;
         }
@@ -358,7 +364,9 @@ public class OrderHandle {
     }
 
     public static void main(String[] args) {
-        JSONObject json = new JSONObject();
-        System.out.println(json.getString("sing"));
+        String url = "http://huidu.imike.cn/ots/order/create";
+        HashMap  hm = new HashMap();
+        hm.put("hotelid",2803);
+        SmsHttpClient.post(url, hm);
     }
 }
