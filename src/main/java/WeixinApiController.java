@@ -3,6 +3,7 @@ import api.CallBackCityApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
+import sun.plugin.javascript.navig.JSType;
 
 public class WeixinApiController extends ApiController {
 
@@ -129,22 +130,25 @@ public class WeixinApiController extends ApiController {
 
 	/**
 	 * 获取临时参数二维码
+	 * expire 时间
+	 * sceneid 内容
 	 */
 	public void getExpireQrcode()
 	{
 		//临时二维码
-		String str = "{\"expire_seconds\": 604800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": 123}}}";
+		String str = "{\"expire_seconds\": "+getPara("expire")+", \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
 		ApiResult apiResult = QrcodeApi.create(str);
 		renderText(apiResult.getJson());
 	}
 
 	/**
 	 * 获取永久参数二维码
+	 * sceneid 内容
 	 */
 	public void getQrcode()
 	{
 		//永久二维码
-        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"123\"}}}";
+        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
         ApiResult apiResult = QrcodeApi.create(str);
         renderText(apiResult.getJson());
 	}
@@ -195,5 +199,25 @@ public class WeixinApiController extends ApiController {
 		ApiResult apiResult = CallBackCityApi.getCallBackCity(getPara("longitude"),getPara("latitude"));
 		renderText(apiResult.getJson());
 	}
+
+	/**
+	 * 获取签名
+	 */
+	public void getSignature()
+	{
+		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
+		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
+		renderText(str);
+	}
+
+	/**
+	 * 获取Token
+	 */
+	public void getToken()
+	{
+		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
+		renderText(str);
+	}
+
 }
 
