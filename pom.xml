@@ -9,6 +9,30 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <properties>
+        <spring.version>4.1.5.RELEASE</spring.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://10.10.144.74:8081/nexus/content/repositories/releases/</url>
+            <!--<url>http://192.168.20.80:8081/mkrepo</url>-->
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://10.10.144.74:8081/nexus/content/repositories/releases/</url>
+            <!--<url>http://192.168.20.80:8081/mkrepo</url>-->
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -46,10 +70,138 @@
             <!--<artifactId>quartz</artifactId>-->
             <!--<version>1.8.5</version>-->
         <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-container-default</artifactId>
+            <version>1.5.5</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>google-collections</artifactId>
+                    <groupId>com.google.collections</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.0.27.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.unidal.framework</groupId>
+            <artifactId>foundation-service</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.5.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dianping.cat</groupId>
+            <artifactId>cat-client</artifactId>
+            <version>1.3.5</version>
+        </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>shanghai-simulation</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <label>product</label>
+                <spring.redis.sentinel.master>ots-redis</spring.redis.sentinel.master>
+                <spring.redis.sentinel.nodes>10.4.1.14:26379,10.4.1.210:26379</spring.redis.sentinel.nodes>
+                <jedis.pool.maxidl>20</jedis.pool.maxidl>
+                <jedis.pool.minidl>8</jedis.pool.minidl>
+                <jedis.pool.maxtotal>500</jedis.pool.maxtotal>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>bgp-simulation</id>
+            <properties>
+                <label>product</label>
+                <spring.redis.sentinel.master>ots-smlt-bj-redis</spring.redis.sentinel.master>
+                <spring.redis.sentinel.nodes>10.10.134.221:6379</spring.redis.sentinel.nodes>
+                <jedis.pool.maxidl>20</jedis.pool.maxidl>
+                <jedis.pool.minidl>8</jedis.pool.minidl>
+                <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>bgp-clu</id>
+            <properties>
+                <label>product</label>
+                <spring.redis.sentinel.master>ots-redis</spring.redis.sentinel.master>
+                <spring.redis.sentinel.nodes>10.10.103.141:26379,10.10.104.151:26379</spring.redis.sentinel.nodes>
+                <jedis.pool.maxidl>20</jedis.pool.maxidl>
+                <jedis.pool.minidl>8</jedis.pool.minidl>
+                <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>ROOT</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 
 </project>
