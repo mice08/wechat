@@ -38,19 +38,34 @@ public class WeixinApiController extends ApiController {
 		String str = "{\n" +
 				"    \"button\": [\n" +
 				"        {\n" +
-				"            \"name\": \"进入\",\n" +
-				"            \"url\": \"http://m.bajie8.com/bajie/enter\",\n" +
-				"            \"type\": \"view\"\n" +
-				"        },\n" +
+				"            \"type\": \"view\", \n" +
+				"            \"name\": \"我要预订\", \n" +
+				"            \"url\": \"http://www.imike.com\"\n" +
+				"        }, \n" +
 				"        {\n" +
-				"            \"name\": \"安全保障\",\n" +
-				"            \"key\": \"112\",\n" +
-				"\t    \"type\": \"click\"\n" +
-				"        },\n" +
+				"            \"type\": \"view\", \n" +
+				"            \"name\": \"我的订单\", \n" +
+				"            \"url\": \"http://www.imike.com\"\n" +
+				"        }, \n" +
 				"        {\n" +
-				"\t    \"name\": \"使用帮助\",\n" +
-				"\t    \"url\": \"http://m.bajie8.com/footer/cjwt\",\n" +
-				"\t    \"type\": \"view\"\n" +
+				"            \"name\": \"个人中心\", \n" +
+				"            \"sub_button\": [\n" +
+				"                {\n" +
+				"                    \"type\": \"view\", \n" +
+				"                    \"name\": \"下载APP\", \n" +
+				"                    \"url\": \"http://www.imike.com\"\n" +
+				"                }, \n" +
+				"                {\n" +
+				"                    \"type\": \"view\", \n" +
+				"                    \"name\": \"验证手机\", \n" +
+				"                    \"url\": \"http://www.imike.com\"\n" +
+				"                }, \n" +
+				"                {\n" +
+				"                    \"type\": \"scancode_push\", \n" +
+				"                    \"name\": \"扫一扫\", \n" +
+				"                    \"key\": \"scan\"\n" +
+				"                }\n" +
+				"            ]\n" +
 				"        }\n" +
 				"    ]\n" +
 				"}";
