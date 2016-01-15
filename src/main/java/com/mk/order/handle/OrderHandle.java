@@ -54,7 +54,7 @@ public class OrderHandle {
         //
         String roomtypeid = request.getParameter("roomtypeid");
         if ("true".equals(debug)) {
-            roomtypeid = "29949";
+            roomtypeid = "29948";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             return null;
@@ -181,7 +181,7 @@ public class OrderHandle {
             //
             request.setAttribute("orderid", orderid);
             request.setAttribute("hotelname", hotelname);
-            request.setAttribute("begintime",begintime );
+            request.setAttribute("begintime", begintime);
             request.setAttribute("endtime", endtime);
             request.setAttribute("orderday", orderday);
             request.setAttribute("roomtypename", roomtypename);
@@ -243,58 +243,89 @@ public class OrderHandle {
     }
 
     public String modify(HttpServletRequest request) {
+
+        String orderId = request.getParameter("orderid");
+        String userName = request.getParameter("username");
+        String userMobile = request.getParameter("usermobile");
+        String walletCost = request.getParameter("walletcost");
+
+        if (StringUtils.isEmpty(orderId)) {
+            return "toCreate";
+        }
+
+        //
+        String debug = UrlUtil.getValue(BaseData.debug);
+        if ("true".equals(debug)) {
+            orderId = "1282328";
+            userName = "userNameTest";
+            userMobile = "123456789";
+            walletCost = "10";
+        }
+
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
+            return "error";
+        }
+        //
         HashMap parmeter = new HashMap();
-//	   if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(userMobile)||(orderId==0)){
-//		   return "error";
-//	   }
-//	   parmeter.put("username", userName);
-//	   parmeter.put("usermobile", userMobile);
-//	   parmeter.put("orderid", orderId);
-//	   parmeter.put("orderid", orderId);
-//
-//
-//
-//	   HttpServletRequest  request =  ServletActionContext.getRequest();
-//
-//	   Cookie[]  cookies = request.getCookies();
-//	    if(null==cookies){
-//	    	return  "error";
-//	    }
-//	    String token = null;
-//	    for(int i=0;i<cookies.length;i++){
-//	    	if("token".equals(cookies[i].getName())){
-//	    		token = cookies[i].getValue();
-//	    		break;
-//	    	}
-//	    }
-        /*if(StringUtils.isEmpty(token)){
-                return  "error";
-	    }
-	    
-	    parmeter.put("token", token);
-	    parmeter.put("callmethod",CallMethodEnum.WEIXIN.getId());
+        parmeter.put("username", userName);
+        parmeter.put("usermobile", userMobile);
+        parmeter.put("orderid", orderId);
+        parmeter.put("walletcost", walletCost);
 
-	    
-	    String  backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
-	    if(StringUtils.isEmpty(backStr)){
-	    	return "error";
-	    }
+        //token
+        Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            return "error";
+        }
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if ("token".equals(cookies[i].getName())) {
+                token = cookies[i].getValue();
+                break;
+            }
+        }
+        if ("true".equals(debug)) {
+            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        }
+        if (StringUtils.isEmpty(token)) {
+            return "error";
+        }
 
-	    JSONObject jsonOrder = JSONObject.parseObject(backStr);
-	    if(!"true".equals(jsonOrder.getString("success"))){
-	    	return "error";
-	    }else{
-	    	
-	    }
-		*/
-        return null;
+        parmeter.put("token", token);
+        parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
+
+        //
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
+        if (StringUtils.isEmpty(backStr)) {
+            return "error";
+        }
+
+        JSONObject jsonOrder = JSONObject.parseObject(backStr);
+        if (!"true".equals(jsonOrder.getString("success"))) {
+            return "error";
+        } else {
+
+        }
+
+        //
+        request.setAttribute("orderid", orderId);
+        return "success";
     }
 
     public String pay(HttpServletRequest request) {
+
+        String orderid = request.getParameter("orderid");
+        //
+        String debug = UrlUtil.getValue(BaseData.debug);
+        if ("true".equals(debug)) {
+            orderid = "1282328";
+        }
         HashMap parmeterPay = new HashMap();
+        parmeterPay.put("orderid", orderid);
         parmeterPay.put("paytype", OrderTypenum.YF.getId());
         parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
+
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
         if (StringUtils.isEmpty(backStr)) {
             return "error";
@@ -315,12 +346,12 @@ public class OrderHandle {
             String timestamp = json.getString("timestamp");
             String sign = json.getString("sign");
 
-            request.setAttribute("appId",appid);
-            request.setAttribute("timeStamp",timestamp);
-            request.setAttribute("nonceStr",noncestr);
-            request.setAttribute("packageValue",packagevalue);
-            request.setAttribute("paySign",sign);
-            request.setAttribute("orderDetailUrl","");
+            request.setAttribute("appId", appid);
+            request.setAttribute("timeStamp", timestamp);
+            request.setAttribute("nonceStr", noncestr);
+            request.setAttribute("packageValue", packagevalue);
+            request.setAttribute("paySign", sign);
+            request.setAttribute("orderDetailUrl", "");
         }
 
         return null;

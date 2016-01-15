@@ -10,7 +10,7 @@
     //更新
     String m = ho.modify(request);
     //是否支付
-    if (null != m) {
+    if (!"toCreate".equals(m)) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }
@@ -84,7 +84,7 @@
                     <div class="use-package">
                         使用红包<span class="u-p-tip">（红包余额：￥${wallet}）</span>
                     </div>
-                    <input type="tel" name="" class="u-p-input  js_order_wallet"/>
+                    <input type="tel" name="walletcost" class="u-p-input  js_order_wallet"/>
                 </div>
             </div>
             <input type="hidden" name="orderid" value="${orderid}"/>
@@ -196,25 +196,7 @@
             $('.js_slide_layer').toggleClass('on');
         }
 
-
     });
-
-    function onBridgeReady(appId, timeStamp, nonceStr, package, signType, paySign) {
-        WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                    "appId": appId,     //公众号名称，由商户传入
-                    "timeStamp": timeStamp,         //时间戳，自1970年以来的秒数
-                    "nonceStr": nonceStr, //随机串
-                    "package": package,
-                    "signType": signType,         //微信签名方式：
-                    "paySign": paySign //微信签名
-                },
-                function (res) {
-                    if (res.err_msg == "get_brand_wcpay_request：ok") {
-                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-                }
-        );
-    }
 
 </script>
 </body>
