@@ -137,7 +137,12 @@ public class OrderHandle {
 
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
-        String backStr = SmsHttpClient.post(url, parmeter);
+        String  backStr = "";
+        try{
+             backStr = SmsHttpClient.post(url, parmeter);
+        }catch(Exception e ){
+            return null;
+        }
 
 
 
