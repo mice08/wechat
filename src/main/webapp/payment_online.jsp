@@ -10,7 +10,7 @@
     //更新
     String m = ho.modify(request);
     //是否支付
-    if (null == m) {
+    if (null != m) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }

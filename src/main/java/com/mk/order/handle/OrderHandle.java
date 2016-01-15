@@ -1,11 +1,13 @@
 package com.mk.order.handle;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mk.common.toolutils.BaseData;
 import com.mk.common.toolutils.SmsHttpClient;
 import com.mk.common.toolutils.UrlUtil;
 import com.mk.enums.CallMethodEnum;
 import com.mk.enums.OrderTypenum;
+import com.mk.enums.PayTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -138,22 +140,63 @@ public class OrderHandle {
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
         String backStr = SmsHttpClient.post(url, parmeter);
-        if ("true".equals(debug)) {
-            request.setAttribute("orderid","orderid");
-            request.setAttribute("hotelname","hotelname33");
-            request.setAttribute("begintime","begintime");
-            request.setAttribute("endtime","endtime");
-            request.setAttribute("orderday","orderday");
-            request.setAttribute("roomtypename","roomtypename");
-            request.setAttribute("contacts","contacts");
-            request.setAttribute("contactsphone","contactsphone");
-            request.setAttribute("usermessage","usermessage");
-            request.setAttribute("onlinepay","onlinepay");
-            request.setAttribute("payprice","payprice");
-            request.setAttribute("redpacket","redpacket");
-            request.setAttribute("timeouttime","100000");
+//        if ("true".equals(debug)) {
+//            request.setAttribute("orderid", "orderid");
+//            request.setAttribute("hotelname", "hotelname33");
+//            request.setAttribute("begintime", "begintime");
+//            request.setAttribute("endtime", "endtime");
+//            request.setAttribute("orderday", "orderday");
+//            request.setAttribute("roomtypename", "roomtypename");
+//            request.setAttribute("contacts", "contacts");
+//            request.setAttribute("contactsphone", "contactsphone");
+//            request.setAttribute("usermessage", "usermessage");
+//            request.setAttribute("onlinepay", "onlinepay");
+//            request.setAttribute("payprice", "payprice");
+//            request.setAttribute("redpacket", "redpacket");
+//            request.setAttribute("timeouttime", "100000");
+//            return JSONObject.parseObject("{}");
+//        } else
+
+        if (StringUtils.isNotEmpty(backStr)) {
+            JSONObject object = this.parseObject(backStr);
+            Object orderid = object.get("orderid");
+            Object hotelname = object.get("hotelname");
+            Object begintime = object.get("begintime");
+            Object endtime = object.get("endtime");
+            Object contacts = object.get("contacts");
+            Object contactsphone = object.get("contactsphone");
+            Object usermessage = object.get("usermessage");
+            Object onlinepay = object.get("onlinepay");
+            Object payprice = object.get("payprice");
+            Object redpacket = object.get("redpacket");
+            Object timeouttime = object.get("timeouttime");
+
+
+            //roomorder
+            JSONArray roomOrders = object.getJSONArray("roomorder");
+            JSONObject roomOrder = roomOrders.getJSONObject(0);
+            Object orderday = roomOrder.get("orderday");
+            Object roomtypename = roomOrder.get("roomtypename");
+
+            //
+            request.setAttribute("orderid", orderid);
+            request.setAttribute("hotelname", hotelname);
+            request.setAttribute("begintime",begintime );
+            request.setAttribute("endtime", endtime);
+            request.setAttribute("orderday", orderday);
+            request.setAttribute("roomtypename", roomtypename);
+            request.setAttribute("contacts", contacts);
+            request.setAttribute("contactsphone", contactsphone);
+            request.setAttribute("usermessage", usermessage);
+            request.setAttribute("onlinepay", onlinepay);
+            request.setAttribute("payprice", payprice);
+            request.setAttribute("redpacket", redpacket);
+            request.setAttribute("timeouttime", timeouttime);
+
+            return object;
         }
-        return this.parseObject(backStr);
+
+        return null;
     }
 
     public JSONObject getUserWXwallet(HttpServletRequest request) {
@@ -182,8 +225,8 @@ public class OrderHandle {
         String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
         String backStr = SmsHttpClient.post(url, hmap);
         if ("true".equals(debug)) {
-            request.setAttribute("maxWallet","maxWallet");
-            request.setAttribute("wallet","wallet");
+            request.setAttribute("maxWallet", "maxWallet");
+            request.setAttribute("wallet", "wallet");
         }
         return this.parseObject(backStr);
     }
@@ -225,7 +268,7 @@ public class OrderHandle {
 //	    	}
 //	    }
         /*if(StringUtils.isEmpty(token)){
-	        	return  "error";
+                return  "error";
 	    }
 	    
 	    parmeter.put("token", token);
@@ -247,35 +290,41 @@ public class OrderHandle {
         return null;
     }
 
-//	protected   String    pay(HashMap hm){
-//	   HashMap  parmeterPay = new HashMap();
-//	   parmeterPay.put("paytype	", OrderTypenum.YF.getId());
-//	   parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
-//	   parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
-//	   String  backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
-//	   if(StringUtils.isEmpty(backStr)){
-//	    	return "error";
-//	    }
-//	   JSONObject jsonPay = JSONObject.parseObject(backStr);
-//	   if(!"true".equals(jsonPay.getString("success"))){
-//	    	return "error";
-//	    }else{
-//	    	if(!jsonPay.containsKey("weinxinpay")){
-//		    	return "error";
-//	    	}
-//	    	JSONObject json = jsonPay.getJSONObject("weinxinpay");
-//	    	String  appid = json.getString("appid");
-//	    	String  appkey = json.getString("appkey");
-//	    	String  noncestr = json.getString("noncestr");
-//	    	String  packagevalue = json.getString("packagevalue");
-//	    	String  partnerid = json.getString("partnerid");
-//	    	String  timestamp = json.getString("timestamp");
-//	    	String  sign = json.getString("sign");
-//
-//	    }
-//
-//		return  null;
-//	}
+    public String pay(HttpServletRequest request) {
+        HashMap parmeterPay = new HashMap();
+        parmeterPay.put("paytype", OrderTypenum.YF.getId());
+        parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
+        parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
+        if (StringUtils.isEmpty(backStr)) {
+            return "error";
+        }
+        JSONObject jsonPay = JSONObject.parseObject(backStr);
+        if (!"true".equals(jsonPay.getString("success"))) {
+            return "error";
+        } else {
+            if (!jsonPay.containsKey("weinxinpay")) {
+                return "error";
+            }
+            JSONObject json = jsonPay.getJSONObject("weinxinpay");
+            String appid = json.getString("appid");
+            String appkey = json.getString("appkey");
+            String noncestr = json.getString("noncestr");
+            String packagevalue = json.getString("packagevalue");
+            String partnerid = json.getString("partnerid");
+            String timestamp = json.getString("timestamp");
+            String sign = json.getString("sign");
+
+            request.setAttribute("appId",appid);
+            request.setAttribute("timeStamp",timestamp);
+            request.setAttribute("nonceStr",noncestr);
+            request.setAttribute("packageValue",packagevalue);
+            request.setAttribute("paySign",sign);
+            request.setAttribute("orderDetailUrl","");
+        }
+
+        return null;
+    }
 
     public static void main(String[] args) {
         JSONObject json = new JSONObject();
