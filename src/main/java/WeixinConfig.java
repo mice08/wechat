@@ -11,8 +11,11 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.weixin.sdk.api.ApiConfigKit;
+import com.jfinal.weixin.sdk.cache.RedisAccessTokenCache;
 
 public class WeixinConfig extends JFinalConfig {
 
@@ -25,7 +28,6 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-//		me.add("/", TokenController.class);
 		me.add("/", WeixinMsgController.class);
 		me.add("/api", WeixinApiController.class);
 		me.add("/pay", WeixinPayController.class);
@@ -42,9 +44,15 @@ public class WeixinConfig extends JFinalConfig {
 		
 		// EhCachePlugin ecp = new EhCachePlugin();
 		// me.add(ecp);
-		
-		// RedisPlugin redisPlugin = new RedisPlugin("weixin", "127.0.0.1");
-		// me.add(redisPlugin);
+
+        Prop result = new Prop("redis.properties", "UTF-8");
+        String nodes = result.get("spring.redis.sentinel.nodes");
+        String[] addresses = nodes.split(",");
+        String[] addressAndPort = addresses[0].split(":");
+        RedisPlugin redisPlugin = new RedisPlugin("weixin", addressAndPort[0], Integer.valueOf(addressAndPort[1]));
+        redisPlugin.start();
+        ApiConfigKit.setAccessTokenCache(new RedisAccessTokenCache());
+//        me.add(redisPlugin);
 	}
 	
 	public void configInterceptor(Interceptors me) {

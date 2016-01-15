@@ -7,7 +7,11 @@ import com.jfinal.core.Controller;
 public class TokenController extends Controller {
     @ActionKey("/")
     public void token () {
-        renderText(getPara("echostr"));
+        if (getPara("echostr")==null){
+            renderText("");
+        }else{
+            renderText(getPara("echostr"));
+        }
     }
 
 }
