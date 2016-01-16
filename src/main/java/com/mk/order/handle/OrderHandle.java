@@ -58,7 +58,7 @@ public class OrderHandle {
             if ("true".equals(debug)) {
                 timeintervalend = "19";
             }
-            if ("undefined".(timeintervalend)) {
+            if ("undefined".equals(timeintervalend)) {
                 timeintervalend = null;
             }
 
