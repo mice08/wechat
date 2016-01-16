@@ -254,8 +254,8 @@ public class DateUtil {
     /*
      获取两日期的天数差
      */
-    public static int daysBetween(String bdate, String smdate,String exmple) throws ParseException {
-        if(StringUtils.isEmpty(exmple)){
+    public static int daysBetween(String bdate, String smdate, String exmple) throws ParseException {
+        if (StringUtils.isEmpty(exmple)) {
             exmple = "yyyy-MM-dd";
         }
         SimpleDateFormat sdf = new SimpleDateFormat(exmple);
@@ -299,10 +299,18 @@ public class DateUtil {
 
     public static void main(String[] args) throws ParseException {
         DateUtil dh = new DateUtil();
-//        System.out.println(dh.getLastDayStr(-1, "yyyy-MM-dd"));
-        System.out.println(dh.getStrFormart("20160109006","yyyyMMdd"));
-//        System.out.println(dh.daysBetween("20160109007","20160109006"));
+
 
     }
 
+    public static String getStrFormart(String str, String exmple) {
+        if (StringUtils.isEmpty(exmple)) {
+            exmple = "yyyy-MM-dd";
+        }
+        if (StringUtils.isEmpty(str)) {
+            return null;
+        }
+        str = str.substring(0, exmple.length());
+        return str;
+    }
 }

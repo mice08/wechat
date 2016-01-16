@@ -43,7 +43,7 @@ public class OrderHandle {
         //
         String hotelid = request.getParameter("hotelid");
         if ("true".equals(debug)) {
-            hotelid = "2803";
+            hotelid = "2230";
         }
         if (StringUtils.isEmpty(hotelid)) {
             return null;
@@ -52,7 +52,7 @@ public class OrderHandle {
         //
         String roomtypeid = request.getParameter("roomtypeid");
         if ("true".equals(debug)) {
-            roomtypeid = "29949";
+            roomtypeid = "29840";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             return null;
@@ -141,6 +141,7 @@ public class OrderHandle {
         try{
              backStr = SmsHttpClient.post(url, parmeter);
         }catch(Exception e ){
+
             return null;
         }
 
@@ -188,7 +189,16 @@ public class OrderHandle {
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
             request.setAttribute("hotelname",DataHander.checkStringNull(object,"hotelname",""));
-            request.setAttribute("begintime",DataHander.checkStringNull(object,"begintime",""));
+
+            //
+            String  begintimeOri = DataHander.checkStringNull(object,"begintime","");
+            begintimeOri=  DateUtil.getStrFormart(begintimeOri,"yyyyMMhh");
+
+            String  endtimeOri = DataHander.checkStringNull(object,"endtime","");
+            endtimeOri=  DateUtil.getStrFormart(endtimeOri,"yyyyMMhh");
+
+            request.setAttribute("begintime",begintimeOri);
+            request.setAttribute("endtime", endtimeOri);
             request.setAttribute("endtime", DataHander.checkStringNull(object,"endtime",""));
             try{
                 request.setAttribute("orderday", DateUtil.daysBetween(DataHander.checkStringNull(object,"endtime",""),DataHander.checkStringNull(object,"begintime",""),"yyyyMMdd"));
@@ -203,7 +213,6 @@ public class OrderHandle {
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
      //       request.setAttribute("redpacket", redpacket);
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
-
 
             return object;
         }
@@ -255,58 +264,89 @@ public class OrderHandle {
     }
 
     public String modify(HttpServletRequest request) {
+
+        String orderId = request.getParameter("orderid");
+        String userName = request.getParameter("username");
+        String userMobile = request.getParameter("usermobile");
+        String walletCost = request.getParameter("walletcost");
+
+        if (StringUtils.isEmpty(orderId)) {
+            return "toCreate";
+        }
+
+        //
+        String debug = UrlUtil.getValue(BaseData.debug);
+        if ("true".equals(debug)) {
+            orderId = "1282358";
+            userName = "userNameTest";
+            userMobile = "123456789";
+            walletCost = "10";
+        }
+
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
+            return "error";
+        }
+        //
         HashMap parmeter = new HashMap();
-//	   if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(userMobile)||(orderId==0)){
-//		   return "error";
-//	   }
-//	   parmeter.put("username", userName);
-//	   parmeter.put("usermobile", userMobile);
-//	   parmeter.put("orderid", orderId);
-//	   parmeter.put("orderid", orderId);
-//
-//
-//
-//	   HttpServletRequest  request =  ServletActionContext.getRequest();
-//
-//	   Cookie[]  cookies = request.getCookies();
-//	    if(null==cookies){
-//	    	return  "error";
-//	    }
-//	    String token = null;
-//	    for(int i=0;i<cookies.length;i++){
-//	    	if("token".equals(cookies[i].getName())){
-//	    		token = cookies[i].getValue();
-//	    		break;
-//	    	}
-//	    }
-        /*if(StringUtils.isEmpty(token)){
-                return  "error";
-	    }
-	    
-	    parmeter.put("token", token);
-	    parmeter.put("callmethod",CallMethodEnum.WEIXIN.getId());
+        parmeter.put("username", userName);
+        parmeter.put("usermobile", userMobile);
+        parmeter.put("orderid", orderId);
+        parmeter.put("walletcost", walletCost);
 
-	    
-	    String  backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
-	    if(StringUtils.isEmpty(backStr)){
-	    	return "error";
-	    }
+        //token
+        Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            return "error";
+        }
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if ("token".equals(cookies[i].getName())) {
+                token = cookies[i].getValue();
+                break;
+            }
+        }
+        if ("true".equals(debug)) {
+            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        }
+        if (StringUtils.isEmpty(token)) {
+            return "error";
+        }
 
-	    JSONObject jsonOrder = JSONObject.parseObject(backStr);
-	    if(!"true".equals(jsonOrder.getString("success"))){
-	    	return "error";
-	    }else{
-	    	
-	    }
-		*/
-        return null;
+        parmeter.put("token", token);
+        parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
+
+        //
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
+        if (StringUtils.isEmpty(backStr)) {
+            return "error";
+        }
+
+        JSONObject jsonOrder = JSONObject.parseObject(backStr);
+        if (!"true".equals(jsonOrder.getString("success"))) {
+            return "error";
+        } else {
+
+        }
+
+        //
+        request.setAttribute("orderid", orderId);
+        return "success";
     }
 
     public String pay(HttpServletRequest request) {
+
+        String orderid = request.getParameter("orderid");
+        //
+        String debug = UrlUtil.getValue(BaseData.debug);
+        if ("true".equals(debug)) {
+            orderid = "1282358";
+        }
         HashMap parmeterPay = new HashMap();
+        parmeterPay.put("orderid", orderid);
         parmeterPay.put("paytype", OrderTypenum.YF.getId());
         parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
+
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
         if (StringUtils.isEmpty(backStr)) {
             return "error";
@@ -327,12 +367,12 @@ public class OrderHandle {
             String timestamp = json.getString("timestamp");
             String sign = json.getString("sign");
 
-            request.setAttribute("appId",appid);
-            request.setAttribute("timeStamp",timestamp);
-            request.setAttribute("nonceStr",noncestr);
-            request.setAttribute("packageValue",packagevalue);
-            request.setAttribute("paySign",sign);
-            request.setAttribute("orderDetailUrl","");
+            request.setAttribute("appId", appid);
+            request.setAttribute("timeStamp", timestamp);
+            request.setAttribute("nonceStr", noncestr);
+            request.setAttribute("packageValue", packagevalue);
+            request.setAttribute("paySign", sign);
+            request.setAttribute("orderDetailUrl", "");
         }
 
         return null;
