@@ -58,12 +58,14 @@
                     <div class="col text-right">房款：<span class="orange">${price}</span></div>
                 </div>
             </div>
-            <div class="h-person bg-white">
-                <ul class="p-items">
-                    <li><span class="item-left">入住人</span><input type="text" class="i-p-input" placeholder="入住人" value="${contacts}"></li>
-                    <li><span class="item-left">手机号</span><input type="text" class="i-p-input" placeholder="联系电话" value="${contactsphone}"></li>
-                </ul>
-            </div>
+            <form id="userInfo_form" method="post" name="userInfo_form">
+                <div class="h-person bg-white">
+                    <ul class="p-items">
+                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input" placeholder="入住人" value="${contacts}"></li>
+                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input" placeholder="联系电话" value="${contactsphone}"></li>
+                    </ul>
+                </div>
+            </form>
             <div class="pay-items">
                 <div class="pay-tips">
                     <span>温馨提示：</span>

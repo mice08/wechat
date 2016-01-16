@@ -152,6 +152,7 @@
 <script>
     var  orderid = ${orderid};
     $(function () {
+        var minUserCost = Math.min(${balance},${maxuserwalletcost});
         countdomn.init({
             time: ${timeouttime},
             onStop: function (data) {
@@ -162,7 +163,10 @@
                 $('.js_time_ss').text(data.s);
             }
         });
-
+        
+        $('.back-icon').tap(function(){
+            history.go(-1);
+        })
 
         $('.js_slideUp').tap(function (event) {
             slideUp(event);
@@ -170,6 +174,9 @@
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
         });
+
+        $('.js_order_wallet').val(minUserCost);
+
         $('.js_submit_order').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
@@ -182,9 +189,8 @@
                 return;
             }
             var userWallet = $('.js_order_wallet').val();
-            var totalWallet = $('.js_order_totalWallet').val();
-            if (userWallet > totalWallet) {
-                alert("红包金额不对。");
+            if (userWallet > minUserCost) {
+                alert("红包金额超限!");
                 return;
             }
             var modifyOrd = {
@@ -193,6 +199,7 @@
                 contactsphone: $.trim(phone)
             };
 
+            alert("准备提交.");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);
