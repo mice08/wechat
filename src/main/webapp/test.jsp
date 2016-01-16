@@ -11,7 +11,7 @@
                         "appId": "wx2d9d3daf15496f60",     //公众号名称，由商户传入
                         "timeStamp": "1452953483",         //时间戳，自1970年以来的秒数
                         "nonceStr": "wkiashis1k9wvkp1olupzyc6926no2di", //随机串
-                        "package": "prepay_id=wx201601162211237109b41a760268140425"
+                        "package": "prepay_id=wx201601162211237109b41a760268140425",
                         "signType": "MD5",         //微信签名方式：
                         "paySign": "4047EFB5F6E5BD4A75B81EEDE4A4684C" //微信签名
                     },
