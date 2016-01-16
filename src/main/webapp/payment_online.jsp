@@ -112,7 +112,7 @@
         还需支付：<span id="all_cost" class="orange ">
             ￥${onlinepay}</span>
     </div>
-    <div class="col">
+    <div class="col text-right">
         <a href="javascript:;" class="js_slideUp">
             明细<i class="icon up-icon"></i>
         </a>
@@ -186,8 +186,8 @@
             var val = $(this).val();
             val = parseInt(val);
             $(this).val(val);
-            $allCost.val('￥'+(allCost - val));
-            $walletLayer.val(val);
+            $allCost.text('￥'+(allCost - val));
+            $walletLayer.text(val);
         });
         
         $userWallet.val(minUserCost).change();
