@@ -359,15 +359,15 @@ public class OrderHandle {
         //
         List<Map<String, String>> checkinuser = new ArrayList<Map<String, String>>();
         Map<String, String> checkinusermap = new HashMap<String, String>();
-        checkinusermap.put("name", "张三丰");
-        checkinusermap.put("phone", "12345678");
+        checkinusermap.put("name", userName);
+        checkinusermap.put("phone", userMobile);
         checkinuser.add(checkinusermap);
         String _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
 
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282754";
+            orderId = "1282837";
             //
             checkinuser = new ArrayList<Map<String, String>>();
             checkinusermap = new HashMap<String, String>();
@@ -376,6 +376,8 @@ public class OrderHandle {
             checkinuser.add(checkinusermap);
             _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
             //
+            userName="eeeee";
+            userMobile="111111111";
             walletCost = "10";
             ordertype="1";
         }

@@ -10,7 +10,10 @@
     //更新
     String m = ho.modify(request);
     //是否支付
-    if (!"toCreate".equals(m)) {
+    if ("error".equals(m)) {
+        request.getRequestDispatcher("500.jsp").forward(request, response);
+    }
+    if ("success".equals(m)) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }
