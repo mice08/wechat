@@ -76,6 +76,14 @@ public class OrderHandle {
             return null;
         }
 
+        String  timeintervaltype= request.getParameter("timeintervaltype");
+        if ("true".equals(debug)) {
+            timeintervaltype = "2";
+        }
+        if (StringUtils.isEmpty(timeintervaltype)) {
+            return null;
+        }
+
         //
         String pricetype = request.getParameter("pricetype");
         if ("true".equals(debug)) {
@@ -211,7 +219,9 @@ public class OrderHandle {
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
-     //       request.setAttribute("redpacket", redpacket);
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost",""));
+            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
+            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
 
             return object;
@@ -241,13 +251,22 @@ public class OrderHandle {
         }
         HashMap hmap = new HashMap();
         hmap.put("token", token);
+        hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //
         String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
         String backStr = SmsHttpClient.post(url, hmap);
+        if(StringUtils.isEmpty(backStr)){
+            return null;
+        }
+        JSONObject jso = this.parseObject(backStr);
+        if(null==jso){
+            return null;
+        }
+        ;
+        request.setAttribute("balance", jso.getString("balance"));
         if ("true".equals(debug)) {
-            request.setAttribute("maxWallet", "maxWallet");
-            request.setAttribute("wallet", "wallet");
+            request.setAttribute("balance", "99999999");
         }
         return this.parseObject(backStr);
     }
