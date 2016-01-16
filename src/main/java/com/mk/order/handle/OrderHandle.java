@@ -34,6 +34,7 @@ public class OrderHandle {
 
         String timeintervalstart ="";
         String  timeintervalend = "";
+        String  timeintervaltype="";
         //预付
         if(OrderTypenum.YF.getId().equals(ordertype)){
             timeintervalstart = request.getParameter("timeintervalstart");
@@ -54,6 +55,16 @@ public class OrderHandle {
                 timeintervalend = "19";
             }
             if (StringUtils.isEmpty(timeintervalend)) {
+                return null;
+            }
+
+            timeintervaltype= request.getParameter("timeintervaltype");
+            System.out.println("timeintervaltype:"+timeintervaltype);
+
+            if ("true".equals(debug)) {
+                timeintervaltype = "1";
+            }
+            if (StringUtils.isEmpty(timeintervaltype)) {
                 return null;
             }
 
@@ -108,15 +119,7 @@ public class OrderHandle {
 
 
 
-        String  timeintervaltype= request.getParameter("timeintervaltype");
-        System.out.println("timeintervaltype:"+timeintervaltype);
 
-        if ("true".equals(debug)) {
-            timeintervaltype = "1";
-        }
-        if (StringUtils.isEmpty(timeintervaltype)) {
-            return null;
-        }
 
         //
         String pricetype = request.getParameter("pricetype");
