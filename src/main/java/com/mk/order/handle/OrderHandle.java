@@ -46,9 +46,10 @@ public class OrderHandle {
             if ("true".equals(debug)) {
                 timeintervalstart = "7";
             }
-            if (StringUtils.isEmpty(timeintervalstart)) {
-                return null;
+            if ("undefined".equals(timeintervalstart)) {
+                timeintervalstart =  null;
             }
+
 
             //
             timeintervalend = request.getParameter("timeintervalend");
@@ -57,8 +58,8 @@ public class OrderHandle {
             if ("true".equals(debug)) {
                 timeintervalend = "19";
             }
-            if (StringUtils.isEmpty(timeintervalend)) {
-                return null;
+            if ("undefined".equals(timeintervalend)) {
+                timeintervalend = null;
             }
 
             timeintervaltype= request.getParameter("timeintervaltype");
@@ -260,6 +261,7 @@ public class OrderHandle {
             }catch (Exception e){
                 e.printStackTrace();
             }
+
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object,"walletcost","0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
@@ -267,6 +269,7 @@ public class OrderHandle {
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price","0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(object,"roomorder","totalprice","0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));

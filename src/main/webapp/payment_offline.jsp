@@ -61,8 +61,8 @@
             <form id="userInfo_form" method="post" name="userInfo_form">
                 <div class="h-person bg-white">
                     <ul class="p-items">
-                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input" placeholder="入住人" value="${contacts}"></li>
-                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input" placeholder="联系电话" value="${contactsphone}"></li>
+                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"></li>
+                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"></li>
                     </ul>
                 </div>
 
@@ -96,14 +96,14 @@
                 <p class="d-gray">房费</p>
                 <div class="row row-no-padding gray">
                     <div class="col">${hotelname}</div>
-                    <div class="col text-right">￥${payprice}</div>
+                    <div class="col text-right">￥${totalprice}</div>
                 </div>
             </li>
             <li>
                 <p class="d-gray">优惠</p>
                 <div class="row row-no-padding gray">
                     <div class="col">红包</div>
-                    <div class="col text-right">￥${redpacket}</div>
+                    <div class="col text-right">￥${walletcost}</div>
                 </div>
             </li>
         </ul>
@@ -120,7 +120,7 @@
 <script src="scripts/zepto.min.js"></script>
 <script src="scripts/countdown.js"></script>
 <script>
-
+    var  orderid = ${orderid};
     $(function () {
         countdomn.init({
             time: ${timeouttime},
@@ -132,6 +132,11 @@
                 $('.js_time_ss').text(data.s);
             }
         });
+
+        $('.back-icon').tap(function(){
+            history.go(-1);
+        })
+
         $('.js_slideUp').tap(function (event) {
             slideUp(event);
         });
@@ -150,12 +155,13 @@
                 return;
             }
 
+
             var modifyOrd = {
                 orderid: orderid,
                 contacts: $.trim(contact),
                 contactsphone: $.trim(phone)
             };
-
+            alert("kaishitijiaodingdan");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);

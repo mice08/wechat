@@ -10,38 +10,50 @@ import java.text.ParseException;
 public class DataHander {
     public static String checkStringNull(JSONObject jsonObject, String key, String resultDefault) {
         String result = "";
-        if (null != jsonObject) {
-            if (jsonObject.containsKey(key)) {
-                return jsonObject.getString(key);
-            }
-        }
         if (StringUtils.isNotEmpty(resultDefault)) {
             result = resultDefault;
         }
+        if (null != jsonObject) {
+            if (jsonObject.containsKey(key)) {
+                if(StringUtils.isEmpty(jsonObject.getString(key))){
+                    return  result;
+                }
+                return jsonObject.getString(key);
+            }
+        }
+
         return result;
     }
 
     public static String checkStringNull(JSONObject jsonObject, String jsonArrayKey, String key, String resultDefault) {
         String result = "";
 
+        if (StringUtils.isNotEmpty(resultDefault)) {
+            result = resultDefault;
+        }
+
         if (null != jsonObject && StringUtils.isNotEmpty(jsonArrayKey) && StringUtils.isNotEmpty(key)) {
             JSONArray jsonArray = jsonObject.getJSONArray(jsonArrayKey);
             if (null != jsonArray) {
                 JSONObject jso = jsonArray.getJSONObject(0);
                 if (null != jso && jso.containsKey(key)) {
+                    if(StringUtils.isEmpty(jso.getString(key))){
+                        return  result;
+                    }
                     return jso.getString(key);
                 }
             }
 
         }
-        if (StringUtils.isNotEmpty(resultDefault)) {
-            result = resultDefault;
-        }
+
         return result;
     }
 
     public static String checkStringNull(JSONObject jsonObject, String jsonArrayKey, String jsonObject2, String key, String resultDefault) {
         String result = "";
+        if (StringUtils.isNotEmpty(resultDefault)) {
+            result = resultDefault;
+        }
 
         if (null != jsonObject && StringUtils.isNotEmpty(jsonArrayKey) && StringUtils.isNotEmpty(jsonObject2) && StringUtils.isNotEmpty(key)) {
             JSONArray jsonArray = jsonObject.getJSONArray(jsonArrayKey);
@@ -52,7 +64,11 @@ public class DataHander {
                     if (null != jsa) {
                         JSONObject json = jsa.getJSONObject(0);
                         if (null != json && json.containsKey(key)) {
-                            return json.getString(key);
+                            String  value = json.getString(key);
+                            if(StringUtils.isEmpty(value)){
+                                return  result;
+                            }
+                            return value;
                         }
                     }
 
@@ -61,9 +77,7 @@ public class DataHander {
             }
 
         }
-        if (StringUtils.isNotEmpty(resultDefault)) {
-            result = resultDefault;
-        }
+
         return result;
     }
 
