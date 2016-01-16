@@ -304,4 +304,27 @@ public class DateUtil {
         str = str.substring(0, exmple.length());
         return str;
     }
+
+    /**
+     * 根据年月日计算星期
+     * @param pTime
+     * @param exmple
+     * @return
+     */
+    public static int getIntWeek(String pTime, String exmple) throws  ParseException{
+        if (StringUtils.isEmpty(exmple)) {
+            exmple = "yyyyMMdd";
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat(exmple);
+        Calendar c = Calendar.getInstance();
+        c.setTime(format.parse(pTime));
+        int dayForWeek = 0;
+        if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+            dayForWeek = 7;
+        } else {
+            dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+        }
+        return dayForWeek;
+    }
 }

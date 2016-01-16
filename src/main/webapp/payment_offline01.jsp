@@ -11,7 +11,7 @@
     String m = ho.modify(request);
     //是否支付
     if (!"toCreate".equals(m)) {
-        request.getRequestDispatcher("pay.jsp?orderid=").forward(request, response);
+        request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }
 
@@ -22,9 +22,6 @@
     }
     //红包
     ho.getUserWXwallet(request);
-
-    Long random = new Random().nextLong();
-    request.setAttribute("random",random);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -34,7 +31,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
-    <link rel="stylesheet" type="text/css" href="styles/pay.css?${random}"/>
+    <link rel="stylesheet" type="text/css" href="styles/pay.css"/>
     <title>在线支付</title>
 </head>
 <body>
@@ -59,7 +56,7 @@
             <div class="h-type row">
                 <div class="col text-left">${roomtypename}</div>
                 <div class="col text-right">
-                    房款：<span class="orange">${price}</span>
+                    房款：<span class="orange">${totalprice}</span>
                 </div>
             </div>
         </div>
@@ -90,7 +87,7 @@
                     <input type="tel" name="walletcost" class="u-p-input  js_order_wallet"/>
                 </div>
             </div>
-            <input type="hidden" name="orderid"  value="${orderid}"/>
+            <input type="hidden" name="orderid" value="${orderid}"/>
         </form>
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
@@ -106,15 +103,13 @@
         </div>
     </section>
 </div>
-<footer class="footer bg-white row" style="width:100%;">
+<footer class="footer bg-white row">
     <div class="col">
         还需支付：<span class="orange f-cost">￥${onlinepay}</span>
     </div>
-    <div class="col">
-        <a href="javascript:;" class="js_slideUp">
-            明细<i class="icon up-icon"></i>
-        </a>
-        <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
+    <div class="col text-right">
+        <a href="javascript:;" class="gray js_slideUp">明细<i
+                class="icon up-icon"></i> </a> <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
     </div>
 </footer>
 <div class="mask_layer js_slide_layer"></div>
@@ -149,7 +144,7 @@
 <script src="scripts/zepto.min.js"></script>
 <script src="scripts/countdown.js"></script>
 <script>
-    var  orderid = ${orderid};
+
     $(function () {
         countdomn.init({
             time: ${timeouttime},
@@ -161,8 +156,6 @@
                 $('.js_time_ss').text(data.s);
             }
         });
-
-
         $('.js_slideUp').tap(function (event) {
             slideUp(event);
         });

@@ -24,19 +24,72 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
 
-        //
-        String startdateday = request.getParameter("startdate");
+        String ordertype = request.getParameter("ordertype");
+        System.out.println("ordertype:"+ordertype);
+
         if ("true".equals(debug)) {
-            startdateday = "20160115";
+            ordertype = "7";
+        }
+        if (StringUtils.isEmpty(ordertype)) {
+            return null;
+        }
+
+        String timeintervalstart ="";
+        String  timeintervalend = "";
+        String  timeintervaltype="";
+        System.out.println("leixing:"+OrderTypenum.YF.getId().equals(ordertype));
+        //预付
+        if(OrderTypenum.YF.getId().equals(ordertype)){
+            timeintervalstart = request.getParameter("timeintervalstart");
+            System.out.println("timeintervalstart:"+timeintervalstart);
+
+            if ("true".equals(debug)) {
+                timeintervalstart = "7";
+            }
+            if (StringUtils.isEmpty(timeintervalstart)) {
+                return null;
+            }
+
+            //
+            timeintervalend = request.getParameter("timeintervalend");
+            System.out.println("timeintervalend:"+timeintervalend);
+
+            if ("true".equals(debug)) {
+                timeintervalend = "19";
+            }
+            if (StringUtils.isEmpty(timeintervalend)) {
+                return null;
+            }
+
+            timeintervaltype= request.getParameter("timeintervaltype");
+            System.out.println("timeintervaltype:"+timeintervaltype);
+
+            if ("true".equals(debug)) {
+                timeintervaltype = "1";
+            }
+            if (StringUtils.isEmpty(timeintervaltype)) {
+                return null;
+            }
+
+        }
+
+        //
+        String startdateday = request.getParameter("startdateday");
+        System.out.println("startdateday:"+startdateday);
+
+        if ("true".equals(debug)) {
+            startdateday = "20160116";
         }
         if (StringUtils.isEmpty(startdateday)) {
             return null;
         }
 
         //
-        String enddateday = request.getParameter("enddate");
+        String enddateday = request.getParameter("enddateday");
+        System.out.println("enddateday:"+enddateday);
+
         if ("true".equals(debug)) {
-            enddateday = "20160116";
+            enddateday = "20160117";
         }
         if (StringUtils.isEmpty(enddateday)) {
             return null;
@@ -44,6 +97,8 @@ public class OrderHandle {
 
         //
         String hotelid = request.getParameter("hotelid");
+        System.out.println("hotelid:"+hotelid);
+
         if ("true".equals(debug)) {
             hotelid = "2230";
         }
@@ -53,44 +108,30 @@ public class OrderHandle {
 
         //
         String roomtypeid = request.getParameter("roomtypeid");
+        System.out.println("roomtypeid:"+roomtypeid);
+
         if ("true".equals(debug)) {
-            roomtypeid = "29840";
+            roomtypeid = "29885";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             return null;
         }
 
         //
-        String timeintervalstart = request.getParameter("timeintervalstart");
-        if ("true".equals(debug)) {
-            timeintervalstart = "7";
-        }
-        if (StringUtils.isEmpty(timeintervalstart)) {
-            return null;
-        }
 
-        //
-        String timeintervalend = request.getParameter("timeintervalend");
-        if ("true".equals(debug)) {
-            timeintervalend = "20";
-        }
-        if (StringUtils.isEmpty(timeintervalend)) {
-            return null;
-        }
 
-        String  timeintervaltype= request.getParameter("timeintervaltype");
-        if ("true".equals(debug)) {
-            timeintervaltype = "2";
-        }
-        if (StringUtils.isEmpty(timeintervaltype)) {
-            return null;
-        }
 
         //
         String pricetype = request.getParameter("pricetype");
+        System.out.println("pricetype:"+pricetype);
+
         if ("true".equals(debug)) {
             pricetype = "2";
         }
+
+
+
+
         //token
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
@@ -105,23 +146,32 @@ public class OrderHandle {
                 break;
             }
         }
+        System.out.println("token:"+token);
 
         if ("true".equals(debug)) {
             token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         }
+
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+
+
         if (StringUtils.isEmpty(token)) {
             return null;
         }
+
 
         //
         String userlongitude = request.getParameter("userlongitude");
         if ("true".equals(debug)) {
             userlongitude = "121";
         }
+        System.out.println("userlongitude:"+userlongitude);
+
         String userlatitude = request.getParameter("userlatitude");
         if ("true".equals(debug)) {
             userlatitude = "31";
         }
+        System.out.println("userlatitude:"+userlatitude);
 
         //
         HashMap<String, String> parmeter = new HashMap();
@@ -141,15 +191,23 @@ public class OrderHandle {
         if (StringUtils.isNotEmpty(userlatitude)) {
             parmeter.put("userlatitude", userlatitude);
         }
-        parmeter.put("ordertype", OrderTypenum.DF.getId());
+        parmeter.put("ordertype", ordertype);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
         parmeter.put("callversion", "3.5");
 
+        System.out.println(123);
+
+
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
+        System.out.println("url:"+url);
+
         String  backStr = "";
         try{
              backStr = SmsHttpClient.post(url, parmeter);
+
+            System.out.println("backStr:"+backStr);
+
         }catch(Exception e ){
 
             return null;
@@ -177,24 +235,10 @@ public class OrderHandle {
 
         if (StringUtils.isNotEmpty(backStr)) {
             JSONObject object = this.parseObject(backStr);
-            Object orderid = object.get("orderid");
-            Object hotelname = object.get("hotelname");
-            Object begintime = object.get("begintime");
-            Object endtime = object.get("endtime");
-            Object contacts = object.get("contacts");
-            Object contactsphone = object.get("contactsphone");
-            Object usermessage = object.get("usermessage");
-            Object onlinepay = object.get("onlinepay");
-            Object payprice = object.get("payprice");
-            Object redpacket = object.get("redpacket");
-            Object timeouttime = object.get("timeouttime");
 
-
-            //roomorder
-            JSONArray roomOrders = object.getJSONArray("roomorder");
-            JSONObject roomOrder = roomOrders.getJSONObject(0);
-            Object orderday = roomOrder.get("orderday");
-            Object roomtypename = roomOrder.get("roomtypename");
+            if(!"true".equals(object.getString("success"))){
+                  return null;
+            }
 
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
@@ -219,9 +263,9 @@ public class OrderHandle {
             request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
             request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
-            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
-            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost",""));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
@@ -233,6 +277,9 @@ public class OrderHandle {
     }
 
     public JSONObject getUserWXwallet(HttpServletRequest request) {
+
+        System.out.println("开始查询红包总额");
+
 
         //
         String debug = UrlUtil.getValue(BaseData.debug);
@@ -248,10 +295,13 @@ public class OrderHandle {
                 break;
             }
         }
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+
         if (StringUtils.isEmpty(token)) {
             return null;
         }
         HashMap hmap = new HashMap();
+
         hmap.put("token", token);
         hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
@@ -265,8 +315,8 @@ public class OrderHandle {
         if(null==jso){
             return null;
         }
-        ;
-        request.setAttribute("balance", jso.getString("balance"));
+        System.out.println("balance:"+DataHander.checkStringNull(jso,"balance","0"));
+        request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0"));
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
         }

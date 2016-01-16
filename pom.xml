@@ -170,9 +170,7 @@
     <profiles>
         <profile>
             <id>shanghai-simulation</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+
             <properties>
                 <label>product</label>
                 <debug>true</debug>
@@ -193,6 +191,9 @@
 
         <profile>
             <id>bgp-simulation</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <label>product</label>
                 <debug>false</debug>
