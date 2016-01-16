@@ -239,16 +239,7 @@ public class DateUtil {
         return Integer.parseInt(String.valueOf(between_days));
     }
 
-    public   static  String   getStrFormart(String  str,String exmple){
-        if(StringUtils.isEmpty(exmple)){
-            exmple = "yyyy-MM-dd";
-        }
-        if(StringUtils.isEmpty(str)){
-            return  null;
-        }
-        str = str.substring(0,exmple.length());
-        return  str;
-    }
+
 
 
     /*
