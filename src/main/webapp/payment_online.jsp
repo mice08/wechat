@@ -87,7 +87,7 @@
                     <input type="tel" name="walletcost" class="u-p-input  js_order_wallet"/>
                 </div>
             </div>
-            <input type="hidden" name="orderid" value="${orderid}"/>
+            <input type="hidden" name="orderid"  value="${orderid}"/>
         </form>
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
@@ -146,7 +146,7 @@
 <script src="scripts/zepto.min.js"></script>
 <script src="scripts/countdown.js"></script>
 <script>
-
+    var  orderid = ${orderid};
     $(function () {
         countdomn.init({
             time: ${timeouttime},
