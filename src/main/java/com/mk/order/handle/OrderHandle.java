@@ -394,9 +394,8 @@ public class OrderHandle {
             request.setAttribute("packageValue", packagevalue);
             request.setAttribute("paySign", sign);
             request.setAttribute("orderDetailUrl", "");
+            return "success";
         }
-
-        return null;
     }
 
     public static void main(String[] args) {
