@@ -152,7 +152,7 @@
                 contacts: $.trim(contact),
                 contactsphone: $.trim(phone)
             };
-
+            alert("kaishitijiaodingdan");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);

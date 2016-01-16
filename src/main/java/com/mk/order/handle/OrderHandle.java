@@ -260,6 +260,7 @@ public class OrderHandle {
             }catch (Exception e){
                 e.printStackTrace();
             }
+
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object,"walletcost","0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
