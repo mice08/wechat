@@ -124,9 +124,14 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         }
+
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+
+
         if (StringUtils.isEmpty(token)) {
             return null;
         }
+
 
         //
         String userlongitude = request.getParameter("userlongitude");
