@@ -105,6 +105,18 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             pricetype = "2";
         }
+
+        String ordertype = request.getParameter("ordertype");
+        System.out.println("ordertype:"+ordertype);
+
+        if ("true".equals(debug)) {
+            ordertype = "7";
+        }
+        if (StringUtils.isEmpty(ordertype)) {
+            return null;
+        }
+
+
         //token
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
@@ -164,7 +176,7 @@ public class OrderHandle {
         if (StringUtils.isNotEmpty(userlatitude)) {
             parmeter.put("userlatitude", userlatitude);
         }
-        parmeter.put("ordertype", OrderTypenum.DF.getId());
+        parmeter.put("ordertype", ordertype);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
         parmeter.put("callversion", "3.5");
 
