@@ -268,6 +268,7 @@ public class OrderHandle {
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price","0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(object,"roomorder","totalprice","0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
