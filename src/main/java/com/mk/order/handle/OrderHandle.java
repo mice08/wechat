@@ -261,6 +261,9 @@ public class OrderHandle {
 
     public JSONObject getUserWXwallet(HttpServletRequest request) {
 
+        System.out.println("开始查询红包总额");
+
+
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         //
@@ -292,7 +295,7 @@ public class OrderHandle {
         if(null==jso){
             return null;
         }
-        
+        System.out.println("balance:"+DataHander.checkStringNull(jso,"balance","0"));
         request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0"));
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
