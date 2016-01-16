@@ -151,6 +151,7 @@
 <script>
     var  orderid = ${orderid};
     $(function () {
+        var minUserCost = Math.min(${balance},${maxuserwalletcost});
         countdomn.init({
             time: ${timeouttime},
             onStop: function (data) {
@@ -162,7 +163,7 @@
             }
         });
         
-        $('back-icon').tap(function(){
+        $('.back-icon').tap(function(){
             history.go(-1);
         })
 
@@ -172,6 +173,9 @@
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
         });
+
+        $('.js_order_wallet').val(minUserCost);
+
         $('.js_submit_order').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
@@ -184,8 +188,7 @@
                 return;
             }
             var userWallet = $('.js_order_wallet').val();
-            var maxuser = Math.min(${balance},${maxuserwalletcost});
-            if (userWallet > maxuser) {
+            if (userWallet > minUserCost) {
                 alert("红包金额超限!");
                 return;
             }

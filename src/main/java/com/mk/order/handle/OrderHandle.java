@@ -261,11 +261,12 @@ public class OrderHandle {
                 e.printStackTrace();
             }
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
+            request.setAttribute("walletcost", DataHander.checkStringNull(object,"walletcost","0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
             request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
-            request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
+            request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price","0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
