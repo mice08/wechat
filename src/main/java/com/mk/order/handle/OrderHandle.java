@@ -251,13 +251,22 @@ public class OrderHandle {
         }
         HashMap hmap = new HashMap();
         hmap.put("token", token);
+        hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //
         String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
         String backStr = SmsHttpClient.post(url, hmap);
+        if(StringUtils.isEmpty(backStr)){
+            return null;
+        }
+        JSONObject jso = this.parseObject(backStr);
+        if(null==jso){
+            return null;
+        }
+        ;
+        request.setAttribute("balance", jso.getString("balance"));
         if ("true".equals(debug)) {
-            request.setAttribute("maxWallet", "maxWallet");
-            request.setAttribute("wallet", "wallet");
+            request.setAttribute("balance", "99999999");
         }
         return this.parseObject(backStr);
     }
