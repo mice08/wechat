@@ -357,7 +357,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282609";
+            orderId = "1282754";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -387,6 +387,7 @@ public class OrderHandle {
                 break;
             }
         }
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         if ("true".equals(debug)) {
             token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         }
@@ -445,6 +446,7 @@ public class OrderHandle {
                 break;
             }
         }
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
