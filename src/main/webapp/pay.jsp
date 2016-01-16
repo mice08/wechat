@@ -42,14 +42,7 @@
 </head>
 <body>
 <header class="header">
-    在线支付页面<br/>
-    "appId": "${appId}",     //公众号名称，由商户传入<br/>
-    "timeStamp": "${timeStamp}",         //时间戳，自1970年以来的秒数<br/>
-    "nonceStr": "${nonceStr}", //随机串<br/>
-    "package": "prepay_id=${prepayid}",<br/>
-    "signType": "MD5",         //微信签名方式：<br/>
-    "paySign": "${paySign}" //微信签名<br/>
-    url:<a href="${url}">${url}</a>
+    在线支付页面
 </header>
 </body>
 </html>

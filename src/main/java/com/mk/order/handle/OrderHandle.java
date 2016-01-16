@@ -1,5 +1,6 @@
 package com.mk.order.handle;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mk.common.toolutils.*;
@@ -354,12 +355,27 @@ public class OrderHandle {
             return "toCreate";
         }
 
+
+        //
+        List<Map<String, String>> checkinuser = new ArrayList<Map<String, String>>();
+        Map<String, String> checkinusermap = new HashMap<String, String>();
+        checkinusermap.put("name", "张三丰");
+        checkinusermap.put("phone", "12345678");
+        checkinuser.add(checkinusermap);
+        String _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
+
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
             orderId = "1282754";
-            userName = "userNameTest";
-            userMobile = "123456789";
+            //
+            checkinuser = new ArrayList<Map<String, String>>();
+            checkinusermap = new HashMap<String, String>();
+            checkinusermap.put("name", "张三丰");
+            checkinusermap.put("phone", "12345678");
+            checkinuser.add(checkinusermap);
+            _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
+            //
             walletCost = "10";
             ordertype="1";
         }
@@ -369,8 +385,7 @@ public class OrderHandle {
         }
         //
         HashMap parmeter = new HashMap();
-        parmeter.put("username", userName);
-        parmeter.put("usermobile", userMobile);
+        parmeter.put("checkinuser", _checkinuser);
         parmeter.put("orderid", orderId);
         parmeter.put("walletcost", walletCost);
         parmeter.put("ordertype",ordertype);
@@ -481,21 +496,19 @@ public class OrderHandle {
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
             // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
-
-            StringBuilder stringBuilder = new StringBuilder()
-                    .append("appid=").append(appid)
-                    .append("&noncestr=").append(noncestr)
-                    .append("&package=WAP")
-                    .append("&prepayid=").append(prepayid)
-                    .append("&sign=").append(sign)
-                    .append("&timestamp=").append(timestamp);
-
-            try {
-                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
-                request.setAttribute("url", "weixin://wap/pay?" + url);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+//            StringBuilder stringBuilder = new StringBuilder()
+//                    .append("appid=").append(appid)
+//                    .append("&noncestr=").append(noncestr)
+//                    .append("&package=WAP")
+//                    .append("&prepayid=").append(prepayid)
+//                    .append("&sign=").append(sign)
+//                    .append("&timestamp=").append(timestamp);
+//            try {
+//                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
+//                request.setAttribute("url", "weixin://wap/pay?" + url);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
 
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
@@ -505,7 +518,7 @@ public class OrderHandle {
             request.setAttribute("packagevalue", packagevalue);
 
             request.setAttribute("paySign", sign);
-            request.setAttribute("orderDetailUrl", "");
+            request.setAttribute("orderDetailUrl", "http://dev-h5.imike.cn/#!/index");
             return "success";
         }
 
