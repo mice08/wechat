@@ -103,11 +103,11 @@
         </div>
     </section>
 </div>
-<footer class="footer bg-white row">
+<footer class="footer bg-white row" style="width:100%;">
     <div class="col">
         还需支付：<span class="orange f-cost">￥${onlinepay}</span>
     </div>
-    <div class="col text-right">
+    <div class="col">
         <a href="javascript:;">
             明细<i class="icon up-icon"></i>
         </a>
