@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.*;
 
 public class OrderHandle {
 
@@ -507,7 +507,9 @@ public class OrderHandle {
             request.setAttribute("orderDetailUrl", "");
             return "success";
         }
+
     }
+
 
     public static void main(String[] args) {
         String url = "http://huidu.imike.cn/ots/order/create";

@@ -13,7 +13,7 @@
                         "nonceStr": "wkiashis1k9wvkp1olupzyc6926no2di", //随机串
                         "package": "prepay_id=wx201601162211237109b41a760268140425",
                         "signType": "MD5",         //微信签名方式：
-                        "paySign": "88D36A0324F9F968160BA5800DE289EE" //微信签名
+                        "paySign": "9763DFA0ED8639CC6DE94D9BC0F725D6" //微信签名
                     },
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request：ok") {
