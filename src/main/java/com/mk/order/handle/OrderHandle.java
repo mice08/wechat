@@ -23,18 +23,18 @@ public class OrderHandle {
         String debug = UrlUtil.getValue(BaseData.debug);
 
         //
-        String startdateday = request.getParameter("startdate");
+        String startdateday = request.getParameter("startdateday");
         if ("true".equals(debug)) {
-            startdateday = "20160115";
+            startdateday = "20160116";
         }
         if (StringUtils.isEmpty(startdateday)) {
             return null;
         }
 
         //
-        String enddateday = request.getParameter("enddate");
+        String enddateday = request.getParameter("enddateday");
         if ("true".equals(debug)) {
-            enddateday = "20160116";
+            enddateday = "20160117";
         }
         if (StringUtils.isEmpty(enddateday)) {
             return null;
@@ -52,7 +52,7 @@ public class OrderHandle {
         //
         String roomtypeid = request.getParameter("roomtypeid");
         if ("true".equals(debug)) {
-            roomtypeid = "29840";
+            roomtypeid = "29885";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             return null;
@@ -70,7 +70,7 @@ public class OrderHandle {
         //
         String timeintervalend = request.getParameter("timeintervalend");
         if ("true".equals(debug)) {
-            timeintervalend = "20";
+            timeintervalend = "19";
         }
         if (StringUtils.isEmpty(timeintervalend)) {
             return null;
@@ -78,7 +78,7 @@ public class OrderHandle {
 
         String  timeintervaltype= request.getParameter("timeintervaltype");
         if ("true".equals(debug)) {
-            timeintervaltype = "2";
+            timeintervaltype = "1";
         }
         if (StringUtils.isEmpty(timeintervaltype)) {
             return null;
