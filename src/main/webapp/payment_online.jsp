@@ -56,7 +56,7 @@
             <div class="h-type row">
                 <div class="col text-left">${roomtypename}</div>
                 <div class="col text-right">
-                    房款：<span class="orange">${totalprice}</span>
+                    房款：<span class="orange">${price}</span>
                 </div>
             </div>
         </div>
