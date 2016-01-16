@@ -76,6 +76,14 @@ public class OrderHandle {
             return null;
         }
 
+        String  timeintervaltype= request.getParameter("timeintervaltype");
+        if ("true".equals(debug)) {
+            timeintervaltype = "2";
+        }
+        if (StringUtils.isEmpty(timeintervaltype)) {
+            return null;
+        }
+
         //
         String pricetype = request.getParameter("pricetype");
         if ("true".equals(debug)) {
@@ -211,7 +219,9 @@ public class OrderHandle {
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
-     //       request.setAttribute("redpacket", redpacket);
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost",""));
+            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
+            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
 
             return object;
