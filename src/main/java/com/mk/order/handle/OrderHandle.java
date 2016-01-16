@@ -296,7 +296,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282358";
+            orderId = "1282388";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -340,12 +340,12 @@ public class OrderHandle {
             return "error";
         }
 
-        JSONObject jsonOrder = JSONObject.parseObject(backStr);
-        if (!"true".equals(jsonOrder.getString("success"))) {
-            return "error";
-        } else {
-
-        }
+//        JSONObject jsonOrder = JSONObject.parseObject(backStr);
+//        if (!"true".equals(jsonOrder.getString("success"))) {
+//            return "error";
+//        } else {
+//
+//        }
 
         //
         request.setAttribute("orderid", orderId);
@@ -354,17 +354,38 @@ public class OrderHandle {
 
     public String pay(HttpServletRequest request) {
 
-        String orderid = request.getParameter("orderid");
+        String orderid = (String)request.getAttribute("orderid");
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderid = "1282358";
+            orderid = "1282388";
         }
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
         parmeterPay.put("paytype", OrderTypenum.YF.getId());
         parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
+
+        //token
+        Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            return "error";
+        }
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if ("token".equals(cookies[i].getName())) {
+                token = cookies[i].getValue();
+                break;
+            }
+        }
+        if ("true".equals(debug)) {
+            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        }
+        if (StringUtils.isEmpty(token)) {
+            return "error";
+        }
+
+        parmeterPay.put("token", token);
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
         if (StringUtils.isEmpty(backStr)) {

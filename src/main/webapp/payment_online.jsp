@@ -11,7 +11,7 @@
     String m = ho.modify(request);
     //是否支付
     if (!"toCreate".equals(m)) {
-        request.getRequestDispatcher("pay.jsp").forward(request, response);
+        request.getRequestDispatcher("pay.jsp?orderid=").forward(request, response);
         return;
     }
 
