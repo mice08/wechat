@@ -28,7 +28,6 @@ var countdomn = {
     },
     update: function (date) {
         this.differ_time = date = date - 1000;
-        console.log(date);
         if (date <= 0) {
             clearInterval(this.time);
             this.options.onStop(this);

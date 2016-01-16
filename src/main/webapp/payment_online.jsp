@@ -144,22 +144,21 @@
 <%
 } else {
 %>
-
 <div>
     <h1>请求不合法</h1>
 </div>
 <%} %>
 
 <script src="scripts/zepto.min.js"></script>
-<script src="scripts/countdown.js"></script>
+<script src="scripts/countdown.js?v=1"></script>
 <script>
     $(function () {
-        var orderid = '${orderid}';
         var minUserCost = parseInt(Math.min('${balance}','${maxuserwalletcost}'));
         var allCost = parseInt('${onlinepay}')
         var $userWallet = $("#user-wallet");
         var $walletLayer = $("#wallet-layer");
         var $allCost = $("#all_cost");
+        
         countdomn.init({
             time: parseInt('${timeouttime}'),
             onStop: function (data) {
@@ -176,14 +175,14 @@
         })
 
         $('.js_slideUp').tap(function (event) {
-            slideUp(event);
-        });
+            $('.js_slide_layer').toggleClass('on');
+        })
+        
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
         });
-
         
-        $userWallet.change(function(){
+        $userWallet.on('change',function(){
             var val = $(this).val();
             val = parseInt(val);
             $(this).val(val);
@@ -215,9 +214,7 @@
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);
 
         });
-        var slideUp = function (e) {
-            $('.js_slide_layer').toggleClass('on');
-        }
+        
     });
 
 </script>
