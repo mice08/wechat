@@ -149,7 +149,7 @@
 </div>
 <%} %>
 
-<script src="scripts/zepto.min.js"></script>
+<script src="scripts/zepto.min.js?v=2"></script>
 <script src="scripts/countdown.js?v=1"></script>
 <script>
     $(function () {
