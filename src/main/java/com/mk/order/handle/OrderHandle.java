@@ -24,6 +24,8 @@ public class OrderHandle {
 
         //
         String startdateday = request.getParameter("startdateday");
+        System.out.println("startdateday:"+startdateday);
+
         if ("true".equals(debug)) {
             startdateday = "20160116";
         }
@@ -33,6 +35,8 @@ public class OrderHandle {
 
         //
         String enddateday = request.getParameter("enddateday");
+        System.out.println("enddateday:"+enddateday);
+
         if ("true".equals(debug)) {
             enddateday = "20160117";
         }
@@ -42,6 +46,8 @@ public class OrderHandle {
 
         //
         String hotelid = request.getParameter("hotelid");
+        System.out.println("hotelid:"+hotelid);
+
         if ("true".equals(debug)) {
             hotelid = "2230";
         }
@@ -51,6 +57,8 @@ public class OrderHandle {
 
         //
         String roomtypeid = request.getParameter("roomtypeid");
+        System.out.println("roomtypeid:"+roomtypeid);
+
         if ("true".equals(debug)) {
             roomtypeid = "29885";
         }
@@ -60,6 +68,8 @@ public class OrderHandle {
 
         //
         String timeintervalstart = request.getParameter("timeintervalstart");
+        System.out.println("timeintervalstart:"+timeintervalstart);
+
         if ("true".equals(debug)) {
             timeintervalstart = "7";
         }
@@ -69,6 +79,8 @@ public class OrderHandle {
 
         //
         String timeintervalend = request.getParameter("timeintervalend");
+        System.out.println("timeintervalend:"+timeintervalend);
+
         if ("true".equals(debug)) {
             timeintervalend = "19";
         }
@@ -77,6 +89,8 @@ public class OrderHandle {
         }
 
         String  timeintervaltype= request.getParameter("timeintervaltype");
+        System.out.println("timeintervaltype:"+timeintervaltype);
+
         if ("true".equals(debug)) {
             timeintervaltype = "1";
         }
@@ -86,6 +100,8 @@ public class OrderHandle {
 
         //
         String pricetype = request.getParameter("pricetype");
+        System.out.println("pricetype:"+pricetype);
+
         if ("true".equals(debug)) {
             pricetype = "2";
         }
@@ -103,6 +119,7 @@ public class OrderHandle {
                 break;
             }
         }
+        System.out.println("token:"+token);
 
         if ("true".equals(debug)) {
             token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
@@ -116,10 +133,13 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             userlongitude = "121";
         }
+        System.out.println("userlongitude:"+userlongitude);
+
         String userlatitude = request.getParameter("userlatitude");
         if ("true".equals(debug)) {
             userlatitude = "31";
         }
+        System.out.println("userlatitude:"+userlatitude);
 
         //
         HashMap<String, String> parmeter = new HashMap();
@@ -143,11 +163,19 @@ public class OrderHandle {
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
         parmeter.put("callversion", "3.5");
 
+        System.out.println(123);
+
+
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
+        System.out.println("url:"+url);
+
         String  backStr = "";
         try{
              backStr = SmsHttpClient.post(url, parmeter);
+
+            System.out.println("backStr:"+backStr);
+
         }catch(Exception e ){
 
             return null;
