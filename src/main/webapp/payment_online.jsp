@@ -164,6 +164,7 @@
         });
         
         $('.back-icon').tap(function(){
+            alert(1234);
             history.go(-1);
         })
 
