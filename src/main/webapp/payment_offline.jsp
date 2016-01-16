@@ -117,7 +117,7 @@
 <script src="scripts/zepto.min.js"></script>
 <script src="scripts/countdown.js"></script>
 <script>
-
+    var  orderid = ${orderid};
     $(function () {
         countdomn.init({
             time: ${timeouttime},
