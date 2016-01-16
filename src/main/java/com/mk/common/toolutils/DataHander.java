@@ -29,6 +29,12 @@ public class DataHander {
             if (null != jsonArray) {
                 JSONObject jso = jsonArray.getJSONObject(0);
                 if (null != jso && jso.containsKey(key)) {
+                    if(StringUtils.isEmpty(jso.getString(key))){
+                        if (StringUtils.isNotEmpty(resultDefault)) {
+                            result = resultDefault;
+                        }
+                        return  result;
+                    }
                     return jso.getString(key);
                 }
             }

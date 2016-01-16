@@ -61,8 +61,8 @@
             <form id="userInfo_form" method="post" name="userInfo_form">
                 <div class="h-person bg-white">
                     <ul class="p-items">
-                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input" placeholder="入住人" value="${contacts}"></li>
-                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input" placeholder="联系电话" value="${contactsphone}"></li>
+                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"></li>
+                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"></li>
                     </ul>
                 </div>
             </form>
@@ -146,6 +146,7 @@
                 alert("请输入手机号。");
                 return;
             }
+
 
             var modifyOrd = {
                 orderid: orderid,
