@@ -87,7 +87,7 @@
                     <div class="use-package">
                         使用红包<span class="u-p-tip">（红包余额：￥${balance}）</span>
                     </div>
-                    <input type="tel" name="walletcost" class="u-p-input  js_order_wallet"/>
+                    <input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
@@ -108,7 +108,8 @@
 </div>
 <footer class="footer bg-white row" style="width:100%;">
     <div class="col">
-        还需支付：<span class="orange f-cost">￥${onlinepay}</span>
+        还需支付：<span id="all_cost" class="orange ">
+            ￥${onlinepay}</span>
     </div>
     <div class="col">
         <a href="javascript:;" class="js_slideUp">
@@ -132,7 +133,9 @@
             <p class="d-gray">优惠</p>
             <div class="row row-no-padding gray">
                 <div class="col">红包</div>
-                <div class="col text-right">￥${walletcost}</div>
+                <div class="col text-right">
+                    ￥<span id="wallet-layer">${walletcost}</span>
+                </div>
             </div>
         </li>
     </ul>
@@ -149,11 +152,15 @@
 <script src="scripts/zepto.min.js"></script>
 <script src="scripts/countdown.js"></script>
 <script>
-    var  orderid = ${orderid};
     $(function () {
-        var minUserCost = Math.min(${balance},${maxuserwalletcost});
+        var orderid = '${orderid}';
+        var minUserCost = parseInt(Math.min('${balance}','${maxuserwalletcost}'));
+        var allCost = parseInt('${onlinepay}')
+        var $userWallet = $("#user-wallet");
+        var $walletLayer = $("#wallet-layer");
+        var $allCost = $("#all_cost");
         countdomn.init({
-            time: ${timeouttime},
+            time: parseInt('${timeouttime}'),
             onStop: function (data) {
                 // 倒计时停止时触发
             },
@@ -174,7 +181,14 @@
             $(this).toggleClass('on');
         });
 
-        $('.js_order_wallet').val(minUserCost);
+        $userWallet.val(minUserCost);
+        $userWallet.change(function(){
+            var val = $(this).val();
+            val = parseInt(val);
+            $(this).val(val);
+            $allCost.val('￥'+(allCost - val));
+            $walletLayer.val(val);
+        });
 
         $('.js_submit_order').tap(function (event) {
             var contact = $('.js_order_concact').val();
@@ -192,23 +206,15 @@
                 alert("红包金额超限!");
                 return;
             }
-            var modifyOrd = {
-                orderid: orderid,
-                contacts: $.trim(contact),
-                contactsphone: $.trim(phone)
-            };
 
-            alert("准备提交.");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);
 
         });
         var slideUp = function (e) {
-            var $target = $(e.target);
             $('.js_slide_layer').toggleClass('on');
         }
-
     });
 
 </script>
