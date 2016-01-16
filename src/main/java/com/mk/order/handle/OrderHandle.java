@@ -191,6 +191,7 @@ public class OrderHandle {
         }
         parmeter.put("ordertype", ordertype);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
+        parmeter.put("ordermethod", CallMethodEnum.WEIXIN.getId());
         parmeter.put("callversion", "3.5");
 
         System.out.println(123);
@@ -267,6 +268,9 @@ public class OrderHandle {
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
+
+
+
 
             return object;
         }
