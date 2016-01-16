@@ -297,7 +297,7 @@ public class OrderHandle {
             return null;
         }
         ;
-        request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0");
+        request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0"));
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
         }
