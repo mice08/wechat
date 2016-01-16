@@ -182,7 +182,7 @@
             $(this).toggleClass('on');
         });
 
-        $userWallet.val(minUserCost);
+        
         $userWallet.change(function(){
             var val = $(this).val();
             val = parseInt(val);
@@ -190,7 +190,9 @@
             $allCost.val('￥'+(allCost - val));
             $walletLayer.val(val);
         });
-
+        
+        $userWallet.val(minUserCost).change();
+        
         $('.js_submit_order').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
