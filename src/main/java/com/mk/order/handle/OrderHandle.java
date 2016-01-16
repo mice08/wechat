@@ -282,6 +282,8 @@ public class OrderHandle {
             return null;
         }
         HashMap hmap = new HashMap();
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+
         hmap.put("token", token);
         hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
