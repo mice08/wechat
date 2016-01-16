@@ -39,8 +39,9 @@
 </head>
 <body>
 
-<header class="header"><a class="back-icon"
-                          href="javascript:;"></a> <span class="title brown">支付订单</span></header>
+<header class="header">
+    <a class="back-icon"  href="javascript:;"></a> <span class="title brown">支付订单</span>
+</header>
 <%
     if (bl) {
 %>
@@ -66,16 +67,15 @@
         <form id="userInfo_form" method="post" name="userInfo_form">
             <div class="h-person bg-white">
                 <ul class="p-items">
-                    <li><span class="item-left">入住人</span><input type="text" name="username"
-                                                                 class="i-p-input js_order_concact" placeholder="入住人"
-                                                                 value="${contacts}"/>
+                    <li>
+                        <span class="item-left">入住人</span>
+                        <input type="text" name="username" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"/>
                     </li>
-                    <li><span class="item-left">手机号</span><input type="tel" name="usermobile"
-                                                                 class="i-p-input js_order_phone" placeholder="联系电话"
-                                                                 value="${contactsphone}"/>
+                    <li>
+                        <span class="item-left">手机号</span>
+                        <input type="tel" name="usermobile" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"/>
                     </li>
                 </ul>
-
             </div>
             <div class="discount-items">
                 <div class="row discount-title d-gray">
@@ -96,9 +96,12 @@
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
             <ul class="pay-item bg-white">
-                <li><i class="icon wx-icon"></i><span>微信支付</span><span
-                        class="u-p-tip gray"></span> <a href="javascript:;"
-                                                         class="icon check-icon on js_pay_check"></a></li>
+                <li>
+                    <i class="icon wx-icon"></i>
+                    <span>微信支付</span>
+                    <span class="u-p-tip gray"></span> 
+                    <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
+                </li>
             </ul>
             <div class="pay-tips">
                 <span>温馨提示：</span>
@@ -121,7 +124,6 @@
 </footer>
 <div class="mask_layer js_slide_layer"></div>
 <div class="footer_layer bg-white js_slide_layer">
-
     <ul class="p-items">
         <li>
             <p class="d-gray">房费</p>
@@ -172,11 +174,11 @@
         
         $('.back-icon').tap(function(){
             history.go(-1);
-        })
+        });
 
         $('.js_slideUp').tap(function (event) {
             $('.js_slide_layer').toggleClass('on');
-        })
+        });
         
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
@@ -184,7 +186,7 @@
         
         $userWallet.on('change',function(){
             var val = $(this).val();
-            val = parseInt(val);
+            val = Math.abs(parseInt(val));
             $(this).val(val);
             $allCost.text('￥'+(allCost - val));
             $walletLayer.text(val);
