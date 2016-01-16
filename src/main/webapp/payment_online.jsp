@@ -161,7 +161,10 @@
                 $('.js_time_ss').text(data.s);
             }
         });
-
+        
+        $('back-icon').tap(function(){
+            history.go(-1);
+        })
 
         $('.js_slideUp').tap(function (event) {
             slideUp(event);
