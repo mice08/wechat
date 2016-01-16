@@ -185,7 +185,7 @@
         });
         
         $userWallet.on('change',function(){
-            var val = $(this).val();
+            var val = $(this).val()||'0';
             val = Math.abs(parseInt(val));
             if(val>minUserCost){
                 val = minUserCost;

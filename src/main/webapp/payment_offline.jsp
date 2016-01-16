@@ -35,7 +35,6 @@
     <title>到店支付</title>
 </head>
 <body>
-
     <header class="header">
         <a class="back-icon" href="javascript:;"></a>
         <span class="title brown">支付订单</span>
@@ -81,7 +80,7 @@
         <div class="col">
             还需支付：<span class="orange f-cost">￥${onlinepay}</span>
         </div>
-        <div class="col">
+        <div class="col text-cut">
             <a href="javascript:;" class="js_slideUp">
                 明细<i class="icon up-icon"></i>
             </a>
@@ -90,7 +89,6 @@
     </footer>
     <div class="mask_layer js_slide_layer"></div>
     <div class="footer_layer bg-white js_slide_layer">
-
         <ul class="p-items">
             <li>
                 <p class="d-gray">房费</p>
@@ -118,7 +116,7 @@
 <%} %>
 
 <script src="scripts/zepto.min.js?v=3"></script>
-<script src="scripts/countdown.js"></script>
+<script src="scripts/countdown.js?v=2"></script>
 <script>
     var  orderid = ${orderid};
     $(function () {
@@ -155,13 +153,6 @@
                 return;
             }
 
-
-            var modifyOrd = {
-                orderid: orderid,
-                contacts: $.trim(contact),
-                contactsphone: $.trim(phone)
-            };
-            alert("kaishitijiaodingdan");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);
