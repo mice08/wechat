@@ -184,7 +184,7 @@
             $(this).toggleClass('on');
         });
         
-        $userWallet.on('change keyup',function(){
+        $userWallet.on('change',function(){
             var val = $(this).val();
             val = Math.abs(parseInt(val));
             if(val>minUserCost){
