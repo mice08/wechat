@@ -472,12 +472,12 @@ public class OrderHandle {
             }
             JSONObject json = jsonPay.getJSONObject("weinxinpay");
             String appid = json.getString("appid");
-            String appkey = json.getString("appkey");
             String noncestr = json.getString("noncestr");
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String sign = json.getString("sign");
+            String key = "WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7";
+            String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
             // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
@@ -503,6 +503,7 @@ public class OrderHandle {
             request.setAttribute("prepayid", prepayid);
             request.setAttribute("package", packagevalue);
             request.setAttribute("packagevalue", packagevalue);
+
             request.setAttribute("paySign", sign);
             request.setAttribute("orderDetailUrl", "");
             return "success";
@@ -510,6 +511,10 @@ public class OrderHandle {
 
     }
 
+    public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key){
+        String keys = "appId="+appId+"&nonceStr="+noncestr + "&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+timestamp+"&key="+key;
+        return MD5.MD5Encode(keys).toUpperCase();
+    }
 
     public static void main(String[] args) {
         String url = "http://huidu.imike.cn/ots/order/create";
