@@ -343,7 +343,7 @@ public class OrderHandle {
     }
 
     public String modify(HttpServletRequest request) {
-
+        System.out.println("修改订单开始.");
         String orderId = request.getParameter("orderid");
         String userName = request.getParameter("username");
         String userMobile = request.getParameter("usermobile");
@@ -391,6 +391,8 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         }
+
+        token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         if (StringUtils.isEmpty(token)) {
             return "error";
         }
@@ -398,11 +400,13 @@ public class OrderHandle {
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
+        System.out.println("修改订单开始请求");
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
         if (StringUtils.isEmpty(backStr)) {
             return "error";
         }
+        System.out.println("修改订单开始请求backStr:"+backStr);
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {

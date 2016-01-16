@@ -39,8 +39,9 @@
 </head>
 <body>
 
-<header class="header"><a class="back-icon"
-                          href="javascript:;"></a> <span class="title brown">支付订单</span></header>
+<header class="header">
+    <a class="back-icon"  href="javascript:;"></a> <span class="title brown">支付订单</span>
+</header>
 <%
     if (bl) {
 %>
@@ -66,16 +67,15 @@
         <form id="userInfo_form" method="post" name="userInfo_form">
             <div class="h-person bg-white">
                 <ul class="p-items">
-                    <li><span class="item-left">入住人</span><input type="text" name="username"
-                                                                 class="i-p-input js_order_concact" placeholder="入住人"
-                                                                 value="${contacts}"/>
+                    <li>
+                        <span class="item-left">入住人</span>
+                        <input type="text" name="username" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"/>
                     </li>
-                    <li><span class="item-left">手机号</span><input type="tel" name="usermobile"
-                                                                 class="i-p-input js_order_phone" placeholder="联系电话"
-                                                                 value="${contactsphone}"/>
+                    <li>
+                        <span class="item-left">手机号</span>
+                        <input type="tel" name="usermobile" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"/>
                     </li>
                 </ul>
-
             </div>
             <div class="discount-items">
                 <div class="row discount-title d-gray">
@@ -87,7 +87,7 @@
                     <div class="use-package">
                         使用红包<span class="u-p-tip">（红包余额：￥${balance}）</span>
                     </div>
-                    <input type="tel" name="walletcost" class="u-p-input  js_order_wallet"/>
+                    <input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
@@ -96,9 +96,12 @@
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
             <ul class="pay-item bg-white">
-                <li><i class="icon wx-icon"></i><span>微信支付</span><span
-                        class="u-p-tip gray"></span> <a href="javascript:;"
-                                                         class="icon check-icon on js_pay_check"></a></li>
+                <li>
+                    <i class="icon wx-icon"></i>
+                    <span>微信支付</span>
+                    <span class="u-p-tip gray"></span> 
+                    <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
+                </li>
             </ul>
             <div class="pay-tips">
                 <span>温馨提示：</span>
@@ -109,9 +112,10 @@
 </div>
 <footer class="footer bg-white row" style="width:100%;">
     <div class="col">
-        还需支付：<span class="orange f-cost">￥${onlinepay}</span>
+        还需支付：<span id="all_cost" class="orange ">
+            ￥${onlinepay}</span>
     </div>
-    <div class="col">
+    <div class="col text-right">
         <a href="javascript:;" class="js_slideUp">
             明细<i class="icon up-icon"></i>
         </a>
@@ -120,7 +124,6 @@
 </footer>
 <div class="mask_layer js_slide_layer"></div>
 <div class="footer_layer bg-white js_slide_layer">
-
     <ul class="p-items">
         <li>
             <p class="d-gray">房费</p>
@@ -133,7 +136,9 @@
             <p class="d-gray">优惠</p>
             <div class="row row-no-padding gray">
                 <div class="col">红包</div>
-                <div class="col text-right">￥${walletcost}</div>
+                <div class="col text-right">
+                    ￥<span id="wallet-layer">${walletcost}</span>
+                </div>
             </div>
         </li>
     </ul>
@@ -141,20 +146,23 @@
 <%
 } else {
 %>
-
 <div>
     <h1>请求不合法</h1>
 </div>
 <%} %>
 
-<script src="scripts/zepto.min.js"></script>
-<script src="scripts/countdown.js"></script>
+<script src="scripts/zepto.min.js?v=2"></script>
+<script src="scripts/countdown.js?v=1"></script>
 <script>
-    var  orderid = ${orderid};
     $(function () {
-        var minUserCost = Math.min(${balance},${maxuserwalletcost});
+        var minUserCost = parseInt(Math.min('${balance}','${maxuserwalletcost}'));
+        var allCost = parseInt('${onlinepay}')
+        var $userWallet = $("#user-wallet");
+        var $walletLayer = $("#wallet-layer");
+        var $allCost = $("#all_cost");
+        
         countdomn.init({
-            time: ${timeouttime},
+            time: parseInt('${timeouttime}'),
             onStop: function (data) {
                 // 倒计时停止时触发
             },
@@ -166,17 +174,26 @@
         
         $('.back-icon').tap(function(){
             history.go(-1);
-        })
+        });
 
         $('.js_slideUp').tap(function (event) {
-            slideUp(event);
+            $('.js_slide_layer').toggleClass('on');
         });
+        
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
         });
-
-        $('.js_order_wallet').val(minUserCost);
-
+        
+        $userWallet.on('change keyup',function(){
+            var val = $(this).val();
+            val = Math.abs(parseInt(val));
+            $(this).val(val);
+            $allCost.text('￥'+(allCost - val));
+            $walletLayer.text(val);
+        });
+        
+        $userWallet.val(minUserCost).change();
+        
         $('.js_submit_order').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
@@ -188,28 +205,18 @@
                 alert("请输入手机号。");
                 return;
             }
-            var userWallet = $('.js_order_wallet').val();
+            var userWallet = $userWallet.val();
             if (userWallet > minUserCost) {
                 alert("红包金额超限!");
                 return;
             }
-            var modifyOrd = {
-                orderid: orderid,
-                contacts: $.trim(contact),
-                contactsphone: $.trim(phone)
-            };
 
-            alert("准备提交.");
             $('#userInfo_form').submit();
 
             //this.onBridgeReady(i.weinxinpay.appid, i.weinxinpay.timestamp, i.weinxinpay.noncestr, i.weinxinpay.packagevalue, 'MD5', i.weinxinpay.sign);
 
         });
-        var slideUp = function (e) {
-            var $target = $(e.target);
-            $('.js_slide_layer').toggleClass('on');
-        }
-
+        
     });
 
 </script>
