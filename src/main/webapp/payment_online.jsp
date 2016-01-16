@@ -161,7 +161,10 @@
                 $('.js_time_ss').text(data.s);
             }
         });
-
+        
+        $('back-icon').tap(function(){
+            history.go(-1);
+        })
 
         $('.js_slideUp').tap(function (event) {
             slideUp(event);
@@ -181,9 +184,9 @@
                 return;
             }
             var userWallet = $('.js_order_wallet').val();
-            var totalWallet = $('.js_order_totalWallet').val();
-            if (userWallet > totalWallet) {
-                alert("红包金额不对。");
+            var maxuser = Math.min(${balance},${maxuserwalletcost});
+            if (userWallet > maxuser) {
+                alert("红包金额超限!");
                 return;
             }
             var modifyOrd = {
