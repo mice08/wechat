@@ -119,9 +119,6 @@ public class OrderHandle {
 
 
 
-
-
-
         //
         String pricetype = request.getParameter("pricetype");
         System.out.println("pricetype:"+pricetype);
@@ -237,7 +234,9 @@ public class OrderHandle {
         if (StringUtils.isNotEmpty(backStr)) {
             JSONObject object = this.parseObject(backStr);
 
-
+            if(!"true".equals(object.getString("success"))){
+                  return null;
+            }
 
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
