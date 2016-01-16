@@ -277,7 +277,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282376";
+            orderId = "1282388";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -339,7 +339,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderid = "1282376";
+            orderid = "1282388";
         }
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
@@ -347,7 +347,28 @@ public class OrderHandle {
         parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
-        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeterPay);
+        //token
+        Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            return "error";
+        }
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if ("token".equals(cookies[i].getName())) {
+                token = cookies[i].getValue();
+                break;
+            }
+        }
+        if ("true".equals(debug)) {
+            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        }
+        if (StringUtils.isEmpty(token)) {
+            return "error";
+        }
+
+        parmeterPay.put("token", token);
+
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
         if (StringUtils.isEmpty(backStr)) {
             return "error";
         }
