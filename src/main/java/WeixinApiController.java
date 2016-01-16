@@ -1,9 +1,7 @@
-
 import api.CallBackCityApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
-import sun.plugin.javascript.navig.JSType;
 
 public class WeixinApiController extends ApiController {
 

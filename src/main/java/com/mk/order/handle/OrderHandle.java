@@ -43,7 +43,7 @@ public class OrderHandle {
         //
         String hotelid = request.getParameter("hotelid");
         if ("true".equals(debug)) {
-            hotelid = "2803";
+            hotelid = "2230";
         }
         if (StringUtils.isEmpty(hotelid)) {
             return null;
@@ -52,7 +52,7 @@ public class OrderHandle {
         //
         String roomtypeid = request.getParameter("roomtypeid");
         if ("true".equals(debug)) {
-            roomtypeid = "29948";
+            roomtypeid = "29840";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             return null;
@@ -141,6 +141,7 @@ public class OrderHandle {
         try{
              backStr = SmsHttpClient.post(url, parmeter);
         }catch(Exception e ){
+
             return null;
         }
 
@@ -267,7 +268,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282328";
+            orderId = "1282358";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -329,7 +330,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderid = "1282328";
+            orderid = "1282358";
         }
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
