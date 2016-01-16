@@ -367,7 +367,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282837";
+            orderId = "1282844";
             //
             checkinuser = new ArrayList<Map<String, String>>();
             checkinusermap = new HashMap<String, String>();
@@ -409,7 +409,6 @@ public class OrderHandle {
             token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         }
 
-        token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         if (StringUtils.isEmpty(token)) {
             return "error";
         }
