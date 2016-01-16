@@ -22,6 +22,43 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
 
+        String ordertype = request.getParameter("ordertype");
+        System.out.println("ordertype:"+ordertype);
+
+        if ("true".equals(debug)) {
+            ordertype = "7";
+        }
+        if (StringUtils.isEmpty(ordertype)) {
+            return null;
+        }
+
+        String timeintervalstart ="";
+        String  timeintervalend = "";
+        //预付
+        if(OrderTypenum.YF.getId().equals(ordertype)){
+            timeintervalstart = request.getParameter("timeintervalstart");
+            System.out.println("timeintervalstart:"+timeintervalstart);
+
+            if ("true".equals(debug)) {
+                timeintervalstart = "7";
+            }
+            if (StringUtils.isEmpty(timeintervalstart)) {
+                return null;
+            }
+
+            //
+            timeintervalend = request.getParameter("timeintervalend");
+            System.out.println("timeintervalend:"+timeintervalend);
+
+            if ("true".equals(debug)) {
+                timeintervalend = "19";
+            }
+            if (StringUtils.isEmpty(timeintervalend)) {
+                return null;
+            }
+
+        }
+
         //
         String startdateday = request.getParameter("startdateday");
         System.out.println("startdateday:"+startdateday);
@@ -67,26 +104,9 @@ public class OrderHandle {
         }
 
         //
-        String timeintervalstart = request.getParameter("timeintervalstart");
-        System.out.println("timeintervalstart:"+timeintervalstart);
 
-        if ("true".equals(debug)) {
-            timeintervalstart = "7";
-        }
-        if (StringUtils.isEmpty(timeintervalstart)) {
-            return null;
-        }
 
-        //
-        String timeintervalend = request.getParameter("timeintervalend");
-        System.out.println("timeintervalend:"+timeintervalend);
 
-        if ("true".equals(debug)) {
-            timeintervalend = "19";
-        }
-        if (StringUtils.isEmpty(timeintervalend)) {
-            return null;
-        }
 
         String  timeintervaltype= request.getParameter("timeintervaltype");
         System.out.println("timeintervaltype:"+timeintervaltype);
@@ -106,15 +126,7 @@ public class OrderHandle {
             pricetype = "2";
         }
 
-        String ordertype = request.getParameter("ordertype");
-        System.out.println("ordertype:"+ordertype);
 
-        if ("true".equals(debug)) {
-            ordertype = "7";
-        }
-        if (StringUtils.isEmpty(ordertype)) {
-            return null;
-        }
 
 
         //token
@@ -283,7 +295,7 @@ public class OrderHandle {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
-        HashMap hmap = new HashMap();   
+        HashMap hmap = new HashMap();
 
         hmap.put("token", token);
         hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
