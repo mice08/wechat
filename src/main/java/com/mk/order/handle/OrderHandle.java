@@ -199,9 +199,9 @@ public class OrderHandle {
 
             request.setAttribute("begintime",begintimeOri);
             request.setAttribute("endtime", endtimeOri);
-            request.setAttribute("endtime", DataHander.checkStringNull(object,"endtime",""));
+
             try{
-                request.setAttribute("orderday", DateUtil.daysBetween(DataHander.checkStringNull(object,"endtime",""),DataHander.checkStringNull(object,"begintime",""),"yyyyMMdd"));
+                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri,begintimeOri,"yyyyMMdd"));
             }catch (Exception e){
                 e.printStackTrace();
             }
