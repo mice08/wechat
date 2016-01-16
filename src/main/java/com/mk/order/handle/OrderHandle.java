@@ -292,7 +292,7 @@ public class OrderHandle {
         if(null==jso){
             return null;
         }
-        ;
+        
         request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0"));
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
