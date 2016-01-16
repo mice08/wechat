@@ -19,6 +19,7 @@ body{
 }
 div.main{
     position: relative;
+    padding-bottom: 5.6rem;
 }
 a{
     text-decoration: none;
@@ -85,6 +86,7 @@ a{
     position: absolute;
     left:2rem;
 }
+
 div.main .t-tips{
     height: 3.6rem;
     line-height: 3.6rem;
@@ -247,10 +249,8 @@ footer.footer{
     z-index: 9999;
 }
 footer.footer div{
-    display: inline-block;
-     color:#616161;
+    color:#616161;
     font-size: 1.3rem;
-
 }
 footer.footer .order-btn{
     width: 8rem;
