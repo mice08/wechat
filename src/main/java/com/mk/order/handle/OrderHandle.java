@@ -220,24 +220,8 @@ public class OrderHandle {
 
         if (StringUtils.isNotEmpty(backStr)) {
             JSONObject object = this.parseObject(backStr);
-            Object orderid = object.get("orderid");
-            Object hotelname = object.get("hotelname");
-            Object begintime = object.get("begintime");
-            Object endtime = object.get("endtime");
-            Object contacts = object.get("contacts");
-            Object contactsphone = object.get("contactsphone");
-            Object usermessage = object.get("usermessage");
-            Object onlinepay = object.get("onlinepay");
-            Object payprice = object.get("payprice");
-            Object redpacket = object.get("redpacket");
-            Object timeouttime = object.get("timeouttime");
 
 
-            //roomorder
-            JSONArray roomOrders = object.getJSONArray("roomorder");
-            JSONObject roomOrder = roomOrders.getJSONObject(0);
-            Object orderday = roomOrder.get("orderday");
-            Object roomtypename = roomOrder.get("roomtypename");
 
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
@@ -262,7 +246,7 @@ public class OrderHandle {
             request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
             request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
-            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
