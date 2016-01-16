@@ -252,7 +252,7 @@ public class OrderHandle {
             request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(object,"usermessage",""));
             request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price",""));
-            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost",""));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
             request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
@@ -297,7 +297,7 @@ public class OrderHandle {
             return null;
         }
         ;
-        request.setAttribute("balance", jso.getString("balance"));
+        request.setAttribute("balance", DataHander.checkStringNull(jso,"balance","0");
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
         }
