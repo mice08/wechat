@@ -12,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class OrderHandle {
@@ -350,7 +352,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282388";
+            orderId = "2448994";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -365,6 +367,7 @@ public class OrderHandle {
         parmeter.put("usermobile", userMobile);
         parmeter.put("orderid", orderId);
         parmeter.put("walletcost", walletCost);
+        parmeter.put("ordertype",OrderTypenum.YF.getId());
 
         //token
         Cookie[] cookies = request.getCookies();
@@ -394,12 +397,12 @@ public class OrderHandle {
             return "error";
         }
 
-//        JSONObject jsonOrder = JSONObject.parseObject(backStr);
-//        if (!"true".equals(jsonOrder.getString("success"))) {
-//            return "error";
-//        } else {
-//
-//        }
+        JSONObject jsonOrder = JSONObject.parseObject(backStr);
+        if (!"true".equals(jsonOrder.getString("success"))) {
+            return "error";
+        } else {
+
+        }
 
         //
         request.setAttribute("orderid", orderId);
@@ -412,7 +415,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderid = "1282388";
+            orderid = "1282591";
         }
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
@@ -433,7 +436,7 @@ public class OrderHandle {
             }
         }
         if ("true".equals(debug)) {
-            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+            token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
         if (StringUtils.isEmpty(token)) {
             return "error";
@@ -457,14 +460,34 @@ public class OrderHandle {
             String appkey = json.getString("appkey");
             String noncestr = json.getString("noncestr");
             String packagevalue = json.getString("packagevalue");
-            String partnerid = json.getString("partnerid");
+            String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
             String sign = json.getString("sign");
+
+            //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
+            // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
+
+            StringBuilder stringBuilder = new StringBuilder()
+                    .append("appid=").append(appid)
+                    .append("&noncestr=").append(noncestr)
+                    .append("&package=WAP")
+                    .append("&prepayid=").append(prepayid)
+                    .append("&sign=").append(sign)
+                    .append("&timestamp=").append(timestamp);
+
+            try {
+                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
+                request.setAttribute("url", "weixin://wap/pay?" + url);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
             request.setAttribute("nonceStr", noncestr);
-            request.setAttribute("packageValue", packagevalue);
+            request.setAttribute("prepayid", prepayid);
+            request.setAttribute("package", packagevalue);
+            request.setAttribute("packagevalue", packagevalue);
             request.setAttribute("paySign", sign);
             request.setAttribute("orderDetailUrl", "");
             return "success";

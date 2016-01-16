@@ -22,6 +22,9 @@
     }
     //红包
     ho.getUserWXwallet(request);
+
+    Long random = new Random().nextLong();
+    request.setAttribute("random",random);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -31,7 +34,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
-    <link rel="stylesheet" type="text/css" href="styles/pay.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/pay.css?${random}"/>
     <title>在线支付</title>
 </head>
 <body>
