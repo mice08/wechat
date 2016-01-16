@@ -184,7 +184,7 @@
             $(this).toggleClass('on');
         });
         
-        $userWallet.on('change',function(){
+        $userWallet.on('change keyup',function(){
             var val = $(this).val();
             val = Math.abs(parseInt(val));
             $(this).val(val);
