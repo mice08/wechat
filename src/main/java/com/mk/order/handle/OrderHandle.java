@@ -348,7 +348,7 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "2448994";
+            orderId = "1282609";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
@@ -410,9 +410,7 @@ public class OrderHandle {
         String orderid = (String)request.getAttribute("orderid");
         //
         String debug = UrlUtil.getValue(BaseData.debug);
-        if ("true".equals(debug)) {
-            orderid = "1282591";
-        }
+        //
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
         parmeterPay.put("paytype", OrderTypenum.YF.getId());
