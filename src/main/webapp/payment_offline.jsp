@@ -117,7 +117,7 @@
 </div>
 <%} %>
 
-<script src="scripts/zepto.min.js"></script>
+<script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js"></script>
 <script>
     var  orderid = ${orderid};

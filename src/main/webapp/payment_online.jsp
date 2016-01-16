@@ -151,7 +151,7 @@
 </div>
 <%} %>
 
-<script src="scripts/zepto.min.js?v=2"></script>
+<script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js?v=1"></script>
 <script>
     $(function () {
@@ -176,7 +176,7 @@
             history.go(-1);
         });
 
-        $('#show-detail').click(function (event) {
+        $('#show-detail').tap(function (event) {
             $('.js_slide_layer').toggleClass('on');
         });
         
@@ -197,7 +197,7 @@
         
         $userWallet.val(minUserCost).change();
         
-        $('#btn-submit').click(function (event) {
+        $('#btn-submit').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
                 alert("请输入联系人。");
