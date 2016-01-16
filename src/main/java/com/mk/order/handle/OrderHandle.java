@@ -35,6 +35,7 @@ public class OrderHandle {
         String timeintervalstart ="";
         String  timeintervalend = "";
         String  timeintervaltype="";
+        System.out.println("leixing:"+OrderTypenum.YF.getId().equals(ordertype));
         //预付
         if(OrderTypenum.YF.getId().equals(ordertype)){
             timeintervalstart = request.getParameter("timeintervalstart");
