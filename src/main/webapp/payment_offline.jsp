@@ -55,7 +55,7 @@
                 </div>
                 <div class="h-type row">
                     <div class="col text-left">${roomtypename}</div>
-                    <div class="col text-right">房款：<span class="orange">${totalprice}</span></div>
+                    <div class="col text-right">房款：<span class="orange">${price}</span></div>
                 </div>
             </div>
             <div class="h-person bg-white">
@@ -72,7 +72,37 @@
             </div>
         </section>
     </div>
+    <footer class="footer bg-white row" style="width:100%;">
+        <div class="col">
+            还需支付：<span class="orange f-cost">￥${onlinepay}</span>
+        </div>
+        <div class="col">
+            <a href="javascript:;" class="js_slideUp">
+                明细<i class="icon up-icon"></i>
+            </a>
+            <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
+        </div>
+    </footer>
+    <div class="mask_layer js_slide_layer"></div>
+    <div class="footer_layer bg-white js_slide_layer">
 
+        <ul class="p-items">
+            <li>
+                <p class="d-gray">房费</p>
+                <div class="row row-no-padding gray">
+                    <div class="col">${hotelname}</div>
+                    <div class="col text-right">￥${payprice}</div>
+                </div>
+            </li>
+            <li>
+                <p class="d-gray">优惠</p>
+                <div class="row row-no-padding gray">
+                    <div class="col">红包</div>
+                    <div class="col text-right">￥${redpacket}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
 <%
 } else {
 %>
