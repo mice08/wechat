@@ -348,6 +348,7 @@ public class OrderHandle {
         String userName = request.getParameter("username");
         String userMobile = request.getParameter("usermobile");
         String walletCost = request.getParameter("walletcost");
+        String ordertype = request.getParameter("ordertype");
 
         if (StringUtils.isEmpty(orderId)) {
             return "toCreate";
@@ -356,10 +357,11 @@ public class OrderHandle {
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "2448994";
+            orderId = "1282609";
             userName = "userNameTest";
             userMobile = "123456789";
             walletCost = "10";
+            ordertype="1";
         }
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
@@ -371,7 +373,7 @@ public class OrderHandle {
         parmeter.put("usermobile", userMobile);
         parmeter.put("orderid", orderId);
         parmeter.put("walletcost", walletCost);
-        parmeter.put("ordertype",OrderTypenum.YF.getId());
+        parmeter.put("ordertype",ordertype);
 
         //token
         Cookie[] cookies = request.getCookies();
@@ -410,20 +412,20 @@ public class OrderHandle {
 
         //
         request.setAttribute("orderid", orderId);
+        request.setAttribute("ordertype",ordertype);
         return "success";
     }
 
     public String pay(HttpServletRequest request) {
 
         String orderid = (String)request.getAttribute("orderid");
+        String ordertype = (String)request.getAttribute("ordertype");
         //
         String debug = UrlUtil.getValue(BaseData.debug);
-        if ("true".equals(debug)) {
-            orderid = "1282591";
-        }
+        //
         HashMap parmeterPay = new HashMap();
         parmeterPay.put("orderid", orderid);
-        parmeterPay.put("paytype", OrderTypenum.YF.getId());
+        parmeterPay.put("paytype", ordertype);
         parmeterPay.put("onlinepaytype", PayTypeEnum.WECHAT.getId());
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
@@ -456,6 +458,9 @@ public class OrderHandle {
         if (!"true".equals(jsonPay.getString("success"))) {
             return "error";
         } else {
+            if (OrderTypenum.DF.getId().equals(ordertype)) {
+                return "success";
+            }
             if (!jsonPay.containsKey("weinxinpay")) {
                 return "error";
             }

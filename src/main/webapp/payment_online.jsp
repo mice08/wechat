@@ -91,6 +91,7 @@
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
+            <input type="hidden" name="ordertype"  value="1"/>
         </form>
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
