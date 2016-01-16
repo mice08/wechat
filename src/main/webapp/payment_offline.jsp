@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
     <link rel="stylesheet" type="text/css" href="styles/pay.css"/>
-    <title>在线支付</title>
+    <title>到店支付</title>
 </head>
 <body>
 
@@ -72,6 +72,7 @@
             </div>
         </section>
     </div>
+
 <%
 } else {
 %>
