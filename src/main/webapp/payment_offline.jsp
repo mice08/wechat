@@ -93,14 +93,14 @@
                 <p class="d-gray">房费</p>
                 <div class="row row-no-padding gray">
                     <div class="col">${hotelname}</div>
-                    <div class="col text-right">￥${payprice}</div>
+                    <div class="col text-right">￥${totalprice}</div>
                 </div>
             </li>
             <li>
                 <p class="d-gray">优惠</p>
                 <div class="row row-no-padding gray">
                     <div class="col">红包</div>
-                    <div class="col text-right">￥${redpacket}</div>
+                    <div class="col text-right">￥${walletcost}</div>
                 </div>
             </li>
         </ul>
