@@ -189,7 +189,16 @@ public class OrderHandle {
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"orderid","0"));
             request.setAttribute("hotelname",DataHander.checkStringNull(object,"hotelname",""));
-            request.setAttribute("begintime",DataHander.checkStringNull(object,"begintime",""));
+
+            //
+            String  begintimeOri = DataHander.checkStringNull(object,"begintime","");
+            begintimeOri=  DateUtil.getStrFormart(begintimeOri,"yyyyMMhh");
+
+            String  endtimeOri = DataHander.checkStringNull(object,"endtime","");
+            endtimeOri=  DateUtil.getStrFormart(endtimeOri,"yyyyMMhh");
+
+            request.setAttribute("begintime",begintimeOri);
+            request.setAttribute("endtime", endtimeOri);
             request.setAttribute("endtime", DataHander.checkStringNull(object,"endtime",""));
             try{
                 request.setAttribute("orderday", DateUtil.daysBetween(DataHander.checkStringNull(object,"endtime",""),DataHander.checkStringNull(object,"begintime",""),"yyyyMMdd"));
