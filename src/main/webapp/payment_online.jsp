@@ -204,7 +204,7 @@
                 alert("请输入手机号。");
                 return;
             }
-            var userWallet = $('.js_order_wallet').val();
+            var userWallet = $userWallet.val();
             if (userWallet > minUserCost) {
                 alert("红包金额超限!");
                 return;
