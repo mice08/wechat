@@ -116,10 +116,10 @@
             ￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" class="js_slideUp">
+        <a href="javascript:;" id="show-detail">
             明细<i class="icon up-icon"></i>
         </a>
-        <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
+        <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
     </div>
 </footer>
 <div class="mask_layer js_slide_layer"></div>
@@ -176,7 +176,7 @@
             history.go(-1);
         });
 
-        $('.js_slideUp').tap(function (event) {
+        $('#show-detail').click(function (event) {
             $('.js_slide_layer').toggleClass('on');
         });
         
@@ -187,6 +187,9 @@
         $userWallet.on('change keyup',function(){
             var val = $(this).val();
             val = Math.abs(parseInt(val));
+            if(val>minUserCost){
+                val = minUserCost;
+            }
             $(this).val(val);
             $allCost.text('￥'+(allCost - val));
             $walletLayer.text(val);
@@ -194,7 +197,7 @@
         
         $userWallet.val(minUserCost).change();
         
-        $('.js_submit_order').tap(function (event) {
+        $('#btn-submit').click(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
                 alert("请输入联系人。");
