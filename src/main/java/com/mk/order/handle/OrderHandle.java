@@ -46,9 +46,10 @@ public class OrderHandle {
             if ("true".equals(debug)) {
                 timeintervalstart = "7";
             }
-            if (StringUtils.isEmpty(timeintervalstart)) {
-                return null;
+            if ("undefined".equals(timeintervalstart)) {
+                timeintervalstart =  null;
             }
+
 
             //
             timeintervalend = request.getParameter("timeintervalend");
@@ -57,8 +58,8 @@ public class OrderHandle {
             if ("true".equals(debug)) {
                 timeintervalend = "19";
             }
-            if (StringUtils.isEmpty(timeintervalend)) {
-                return null;
+            if ("undefined".(timeintervalend)) {
+                timeintervalend = null;
             }
 
             timeintervaltype= request.getParameter("timeintervaltype");
