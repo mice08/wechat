@@ -65,6 +65,9 @@
                         <li><span class="item-left">手机号</span><input type="text" class="i-p-input" placeholder="联系电话" value="${contactsphone}"></li>
                     </ul>
                 </div>
+
+                <input type="hidden" name="orderid"  value="${orderid}"/>
+                <input type="hidden" name="ordertype"  value="2"/>
             </form>
             <div class="pay-items">
                 <div class="pay-tips">
