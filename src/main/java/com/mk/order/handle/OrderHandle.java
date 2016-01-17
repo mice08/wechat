@@ -297,6 +297,8 @@ public class OrderHandle {
             return null;
         }
         String token = null;
+        System.out.println("开始获取cookies");
+
         for (int i = 0; i < cookies.length; i++) {
             if ("token".equals(cookies[i].getName())) {
                 token = cookies[i].getValue();
@@ -304,6 +306,7 @@ public class OrderHandle {
             }
         }
         token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+        System.out.println("获取红包:token"+token);
 
         if (StringUtils.isEmpty(token)) {
             return null;
@@ -315,7 +318,12 @@ public class OrderHandle {
 
         //
         String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
+
+        System.out.println("获取红包:url"+url);
+
         String backStr = SmsHttpClient.post(url, hmap);
+        System.out.println("获取红包返回参数:backStr"+backStr);
+
         if(StringUtils.isEmpty(backStr)){
             return null;
         }
@@ -350,6 +358,8 @@ public class OrderHandle {
         String walletCost = request.getParameter("walletcost");
         String ordertype = request.getParameter("ordertype");
 
+        System.out.println("修改订单开始.orderId:"+orderId);
+
         if (StringUtils.isEmpty(orderId)) {
             return "toCreate";
         }
@@ -363,11 +373,14 @@ public class OrderHandle {
             walletCost = "10";
             ordertype="1";
         }
+        System.out.println("修改订单开始.ordertype:"+ordertype);
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
             return "error";
         }
         //
+        System.out.println("修改订单开始.walletCost:"+walletCost);
+
         HashMap parmeter = new HashMap();
         parmeter.put("username", userName);
         parmeter.put("usermobile", userMobile);
@@ -391,6 +404,8 @@ public class OrderHandle {
             token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         }
 
+        System.out.println("修改订单开始.token:"+token);
+
         token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         if (StringUtils.isEmpty(token)) {
             return "error";
@@ -399,9 +414,11 @@ public class OrderHandle {
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
-        System.out.println("修改订单开始请求");
+
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
+        System.out.println("修改订单开始请求backStr:"+backStr);
+
         if (StringUtils.isEmpty(backStr)) {
             return "error";
         }
@@ -424,6 +441,9 @@ public class OrderHandle {
 
         String orderid = (String)request.getAttribute("orderid");
         String ordertype = (String)request.getAttribute("ordertype");
+
+        System.out.println("修改订单开始请求orderid:"+orderid);
+
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         //
@@ -448,6 +468,9 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
+        token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        System.out.println("修改订单开始请求token:"+token);
+
         if (StringUtils.isEmpty(token)) {
             return "error";
         }
@@ -455,6 +478,8 @@ public class OrderHandle {
         parmeterPay.put("token", token);
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
+        System.out.println("修改订单开始请求backStr:"+backStr);
+
         if (StringUtils.isEmpty(backStr)) {
             return "error";
         }
