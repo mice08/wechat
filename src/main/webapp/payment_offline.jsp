@@ -1,28 +1,34 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.alibaba.fastjson.JSONObject" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
-
     boolean bl = true;
     OrderHandle ho = new OrderHandle();
-
+    System.out.println("初始化页面,准备执行修改!");
     //更新
     String m = ho.modify(request);
     //是否支付
     if ("error".equals(m)) {
-        request.getRequestDispatcher("500.jsp").forward(request, response);
-    }
+      }
     if ("success".equals(m)) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }
 
-    //创建订单
-    JSONObject jsonObject = ho.createOrder(request);
-    if (null == jsonObject) {
-        bl = false;
+    String  orderid = request.getParameter("orderid");
+    JSONObject jsonObject  = null;
+    System.out.println("初始化页面,准备执行添加!+orderi"+orderid);
+    if(StringUtils.isEmpty(orderid)){
+        //创建订单
+        jsonObject = ho.createOrder(request);
+        if (null == jsonObject) {
+            bl = false;
+        }
+
     }
+
     //红包
     ho.getUserWXwallet(request);
 %>
