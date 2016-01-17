@@ -405,6 +405,8 @@ public class OrderHandle {
         parmeter.put("walletcost", walletCost);
         parmeter.put("ordertype",ordertype);
 
+        System.out.println("修改订单开始.准备获取cookies:");
+
         //token
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
