@@ -10,8 +10,11 @@
     //更新
     String m = ho.modify(request);
     //是否支付
-    if (!"toCreate".equals(m)) {
-        request.getRequestDispatcher("pay.jsp?orderid=").forward(request, response);
+    if ("error".equals(m)) {
+        request.getRequestDispatcher("500.jsp").forward(request, response);
+    }
+    if ("success".equals(m)) {
+        request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
     }
 
@@ -39,8 +42,9 @@
 </head>
 <body>
 
-<header class="header"><a class="back-icon"
-                          href="javascript:;"></a> <span class="title brown">支付订单</span></header>
+<header class="header">
+    <a class="back-icon"  href="javascript:;"></a> <span class="title brown">支付订单</span>
+</header>
 <%
     if (bl) {
 %>
@@ -66,16 +70,15 @@
         <form id="userInfo_form" method="post" name="userInfo_form">
             <div class="h-person bg-white">
                 <ul class="p-items">
-                    <li><span class="item-left">入住人</span><input type="text" name="username"
-                                                                 class="i-p-input js_order_concact" placeholder="入住人"
-                                                                 value="${contacts}"/>
+                    <li>
+                        <span class="item-left">入住人</span>
+                        <input type="text" name="username" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"/>
                     </li>
-                    <li><span class="item-left">手机号</span><input type="tel" name="usermobile"
-                                                                 class="i-p-input js_order_phone" placeholder="联系电话"
-                                                                 value="${contactsphone}"/>
+                    <li>
+                        <span class="item-left">手机号</span>
+                        <input type="tel" name="usermobile" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"/>
                     </li>
                 </ul>
-
             </div>
             <div class="discount-items">
                 <div class="row discount-title d-gray">
@@ -96,9 +99,12 @@
         <div class="pay-items">
             <div class="c-title">选择支付方式</div>
             <ul class="pay-item bg-white">
-                <li><i class="icon wx-icon"></i><span>微信支付</span><span
-                        class="u-p-tip gray"></span> <a href="javascript:;"
-                                                         class="icon check-icon on js_pay_check"></a></li>
+                <li>
+                    <i class="icon wx-icon"></i>
+                    <span>微信支付</span>
+                    <span class="u-p-tip gray"></span> 
+                    <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
+                </li>
             </ul>
             <div class="pay-tips">
                 <span>温馨提示：</span>
@@ -113,15 +119,14 @@
             ￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" class="js_slideUp">
+        <a href="javascript:;" id="show-detail">
             明细<i class="icon up-icon"></i>
         </a>
-        <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
+        <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
     </div>
 </footer>
 <div class="mask_layer js_slide_layer"></div>
 <div class="footer_layer bg-white js_slide_layer">
-
     <ul class="p-items">
         <li>
             <p class="d-gray">房费</p>
@@ -149,7 +154,7 @@
 </div>
 <%} %>
 
-<script src="scripts/zepto.min.js?v=2"></script>
+<script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js?v=1"></script>
 <script>
     $(function () {
@@ -172,19 +177,22 @@
         
         $('.back-icon').tap(function(){
             history.go(-1);
-        })
+        });
 
-        $('.js_slideUp').tap(function (event) {
+        $('#show-detail').tap(function (event) {
             $('.js_slide_layer').toggleClass('on');
-        })
+        });
         
         $('.js_pay_check').tap(function (event) {
             $(this).toggleClass('on');
         });
         
         $userWallet.on('change',function(){
-            var val = $(this).val();
-            val = parseInt(val);
+            var val = $(this).val()||'0';
+            val = Math.abs(parseInt(val));
+            if(val>minUserCost){
+                val = minUserCost;
+            }
             $(this).val(val);
             $allCost.text('￥'+(allCost - val));
             $walletLayer.text(val);
@@ -192,7 +200,7 @@
         
         $userWallet.val(minUserCost).change();
         
-        $('.js_submit_order').tap(function (event) {
+        $('#btn-submit').tap(function (event) {
             var contact = $('.js_order_concact').val();
             if ($.trim(contact).length == 0) {
                 alert("请输入联系人。");

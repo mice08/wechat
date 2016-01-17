@@ -1,5 +1,6 @@
 package com.mk.order.handle;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mk.common.toolutils.*;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.*;
 
 public class OrderHandle {
 
@@ -364,12 +365,29 @@ public class OrderHandle {
             return "toCreate";
         }
 
+
+        //
+        List<Map<String, String>> checkinuser = new ArrayList<Map<String, String>>();
+        Map<String, String> checkinusermap = new HashMap<String, String>();
+        checkinusermap.put("name", userName);
+        checkinusermap.put("phone", userMobile);
+        checkinuser.add(checkinusermap);
+        String _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
+
         //
         String debug = UrlUtil.getValue(BaseData.debug);
         if ("true".equals(debug)) {
-            orderId = "1282609";
-            userName = "userNameTest";
-            userMobile = "123456789";
+            orderId = "1282844";
+            //
+            checkinuser = new ArrayList<Map<String, String>>();
+            checkinusermap = new HashMap<String, String>();
+            checkinusermap.put("name", "张三丰");
+            checkinusermap.put("phone", "12345678");
+            checkinuser.add(checkinusermap);
+            _checkinuser = String.valueOf(JSON.toJSON(checkinuser));
+            //
+            userName="eeeee";
+            userMobile="111111111";
             walletCost = "10";
             ordertype="1";
         }
@@ -382,8 +400,7 @@ public class OrderHandle {
         System.out.println("修改订单开始.walletCost:"+walletCost);
 
         HashMap parmeter = new HashMap();
-        parmeter.put("username", userName);
-        parmeter.put("usermobile", userMobile);
+        parmeter.put("checkinuser", _checkinuser);
         parmeter.put("orderid", orderId);
         parmeter.put("walletcost", walletCost);
         parmeter.put("ordertype",ordertype);
@@ -400,13 +417,16 @@ public class OrderHandle {
                 break;
             }
         }
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         if ("true".equals(debug)) {
             token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
         }
 
+
         System.out.println("修改订单开始.token:"+token);
 
         token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+
         if (StringUtils.isEmpty(token)) {
             return "error";
         }
@@ -465,6 +485,7 @@ public class OrderHandle {
                 break;
             }
         }
+        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
@@ -495,30 +516,28 @@ public class OrderHandle {
             }
             JSONObject json = jsonPay.getJSONObject("weinxinpay");
             String appid = json.getString("appid");
-            String appkey = json.getString("appkey");
             String noncestr = json.getString("noncestr");
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String sign = json.getString("sign");
+            String key = "WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7";
+            String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
             // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
-
-            StringBuilder stringBuilder = new StringBuilder()
-                    .append("appid=").append(appid)
-                    .append("&noncestr=").append(noncestr)
-                    .append("&package=WAP")
-                    .append("&prepayid=").append(prepayid)
-                    .append("&sign=").append(sign)
-                    .append("&timestamp=").append(timestamp);
-
-            try {
-                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
-                request.setAttribute("url", "weixin://wap/pay?" + url);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+//            StringBuilder stringBuilder = new StringBuilder()
+//                    .append("appid=").append(appid)
+//                    .append("&noncestr=").append(noncestr)
+//                    .append("&package=WAP")
+//                    .append("&prepayid=").append(prepayid)
+//                    .append("&sign=").append(sign)
+//                    .append("&timestamp=").append(timestamp);
+//            try {
+//                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
+//                request.setAttribute("url", "weixin://wap/pay?" + url);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
 
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
@@ -526,10 +545,17 @@ public class OrderHandle {
             request.setAttribute("prepayid", prepayid);
             request.setAttribute("package", packagevalue);
             request.setAttribute("packagevalue", packagevalue);
+
             request.setAttribute("paySign", sign);
-            request.setAttribute("orderDetailUrl", "");
+            request.setAttribute("orderDetailUrl", "http://dev-h5.imike.cn/#!/index");
             return "success";
         }
+
+    }
+
+    public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key){
+        String keys = "appId="+appId+"&nonceStr="+noncestr + "&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+timestamp+"&key="+key;
+        return MD5.MD5Encode(keys).toUpperCase();
     }
 
     public static void main(String[] args) {

@@ -5,14 +5,15 @@
     <title>在线支付</title>
     <script>
         function onBridgeReady() {
+
             WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
-                        "appId": "wx83cc02790df41a2b",     //公众号名称，由商户传入
-                        "timeStamp": "1452940678",         //时间戳，自1970年以来的秒数
-                        "nonceStr": "ow542c8h8jpdj8678sgelmex8lkkh3j5", //随机串
-                        "package": "prepay_id=wx201601161837584aec88632e0174281463",
+                        "appId": "wx2d9d3daf15496f60",     //公众号名称，由商户传入
+                        "timeStamp": "1452953483",         //时间戳，自1970年以来的秒数
+                        "nonceStr": "wkiashis1k9wvkp1olupzyc6926no2di", //随机串
+                        "package": "prepay_id=wx201601162211237109b41a760268140425",
                         "signType": "MD5",         //微信签名方式：
-                        "paySign": "5CDD866FF124E5241CC6FAF8746E84C0" //微信签名
+                        "paySign": "9763DFA0ED8639CC6DE94D9BC0F725D6" //微信签名
                     },
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request：ok") {
