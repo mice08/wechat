@@ -9,6 +9,7 @@
 
     //更新
     String m = ho.modify(request);
+    System.out.println("m:"+m);
     //是否支付
     if ("error".equals(m)) {
         request.getRequestDispatcher("500.jsp").forward(request, response);
