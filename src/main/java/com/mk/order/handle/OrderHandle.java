@@ -1,7 +1,6 @@
 package com.mk.order.handle;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mk.common.toolutils.*;
 import com.mk.enums.CallMethodEnum;
@@ -21,6 +20,36 @@ public class OrderHandle {
 
     final Logger logger = LoggerFactory.getLogger(OrderHandle.class);
 
+    //订单路由
+    public  String  orderRoute(HttpServletRequest request){
+        String  result = BaseData.RESULT_INIT;
+        String  orderid = request.getParameter("orderid");
+        //判断为修改操作
+        if(StringUtils.isNotEmpty(orderid)){
+            logger.info("获取id,判断为修改订单orderid"+orderid);
+            result = this.modify(request);
+        }else{
+            String  qorderid = request.getParameter("qorderid");
+            if(StringUtils.isNotEmpty(qorderid)){
+                logger.info("获取id,判断为查询订单orderid"+qorderid);
+                result = this.queryOrder(request);
+            }else{
+                logger.info("获取id,判断为创建订单orderid"+qorderid);
+                try{
+                    result = this.createOrder(request);
+                }catch(Exception e){
+                    result = BaseData.RESULT_EXCEPTION;  //创建订单出现异常
+                    logger.info("获取id,判断为创建订单orderid,"+qorderid +"创建订单出现异常");
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        return  result;
+    }
+
+
     public String createOrder(HttpServletRequest request) throws IOException {
         logger.info("准备创建订单--执行 [OrderHandle : createOrder] ");
         //
@@ -33,7 +62,7 @@ public class OrderHandle {
         }
         if (StringUtils.isEmpty(ordertype)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder] 出现错误,错误信息:ordertype为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         String timeintervalstart = "";
@@ -68,7 +97,7 @@ public class OrderHandle {
             }
             if (StringUtils.isEmpty(timeintervaltype)) {
                 logger.info("准备创建订单--执行 [OrderHandle : createOrder],当前订单为预付订单,出现错误,错误信息:timeintervaltype为空");
-                return null;
+                return BaseData.RESULT_BAD;
             }
 
         }
@@ -81,7 +110,7 @@ public class OrderHandle {
         }
         if (StringUtils.isEmpty(startdateday)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:startdateday为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         //
@@ -92,7 +121,7 @@ public class OrderHandle {
         }
         if (StringUtils.isEmpty(enddateday)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:enddateday为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         //
@@ -103,7 +132,7 @@ public class OrderHandle {
         }
         if (StringUtils.isEmpty(hotelid)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:hotelid为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         //
@@ -114,7 +143,7 @@ public class OrderHandle {
         }
         if (StringUtils.isEmpty(roomtypeid)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:roomtypeid为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         //
@@ -132,7 +161,7 @@ public class OrderHandle {
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         //
@@ -145,19 +174,17 @@ public class OrderHandle {
             }
         }
 
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
 
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if (StringUtils.isEmpty(token)) {
             logger.info("准备创建订单--执行 [OrderHandle : createOrder],获取token为空");
-            return null;
+            return BaseData.RESULT_BAD;
         }
-
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         //
         String userlongitude = request.getParameter("userlongitude");
@@ -208,17 +235,16 @@ public class OrderHandle {
         } catch (Exception e) {
             logger.error("准备创建订单--执行 [OrderHandle : createOrder], 请求ots,出现错误");
             e.printStackTrace();
-            return null;
+            return BaseData.RESULT_BAD;
         }
-
 
 
         if (StringUtils.isNotEmpty(backStr)) {
             JSONObject object = this.parseObject(backStr);
 
             if (!"true".equals(object.getString("success"))) {
-                request.setAttribute("errmsg", DataHander.checkStringNull(object, "errmsg", ""));
-                return null;
+                request.setAttribute("errormsg", DataHander.checkStringNull(object, "errormsg", ""));
+                return BaseData.RESULT_EXCEPTION;
             }
 
             //
@@ -265,29 +291,24 @@ public class OrderHandle {
             }
 
 
-            return "ok";
+            return BaseData.RESULT_ADD_SUCCESS;
         }
 
-        return null;
+        return BaseData.RESULT_UNKNOW;
     }
 
-    public JSONObject getUserWXwallet(HttpServletRequest request) {
+    public String getUserWXwallet(HttpServletRequest request) {
 
-        System.out.println("开始查询红包总额");
+        logger.info("开始查询红包总额--执行 [OrderHandle : getUserWXwallet]");
 
-
-        //
         String debug = UrlUtil.getValue(BaseData.debug);
-        System.out.println("获取cookies:" + request.getCookies());
-
         //
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
-            System.out.println("获取cookies为空");
-            return null;
+            logger.info("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取cookies为空");
+            return BaseData.RESULT_BAD;
         }
         String token = null;
-        System.out.println("开始获取cookies");
 
         for (int i = 0; i < cookies.length; i++) {
             if ("token".equals(cookies[i].getName())) {
@@ -296,10 +317,10 @@ public class OrderHandle {
             }
         }
         token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
-        System.out.println("获取红包:token" + token);
 
         if (StringUtils.isEmpty(token)) {
-            return null;
+            logger.info("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取token为空");
+            return BaseData.RESULT_BAD;
         }
         HashMap hmap = new HashMap();
 
@@ -309,24 +330,25 @@ public class OrderHandle {
         //
         String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
 
-        System.out.println("获取红包:url" + url);
+        logger.info("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] url"+url);
 
         String backStr = SmsHttpClient.post(url, hmap);
-        System.out.println("获取红包返回参数:backStr" + backStr);
+
+        logger.info("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取红包返回参数:backStr"+backStr);
 
         if (StringUtils.isEmpty(backStr)) {
-            return null;
+            return BaseData.RESULT_BAD;
         }
         JSONObject jso = this.parseObject(backStr);
         if (null == jso) {
-            return null;
+            return BaseData.RESULT_BAD;
         }
-        System.out.println("balance:" + DataHander.checkStringNull(jso, "balance", "0"));
+
         request.setAttribute("balance", DataHander.checkStringNull(jso, "balance", "0"));
         if ("true".equals(debug)) {
             request.setAttribute("balance", "99999999");
         }
-        return this.parseObject(backStr);
+        return BaseData.RESULT_SUCCESS;
     }
 
     private JSONObject parseObject(String str) {
@@ -341,20 +363,17 @@ public class OrderHandle {
     }
 
     public String modify(HttpServletRequest request) {
-        System.out.println("修改订单开始.");
         String orderId = request.getParameter("orderid");
         String userName = request.getParameter("username");
         String userMobile = request.getParameter("usermobile");
         String walletCost = request.getParameter("walletcost");
         String ordertype = request.getParameter("ordertype");
 
-        System.out.println("修改订单开始.orderId:" + orderId);
+        logger.info("修改订单开始.orderId:" + orderId);
 
         if (StringUtils.isEmpty(orderId)) {
-            System.out.println("orderId:" + orderId + "跳转 toCreate");
-            return "toCreate";
+            return BaseData.RESULT_BAD;
         }
-
 
         //
         List<Map<String, String>> checkinuser = new ArrayList<Map<String, String>>();
@@ -381,16 +400,14 @@ public class OrderHandle {
             walletCost = "10";
             ordertype = "1";
         }
-        System.out.println("修改订单开始.ordertype:" + ordertype);
 
-        System.out.println("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId);
-
+        logger.info("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId);
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
-            return "error";
+            logger.info("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId+"参数不正确");
+            return BaseData.RESULT_BAD;
         }
         //
-        System.out.println("修改订单开始.walletCost:" + walletCost);
 
         HashMap parmeter = new HashMap();
         parmeter.put("checkinuser", _checkinuser);
@@ -400,12 +417,11 @@ public class OrderHandle {
         parmeter.put("contacts", userName);
         parmeter.put("contactsphone", userMobile);
 
-        System.out.println("修改订单开始.准备获取cookies:");
-
         //token
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
-            return "error";
+            logger.info("修改订单开始.获取cookies失败");
+            return BaseData.RESULT_BAD;
         }
         String token = null;
         for (int i = 0; i < cookies.length; i++) {
@@ -418,10 +434,10 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
-        System.out.println("修改订单开始.token:" + token);
 
         if (StringUtils.isEmpty(token)) {
-            return "error";
+            logger.info("修改订单开始.获取token失败");
+            return BaseData.RESULT_BAD;
         }
 
         parmeter.put("token", token);
@@ -430,23 +446,22 @@ public class OrderHandle {
 
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
-        System.out.println("修改订单开始请求backStr:" + backStr);
+        logger.info("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
-
-            return "error";
+            return BaseData.RESULT_BAD;
         }
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
             request.setAttribute("errmsg", DataHander.checkStringNull(jsonOrder, "errmsg", ""));
-            return "error";
+            return BaseData.RESULT_EXCEPTION;
         }
 
         //
         request.setAttribute("orderid", orderId);
         request.setAttribute("ordertype", ordertype);
-        return "success";
+        return BaseData.RESULT_EDIT_SUCCESS;
     }
 
     public String pay(HttpServletRequest request, HttpServletResponse response) {

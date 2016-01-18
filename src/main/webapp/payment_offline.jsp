@@ -1,48 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.alibaba.fastjson.JSONObject" %>
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page import="com.mk.common.toolutils.BaseData" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
     boolean bl = true;
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
+    String  result =  ho.orderRoute(request);
 
-    System.out.println("初始化页面,准备执行添加!+orderid:"+orderid);
-    if(StringUtils.isNotEmpty(orderid)){
-        System.out.println("初始化页面,准备执行修改!orderid:"+orderid);
-        //更新
-        String m = ho.modify(request);
-        //是否支付
-        if ("error".equals(m)) {
-            request.getRequestDispatcher("500.jsp").forward(request, response);
-            return;
-        }
-        if ("success".equals(m)) {
+    if (BaseData.RESULT_EDIT_SUCCESS.equals(result)) {
             request.getRequestDispatcher("pay.jsp").forward(request, response);
             return;
-        }
-    }else{
-        String qorderid = request.getParameter("orderid");
-        String backresult =  "";
-        if(StringUtils.isEmpty(qorderid)){
-            //创建订单
-            backresult = ho.queryOrder(request);
-        }else{
-            backresult = ho.queryOrder(request);
-
-        }
-        if (StringUtils.isEmpty(backresult)) {
-            bl = false;
-        }if ("error".equals(backresult)) {
-            request.getRequestDispatcher("500.jsp").forward(request, response);
-            return;
-        }else{
-            bl = true;
-        }
     }
-    if(bl){
-        //红包
+    if (BaseData.RESULT_QUERY_SUCCESS.equals(result)) {
+        ho.getUserWXwallet(request);
+    }
+    if (BaseData.RESULT_ADD_SUCCESS.equals(result)) {
         ho.getUserWXwallet(request);
     }
 %>
@@ -62,8 +36,18 @@
         <a class="back-icon" href="javascript:;"></a>
         <span class="title brown">支付订单</span>
     </header>
+    <%  if(BaseData.RESULT_BAD.equals(result)){ %>
+        <div>
+
+            <h1>请求不合法</h1>
+        </div>
+    <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
+        String  message = request.getParameter("errormsg");
+    %>
+        alert("错误: "+message);
+        history.go(-1);
     <%
-        if (bl) {
+        }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){
     %>
     <div class="main">
         <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em class="p-timer">00</em>时<em class="p-timer">00</em>分</div>
@@ -130,13 +114,9 @@
         </ul>
     </div>
 <%
-    } else {
+    }
     %>
-    <div>
 
-         <h1>请求不合法</h1>
-    </div>
-    <%} %>
 
 
 <script src="scripts/zepto.min.js?v=3"></script>
