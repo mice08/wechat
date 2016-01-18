@@ -29,7 +29,7 @@
         //红包
         ho.getUserWXwallet(request);
     }
-
+    
     Long random = new Random().nextLong();
     request.setAttribute("random",random);
 %>
