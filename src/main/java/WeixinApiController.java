@@ -3,7 +3,6 @@ import api.CallBackOTSToken;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
-import com.jfinal.weixin.sdk.utils.HttpUtils;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -225,15 +224,6 @@ public class WeixinApiController extends ApiController {
 	}
 
 	/**
-	 * 获取Token
-	 */
-	public void getToken()
-	{
-		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
-		renderText(str);
-	}
-
-	/**
 	 * 获取Id
 	 */
 	public void getIds()
@@ -260,6 +250,15 @@ public class WeixinApiController extends ApiController {
 		}else{
 			renderText("{\"success\": 0 }");
 		}
+	}
+	
+	/**
+	 * 获取用户增减数据
+	 */
+	public void getUserSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getUserSummary("2015-12-31","2015-12-31");
+		renderText(apiResult.getJson());
 	}
 }
 
