@@ -7,9 +7,12 @@
 <%
 
     OrderHandle ho = new OrderHandle();
-    String m = ho.pay(request);
+    String m = ho.pay(request,response);
     if ("error".equals(m)) {
         request.getRequestDispatcher("500.jsp").forward(request, response);
+        return;
+    }
+    if ("redirect".equals(m)) {
         return;
     }
 %>

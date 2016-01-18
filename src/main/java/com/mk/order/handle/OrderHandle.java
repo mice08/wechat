@@ -460,7 +460,7 @@ public class OrderHandle {
         return "success";
     }
 
-    public String pay(HttpServletRequest request) {
+    public String pay(HttpServletRequest request,HttpServletResponse response) {
 
         String orderid = (String) request.getAttribute("orderid");
         String ordertype = (String) request.getAttribute("ordertype");
@@ -515,7 +515,12 @@ public class OrderHandle {
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
-                return "success";
+                try {
+                    response.sendRedirect(UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
                 return "error";
