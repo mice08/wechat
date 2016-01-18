@@ -13,8 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.*;
 
 public class OrderHandle {
@@ -235,6 +233,7 @@ public class OrderHandle {
             JSONObject object = this.parseObject(backStr);
 
             if (!"true".equals(object.getString("success"))) {
+                request.setAttribute("errmsg",  DataHander.checkStringNull(object, "errmsg", ""));
                 return null;
             }
 
@@ -456,8 +455,7 @@ public class OrderHandle {
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            String errmsg = jsonOrder.getString("errmsg");
-            request.setAttribute("errmsg", errmsg);
+            request.setAttribute("errmsg",  DataHander.checkStringNull(jsonOrder, "errmsg", ""));
             return "error";
         }
 
@@ -519,8 +517,7 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            String errmsg = jsonPay.getString("errmsg");
-            request.setAttribute("errmsg", errmsg);
+            request.setAttribute("errmsg",  DataHander.checkStringNull(jsonPay, "errmsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {

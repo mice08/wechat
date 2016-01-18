@@ -73,7 +73,7 @@
                 <div class="h-person bg-white">
                     <ul class="p-items">
                         <li><span class="item-left">入住人</span><input type="text" class="i-p-input js_order_concact" placeholder="入住人" name="username" value="${contacts}"></li>
-                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input js_order_phone" placeholder="联系电话"  name="usermobile" value="${contactsphone}"></li>
+                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input js_order_phone" placeholder="联系电话"  name="usermobile"  value="${contactsphone}"></li>
                     </ul>
                 </div>
 
@@ -119,13 +119,18 @@
         </ul>
     </div>
 <%
-} else {
-%>
+    } else {
+    %>
+    <div>
+        <% String errmsg = request.getParameter("errmsg");
+            if(StringUtils.isEmpty(errmsg)){  %>
+         <h1>请求不合法</h1>
+        <%} else {  %>
 
-<div>
-    <h1>请求不合法</h1>
-</div>
-<%} %>
+        <h1><%=errmsg }%></h1>
+    </div>
+    <%} %>
+
 
 <script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js?v=2"></script>

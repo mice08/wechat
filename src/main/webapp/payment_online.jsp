@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.alibaba.fastjson.JSONObject" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
+<%@ page import="org.springframework.util.StringUtils" %>
 
 <%
 
@@ -154,7 +155,12 @@
 } else {
 %>
 <div>
-    <h1>请求不合法</h1>
+    <% String errmsg = request.getParameter("errmsg");
+        if(StringUtils.isEmpty(errmsg)){  %>
+        <h1>请求不合法</h1>
+    <%} else {  %>
+
+    <h1><%=errmsg }%></h1>
 </div>
 <%} %>
 
