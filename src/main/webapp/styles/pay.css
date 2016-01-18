@@ -244,7 +244,7 @@ div.main .t-tips .p-timer{
 }
 footer.footer{
     position: fixed;
-    padding:0 0 1rem 1rem;
+    padding:0 0.8rem  0 1rem;
     bottom: 0;
     height: 5.6rem;
     line-height: 5.6rem;

@@ -57,7 +57,7 @@
 
     <div class="t-tips">
         <i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em
-            class="p-timer js_time_min">02</em>分<em class="p-timer js_time_ss">29</em>秒
+            class="p-timer js_time_min">00</em>分<em class="p-timer js_time_ss">00</em>秒
     </div>
     <section class="o-d-info ">
         <div class="h-info bg-white brown">

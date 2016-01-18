@@ -55,7 +55,7 @@
         if (bl) {
     %>
     <div class="main">
-        <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em class="p-timer">02</em>时<em class="p-timer">29</em>分</div>
+        <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em class="p-timer">00</em>时<em class="p-timer">00</em>分</div>
         <section class="o-d-info ">
             <div class="h-info bg-white brown">
                 <div class="h-name">${hotelname}</div>
