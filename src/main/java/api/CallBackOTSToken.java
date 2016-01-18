@@ -2,6 +2,7 @@ package api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiResult;
 import com.jfinal.weixin.sdk.utils.HttpUtils;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
@@ -14,6 +15,7 @@ import java.util.Map;
  * Created by Mi on 16/1/18.
  */
 public class CallBackOTSToken {
+    static Log logger = Log.getLog(CallBackOTSToken.class);
     private static String apiUrl = "http://huidu.imike.cn/ots/unionidandphone/check";
 
     public CallBackOTSToken() {
@@ -22,6 +24,7 @@ public class CallBackOTSToken {
     public static ApiResult getCallBackToken(String unionid) {
         //请求
         String apiStringResult = HttpUtils.post(apiUrl+"?ostype=3&unionid="+unionid,"");
+        logger.debug(apiUrl+"?ostype=3&unionid="+unionid);
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }
