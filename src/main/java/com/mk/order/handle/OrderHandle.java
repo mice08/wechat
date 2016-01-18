@@ -159,7 +159,7 @@ public class OrderHandle {
 
         //token
         Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
+        if (null == cookies ||cookies.length==0) {
             logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
             return BaseData.RESULT_BAD;
         }
@@ -590,6 +590,8 @@ public class OrderHandle {
         }
 
         Cookie[] cookies = request.getCookies();
+
+
         String token = null;
         if(null==cookies||cookies.length==0){
             logger.error("查询订单开始请求orderid:" + qorderid+"获取cookies失败.");
