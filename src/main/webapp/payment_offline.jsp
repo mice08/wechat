@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
-<%@ page import="com.alibaba.fastjson.JSONObject" %>
 <%@ page import="com.mk.common.toolutils.BaseData" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
@@ -114,8 +113,12 @@
         </ul>
     </div>
 <%
-    }
-    %>
+} else {
+%>
+<div>
+    <h1>请求不合法!</h1>
+</div>
+<%} %>
 
 
 
