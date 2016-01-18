@@ -227,5 +227,14 @@ public class WeixinApiController extends ApiController {
 		renderText(str);
 	}
 
+	/**
+	 * 获取Id
+	 */
+	public void getIds()
+	{
+		SnsAccessToken apiResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),getPara("code"));
+		renderText(apiResult.getJson());
+	}
+
 }
 
