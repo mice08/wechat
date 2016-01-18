@@ -21,6 +21,7 @@ public class OrderHandle {
 
     //订单路由
     public  String  orderRoute(HttpServletRequest request){
+        System.out.println("进来了!!");
         String  result = BaseData.RESULT_INIT;
         String  orderid = request.getParameter("orderid");
         //判断为修改操作
