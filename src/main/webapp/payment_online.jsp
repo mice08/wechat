@@ -193,6 +193,7 @@
         });
         
         $userWallet.on('change',function(){
+            debugger;
             var val = $(this).val()||'0';
             val = Math.abs(parseInt(val));
             if(val>minUserCost){
@@ -204,6 +205,7 @@
         });
         
         $userWallet.val(minUserCost).change();
+        $userWallet.val(minUserCost).trigger('change');
         
         $('#btn-submit').tap(function (event) {
             var contact = $('.js_order_concact').val();
