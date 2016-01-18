@@ -36,8 +36,19 @@
 </head>
 <script type="text/javascript">
     function   showMessage(message){
-        alert(message);
-        history.go(-1);
+        alert(message,{
+            clickFn: function(e){
+                e.preventDefault();
+                if(e.target.tagName=='BUTTON'){
+                    //                  console.log('111111');
+                    history.go(-1);
+                    this.destroy();
+                    //            window.location.href="";
+
+                }
+            }
+        })
+
     }
 </script>
 <body>

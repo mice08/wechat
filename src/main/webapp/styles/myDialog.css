@@ -27,9 +27,9 @@
     position: fixed;
     left: 50%;
     top: 50%;
-    width: 16rem;
+    width: 22rem;
     min-height: 6rem;
-    margin: -100px -8rem;
+    margin: -100px -11rem;
     background: #ffffff;
     overflow: hidden;
     border-radius: 8px;
@@ -59,9 +59,9 @@
 *[data-widget^="widget_"] .widget_footer ul li button, *[data-widget^="widget_"] .widget_footer ul li .button{
 	-webkit-appearance: none;
 	display: inline-block;
-	padding: 0 10px;
-	height: 36px;
-	line-height: 36px;
+	padding: 0 1rem;
+	height: 4.2rem;
+	line-height: 3.6rem;
 	border-radius: 3px;
 	white-space: pre;
 	overflow: hidden;
@@ -69,8 +69,8 @@
 	border: 0;
 	background: none;
 	color: #00aeef;
-	font-size: 0.9rem;
-	min-width: 60px;
+	font-size: 1.6rem;
+	min-width: 6rem;
 	background:none;
 	display: block;
 	width: 100%;
@@ -83,10 +83,10 @@
 }
 /****/
 *[data-widget="widget_alert"] .widget_body, *[data-widget="widget_confirm"] .widget_body, *[data-widget="widget_tip"] .widget_body{
-	font-size: 0.9rem;
+	font-size: 1.4rem;
 	color: #333333;
-	line-height: 20px;
-	padding: 20px 10px;
+	line-height: 2rem;
+	padding: 2rem 1rem;
 	text-align: center;
 }
 

@@ -27,13 +27,26 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
+    <link rel="stylesheet" href="styles/myDialog.css"/>
     <link rel="stylesheet" type="text/css" href="styles/pay.css"/>
+
+    <script type="text/javascript" src="scripts/myDialog.js"></script>
     <title>到店支付</title>
 </head>
 <script type="text/javascript">
     function   showMessage(message){
-        alert(message);
-        history.go(-1);
+        alert(message,{
+            clickFn: function(e){
+                e.preventDefault();
+                if(e.target.tagName=='BUTTON'){
+  //                  console.log('111111');
+                    history.go(-1);
+                    this.destroy();
+        //            window.location.href="";
+
+                }
+            }
+        })
     }
 </script>
 <body>
