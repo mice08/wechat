@@ -2,13 +2,12 @@ package com.mk.order.handle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jfinal.log.Log;
 import com.mk.common.toolutils.*;
 import com.mk.enums.CallMethodEnum;
 import com.mk.enums.OrderTypenum;
 import com.mk.enums.PayTypeEnum;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import java.util.*;
 
 public class OrderHandle {
 
-    final Logger logger = LoggerFactory.getLogger(OrderHandle.class);
+    static Log logger = Log.getLog(OrderHandle.class);
 
     //订单路由
     public  String  orderRoute(HttpServletRequest request){
