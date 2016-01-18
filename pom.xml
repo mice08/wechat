@@ -186,6 +186,7 @@
                 <wallet.url>http://huidu.imike.cn/ots/redpacket/balance</wallet.url>
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
+                <order.detail.url>http://dev-h5.imike.cn/#!/orderdetail/</order.detail.url>
             </properties>
         </profile>
 
@@ -209,6 +210,7 @@
                 <wallet.url>http://huidu.imike.cn/ots/redpacket/balance</wallet.url>
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
+                <order.detail.url>http://dev-h5.imike.cn/#!/orderdetail/</order.detail.url>
             </properties>
         </profile>
 
@@ -229,6 +231,7 @@
                 <wallet.url>http://ots.imike.com/ots/redpacket/balance</wallet.url>
 
                 <create.pay.url>http://ots.imike.com/ots/pay/create</create.pay.url>
+                <order.detail.url>http://dev-h5.imike.cn/#!/orderdetail/</order.detail.url>
             </properties>
         </profile>
     </profiles>
