@@ -1,7 +1,12 @@
 import api.CallBackCityApi;
+import api.CallBackOTSToken;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
+import com.jfinal.weixin.sdk.utils.JsonUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WeixinApiController extends ApiController {
 
@@ -219,22 +224,41 @@ public class WeixinApiController extends ApiController {
 	}
 
 	/**
-	 * 获取Token
-	 */
-	public void getToken()
-	{
-		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
-		renderText(str);
-	}
-
-	/**
 	 * 获取Id
 	 */
 	public void getIds()
 	{
-		SnsAccessToken apiResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),getPara("code"));
+		SnsAccessToken snsResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),getPara("code"));
+		String openid = snsResult.getOpenid();
+		String unionid = snsResult.getUnionid();
+		if (unionid!=null){
+			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid);
+			//结果
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("unionid", unionid);
+			result.put("openid", openid);
+			Boolean success = apiResult.getBoolean("success");
+			if (success){
+				result.put("success",1);
+			}else{
+				result.put("success",0);
+			}
+			result.put("phone",apiResult.getStr("phone"));
+			result.put("check",apiResult.getStr("check"));
+			result.put("token",apiResult.getStr("token"));
+			renderText(JsonUtils.toJson(result));
+		}else{
+			renderText("{\"success\": 0 }");
+		}
+	}
+	
+	/**
+	 * 获取用户增减数据
+	 */
+	public void getUserSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getUserSummary("2015-12-31","2015-12-31");
 		renderText(apiResult.getJson());
 	}
-
 }
 

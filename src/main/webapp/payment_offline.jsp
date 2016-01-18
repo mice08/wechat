@@ -6,6 +6,7 @@
     boolean bl = true;
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
+
     String  result =  ho.orderRoute(request);
 
     if (BaseData.RESULT_EDIT_SUCCESS.equals(result)) {
@@ -61,9 +62,9 @@
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
         Object obj =request.getAttribute("errormsg");
-        String  result = "请重试.";
+        String  msg = "请重试.";
         if(null!=obj)
-            result = obj.toString();
+            msg = obj.toString();
     %>
         <script>
             showMessage("<%=obj%>");
