@@ -124,7 +124,7 @@
             ￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" id="show-detail gray">
+        <a href="javascript:;" id="show-detail" class="gray">
             明细<i class="icon up-icon"></i>
         </a>
         <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>

@@ -13,6 +13,7 @@
         return;
     }
     if ("redirect".equals(m)) {
+        System.out.println("on page redirect to detail");
         return;
     }
 %>
