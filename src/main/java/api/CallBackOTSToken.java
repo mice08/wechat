@@ -15,7 +15,6 @@ import java.util.Map;
  * Created by Mi on 16/1/18.
  */
 public class CallBackOTSToken {
-    static Log logger = Log.getLog(CallBackOTSToken.class);
     private static String apiUrl = "http://huidu.imike.cn/ots/unionidandphone/check";
 
     public CallBackOTSToken() {
@@ -24,7 +23,7 @@ public class CallBackOTSToken {
     public static ApiResult getCallBackToken(String unionid) {
         //请求
         String apiStringResult = HttpUtils.post(apiUrl+"?ostype=3&unionid="+unionid,"");
-        logger.debug(apiUrl+"?ostype=3&unionid="+unionid);
+        System.out.println(apiUrl+"?ostype=3&unionid="+unionid);
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }
