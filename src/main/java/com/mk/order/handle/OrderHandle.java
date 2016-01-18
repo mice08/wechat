@@ -450,11 +450,14 @@ public class OrderHandle {
         System.out.println("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
+
             return "error";
         }
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
+            String errmsg = jsonOrder.getString("errmsg");
+            request.setAttribute("errmsg", errmsg);
             return "error";
         }
 
@@ -516,6 +519,8 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
+            String errmsg = jsonPay.getString("errmsg");
+            request.setAttribute("errmsg", errmsg);
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {

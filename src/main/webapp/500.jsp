@@ -18,6 +18,7 @@
     <span class="title brown">支付订单</span></header>
 <div>
     <h1>请求错误</h1>
+    ${errmsg}
 </div>
 
 </body>
