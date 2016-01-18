@@ -63,7 +63,9 @@
         <div class="h-info bg-white brown">
             <div class="h-name">${hotelname}</div>
             <div class="o-date">
-                <span>入住：${begintime}</span> <span>离店：${endtime}</span> <span>共${orderday}天</span>
+                <div class="d-inline">01-13<span class="orange">${begintime}</span>入住</div>|
+                <span>${endtime}离店</span> |
+                <span>共${orderday}天</span>
             </div>
             <div class="h-type row">
                 <div class="col text-left">${roomtypename}</div>
@@ -96,6 +98,10 @@
                         使用红包<span class="u-p-tip">（红包余额：￥${balance}）</span>
                     </div>
                     <input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
+                </div>
+                <div class="pay-tips">
+                    <span>温馨提示：</span>
+                    <div>${usermessage}</div>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>

@@ -227,6 +227,9 @@ div.main .t-tips .p-timer{
     margin-top:0.5rem;
     color:#9e9e9e;
 }
+.d-inline{
+    display: inline-block;
+}
 .pay-items .c-title{
     padding-left:1.5rem;
 }
