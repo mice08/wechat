@@ -155,12 +155,7 @@
 } else {
 %>
 <div>
-    <% String errmsg = request.getParameter("errmsg");
-        if(StringUtils.isEmpty(errmsg)){  %>
         <h1>请求不合法</h1>
-    <%} else {  %>
-
-    <h1><%=errmsg }%></h1>
 </div>
 <%} %>
 

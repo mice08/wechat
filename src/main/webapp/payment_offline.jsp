@@ -11,9 +11,7 @@
     String m = ho.modify(request);
     //是否支付
     if ("error".equals(m)) {
-        request.getRequestDispatcher("500.jsp").forward(request, response);
-        return;
-    }
+      }
     if ("success".equals(m)) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
@@ -122,12 +120,8 @@
     } else {
     %>
     <div>
-        <% String errmsg = request.getParameter("errmsg");
-            if(StringUtils.isEmpty(errmsg)){  %>
-         <h1>请求不合法</h1>
-        <%} else {  %>
 
-        <h1><%=errmsg }%></h1>
+         <h1>请求不合法</h1>
     </div>
     <%} %>
 
