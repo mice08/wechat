@@ -61,8 +61,8 @@
             <div class="h-info bg-white brown">
                 <div class="h-name">${hotelname}</div>
                 <div class="o-date">
-                    <span>入住：${begintime}</span>|
-                    <span>离店：${endtime}</span>|
+                    <span>${begintime}入住</span>|
+                    <span>${endtime}离店</span>|
                     <span>共${orderday}晚</span>
                 </div>
                 <div class="h-type row">

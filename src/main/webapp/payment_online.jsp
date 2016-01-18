@@ -70,7 +70,7 @@
         <div class="h-info bg-white brown">
             <div class="h-name">${hotelname}</div>
             <div class="o-date">
-                <div class="d-inline">01-13<span class="orange">${begintime}</span>入住</div>|
+                <div class="d-inline">${begintime}<span class="orange">${timeintervalstart}</span>入住</div>|
                 <span>${endtime}离店</span> |
                 <span>共${orderday}天</span>
             </div>
