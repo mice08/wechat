@@ -13,7 +13,7 @@
         return;
     }
     if ("redirect".equals(m)) {
-        request.getRequestDispatcher("success.jsp").forward(request, response);
+//        request.getRequestDispatcher("success.jsp").forward(request, response);
         return;
     }
 %>

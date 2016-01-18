@@ -521,14 +521,14 @@ public class OrderHandle {
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
-//                try {
-//                    System.out.println("in handle redirect to detail start");
-//                    response.sendRedirect(UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
-//                    System.out.println("in handle redirect to detail end");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
+                try {
+                    System.out.println("in handle redirect to detail start");
+                    response.sendRedirect(UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
+                    System.out.println("in handle redirect to detail end");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
                 return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
