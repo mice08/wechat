@@ -586,7 +586,7 @@ public class OrderHandle {
         logger.debug("查询订单开始请求orderid:" + qorderid);
         if(StringUtils.isEmpty(qorderid)){
             logger.error("查询订单开始请求orderid:" + qorderid);
-            return null;
+            return BaseData.RESULT_BAD;
         }
 
         Cookie[] cookies = request.getCookies();
@@ -615,8 +615,10 @@ public class OrderHandle {
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
         if (StringUtils.isEmpty(backStr)) {
-            return  null;
+            logger.error("查询订单开始请求orderid:" + qorderid);
+            return BaseData.RESULT_BAD;
         }
+
         JSONObject object = JSONObject.parseObject(backStr);
         if (!"true".equals(object.getString("success"))) {
             request.setAttribute("errormsg", DataHander.checkStringNull(object, "errmsg", ""));
