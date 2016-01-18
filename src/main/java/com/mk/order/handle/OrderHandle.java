@@ -8,6 +8,8 @@ import com.mk.enums.CallMethodEnum;
 import com.mk.enums.OrderTypenum;
 import com.mk.enums.PayTypeEnum;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,31 +19,30 @@ import java.util.*;
 
 public class OrderHandle {
 
+    final Logger logger = LoggerFactory.getLogger(OrderHandle.class);
 
     public JSONObject createOrder(HttpServletRequest request) throws IOException {
-
-
+        logger.info("准备创建订单--执行 [OrderHandle : createOrder] ");
         //
         String debug = UrlUtil.getValue(BaseData.debug);
 
         String ordertype = request.getParameter("ordertype");
-        System.out.println("ordertype:" + ordertype);
 
         if ("true".equals(debug)) {
             ordertype = "7";
         }
         if (StringUtils.isEmpty(ordertype)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder] 出现错误,错误信息:ordertype为空");
             return null;
         }
 
         String timeintervalstart = "";
         String timeintervalend = "";
         String timeintervaltype = "";
-        System.out.println("leixing:" + OrderTypenum.YF.getId().equals(ordertype));
         //预付
         if (OrderTypenum.YF.getId().equals(ordertype)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],当前订单为预付订单");
             timeintervalstart = request.getParameter("timeintervalstart");
-            System.out.println("timeintervalstart:" + timeintervalstart);
 
             if ("true".equals(debug)) {
                 timeintervalstart = "7";
@@ -50,10 +51,8 @@ public class OrderHandle {
                 timeintervalstart = null;
             }
 
-
             //
             timeintervalend = request.getParameter("timeintervalend");
-            System.out.println("timeintervalend:" + timeintervalend);
 
             if ("true".equals(debug)) {
                 timeintervalend = "19";
@@ -63,12 +62,12 @@ public class OrderHandle {
             }
 
             timeintervaltype = request.getParameter("timeintervaltype");
-            System.out.println("timeintervaltype:" + timeintervaltype);
 
             if ("true".equals(debug)) {
                 timeintervaltype = "1";
             }
             if (StringUtils.isEmpty(timeintervaltype)) {
+                logger.info("准备创建订单--执行 [OrderHandle : createOrder],当前订单为预付订单,出现错误,错误信息:timeintervaltype为空");
                 return null;
             }
 
@@ -76,45 +75,45 @@ public class OrderHandle {
 
         //
         String startdateday = request.getParameter("startdateday");
-        System.out.println("startdateday:" + startdateday);
 
         if ("true".equals(debug)) {
             startdateday = "20160116";
         }
         if (StringUtils.isEmpty(startdateday)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:startdateday为空");
             return null;
         }
 
         //
         String enddateday = request.getParameter("enddateday");
-        System.out.println("enddateday:" + enddateday);
 
         if ("true".equals(debug)) {
             enddateday = "20160117";
         }
         if (StringUtils.isEmpty(enddateday)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:enddateday为空");
             return null;
         }
 
         //
         String hotelid = request.getParameter("hotelid");
-        System.out.println("hotelid:" + hotelid);
 
         if ("true".equals(debug)) {
             hotelid = "2230";
         }
         if (StringUtils.isEmpty(hotelid)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:hotelid为空");
             return null;
         }
 
         //
         String roomtypeid = request.getParameter("roomtypeid");
-        System.out.println("roomtypeid:" + roomtypeid);
 
         if ("true".equals(debug)) {
             roomtypeid = "29885";
         }
         if (StringUtils.isEmpty(roomtypeid)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:roomtypeid为空");
             return null;
         }
 
@@ -123,7 +122,6 @@ public class OrderHandle {
 
         //
         String pricetype = request.getParameter("pricetype");
-        System.out.println("pricetype:" + pricetype);
 
         if ("true".equals(debug)) {
             pricetype = "2";
@@ -133,6 +131,7 @@ public class OrderHandle {
         //token
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
             return null;
         }
 
@@ -141,34 +140,35 @@ public class OrderHandle {
         for (int i = 0; i < cookies.length; i++) {
             if ("token".equals(cookies[i].getName())) {
                 token = cookies[i].getValue();
+                logger.info("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
                 break;
             }
         }
+
         token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
 
-        System.out.println("token:" + token);
 
         if (StringUtils.isEmpty(token)) {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder],获取token为空");
             return null;
         }
 
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         //
         String userlongitude = request.getParameter("userlongitude");
         if ("true".equals(debug)) {
             userlongitude = "121";
         }
-        System.out.println("userlongitude:" + userlongitude);
 
         String userlatitude = request.getParameter("userlatitude");
         if ("true".equals(debug)) {
             userlatitude = "31";
         }
-        System.out.println("userlatitude:" + userlatitude);
 
         //
         HashMap<String, String> parmeter = new HashMap();
@@ -193,41 +193,25 @@ public class OrderHandle {
         parmeter.put("ordermethod", CallMethodEnum.WEIXIN.getId());
         parmeter.put("callversion", "3.5");
 
-        System.out.println(123);
-
 
         //
         String url = UrlUtil.getValue(BaseData.creatOrderUrl);
-        System.out.println("url:" + url);
 
         String backStr = "";
         try {
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder], 请求ots,url:"+url);
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder], 请求ots,parmeter:"+JSONObject.toJSONString(parmeter));
             backStr = SmsHttpClient.post(url, parmeter);
 
-            System.out.println("backStr:" + backStr);
+            logger.info("准备创建订单--执行 [OrderHandle : createOrder], 请求ots,出参"+ backStr);
 
         } catch (Exception e) {
-
+            logger.error("准备创建订单--执行 [OrderHandle : createOrder], 请求ots,出现错误");
+            e.printStackTrace();
             return null;
         }
 
 
-//        if ("true".equals(debug)) {
-//            request.setAttribute("orderid", "orderid");
-//            request.setAttribute("hotelname", "hotelname33");
-//            request.setAttribute("begintime", "begintime");
-//            request.setAttribute("endtime", "endtime");
-//            request.setAttribute("orderday", "orderday");
-//            request.setAttribute("roomtypename", "roomtypename");
-//            request.setAttribute("contacts", "contacts");
-//            request.setAttribute("contactsphone", "contactsphone");
-//            request.setAttribute("usermessage", "usermessage");
-//            request.setAttribute("onlinepay", "onlinepay");
-//            request.setAttribute("payprice", "payprice");
-//            request.setAttribute("redpacket", "redpacket");
-//            request.setAttribute("timeouttime", "100000");
-//            return JSONObject.parseObject("{}");
-//        } else
 
         if (StringUtils.isNotEmpty(backStr)) {
             JSONObject object = this.parseObject(backStr);
