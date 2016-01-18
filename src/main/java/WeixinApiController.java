@@ -44,7 +44,7 @@ public class WeixinApiController extends ApiController {
 				"        {\n" +
 				"            \"type\": \"view\", \n" +
 				"            \"name\": \"我要预订\", \n" +
-				"            \"url\": \"http://weixn.imike.cn\"\n" +
+				"            \"url\": \"http://weixin.imike.cn\"\n" +
 				"        }, \n" +
 				"        {\n" +
 				"            \"type\": \"view\", \n" +
