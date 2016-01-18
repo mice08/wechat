@@ -579,7 +579,7 @@ public class OrderHandle {
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String key = "WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7";
+            String key = "IAYG8HpT1f4tosODIryb2BqKSqxIod2S";
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
@@ -636,8 +636,6 @@ public class OrderHandle {
                 break;
             }
         }
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
-
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
