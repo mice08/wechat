@@ -90,7 +90,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	@Override
 	protected void processInCustomEvent(InCustomEvent inCustomEvent)
 	{
-		logger.debug("测试方法：processInCustomEvent()");
+//		logger.info("测试方法：processInCustomEvent()");
 //		renderNull();
 		if(inCustomEvent.getEvent().equals("subscribe")) {
 			renderOutTextMsg("亲你好");
