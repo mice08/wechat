@@ -590,6 +590,10 @@ public class OrderHandle {
 
         Cookie[] cookies = request.getCookies();
         String token = null;
+        if(null==cookies||cookies.length==0){
+            logger.error("查询订单开始请求orderid:" + qorderid+"获取cookies失败.");
+            return  BaseData.RESULT_BAD;
+        }
         for (int i = 0; i < cookies.length; i++) {
             if ("m18".equals(cookies[i].getName())) {
                 token = cookies[i].getValue();
