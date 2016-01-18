@@ -21,7 +21,7 @@ public class OrderHandle {
 
     final Logger logger = LoggerFactory.getLogger(OrderHandle.class);
 
-    public JSONObject createOrder(HttpServletRequest request) throws IOException {
+    public String createOrder(HttpServletRequest request) throws IOException {
         logger.info("准备创建订单--执行 [OrderHandle : createOrder] ");
         //
         String debug = UrlUtil.getValue(BaseData.debug);
@@ -265,7 +265,7 @@ public class OrderHandle {
             }
 
 
-            return object;
+            return "ok";
         }
 
         return null;
@@ -556,6 +556,90 @@ public class OrderHandle {
         }
 
     }
+
+
+    public  String  queryOrder(HttpServletRequest request){
+        String  qorderid = request.getParameter("qorderid");
+        if(StringUtils.isEmpty(qorderid)){
+            return null;
+        }
+
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if ("token".equals(cookies[i].getName())) {
+                token = cookies[i].getValue();
+                break;
+            }
+        }
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
+
+        System.out.println("修改订单开始.token:" + token);
+
+        if (StringUtils.isEmpty(token)) {
+            return  null;
+        }
+        HashMap  hm = new HashMap();
+
+        hm.put("token",token);
+        hm.put("orderid",qorderid);
+
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
+        if (StringUtils.isEmpty(backStr)) {
+            return  null;
+        }
+        JSONObject object = JSONObject.parseObject(backStr);
+        if (!"true".equals(object.getString("success"))) {
+            request.setAttribute("errmsg", DataHander.checkStringNull(object, "errmsg", ""));
+            return   "bad";
+        } else {
+            //
+            request.setAttribute("orderid", DataHander.checkStringNull(object,"order", "orderid", "0"));
+            request.setAttribute("hotelname", DataHander.checkStringNull(object,"order", "hotelname", ""));
+
+            //
+            String begintimeOri = DataHander.checkStringNull(object,"order", "begintime", "");
+            begintimeOri = DateUtil.getStrFormart(begintimeOri, "yyyyMMhh");
+
+            String endtimeOri = DataHander.checkStringNull(object,"order", "endtime", "");
+            endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
+
+            request.setAttribute("begintime", begintimeOri);
+            request.setAttribute("endtime", endtimeOri);
+
+            try {
+                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri, begintimeOri, "yyyyMMdd"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            request.setAttribute("roomtypename", DataHander.checkStringNull(object,"order", "roomorder", "roomtypename", ""));
+            request.setAttribute("walletcost", DataHander.checkStringNull(object, "order","walletcost", "0"));
+            request.setAttribute("contacts", DataHander.checkStringNull(object,"order", "contacts", ""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(object,"order","contactsphone", ""));
+            request.setAttribute("usermessage", DataHander.checkStringNull(object,"order", "usermessage", ""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"order", "onlinepay", "0"));
+            request.setAttribute("price", DataHander.checkStringNull(object,"order",  "price", "0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(object,"order","totalprice", "0"));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"order", "maxuserwalletcost", "0"));
+            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object, "order","timeintervalstart", ""));
+            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"order", "timeintervalend", ""));
+            String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
+            if (!"0".equals(backtimeouttime)) {
+                try {
+                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
+                } catch (Exception e) {
+                    System.out.println("时间处理错误");
+                    e.printStackTrace();
+                }
+            }
+            return  "ok";
+
+        }
+
+    }
+
 
     public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key) {
         String keys = "appId=" + appId + "&nonceStr=" + noncestr + "&package=prepay_id=" + prepay_id + "&signType=MD5&timeStamp=" + timestamp + "&key=" + key;

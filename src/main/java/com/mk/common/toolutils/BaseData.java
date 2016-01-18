@@ -6,6 +6,7 @@ public class BaseData {
     public static String queryWXUserWallet = "wallet.url";
     public static String modifyOrderUrl = "modify.order.url";
     public static String createPayUrl = "create.pay.url";
-
+    public static String queryOrderUrl = "query.order.Url";
     public static String orderDetailUrl = "order.detail.url";
+
 }

@@ -6,29 +6,40 @@
 <%
     boolean bl = true;
     OrderHandle ho = new OrderHandle();
-    System.out.println("初始化页面,准备执行修改!");
-    //更新
-    String m = ho.modify(request);
-    //是否支付
-    if ("error".equals(m)) {
-        request.getRequestDispatcher("500.jsp").forward(request, response);
-        return;
-    }
-    if ("success".equals(m)) {
-        request.getRequestDispatcher("pay.jsp").forward(request, response);
-        return;
-    }
-
     String  orderid = request.getParameter("orderid");
-    JSONObject jsonObject  = null;
-    System.out.println("初始化页面,准备执行添加!+orderi"+orderid);
-    if(StringUtils.isEmpty(orderid)){
-        //创建订单
-        jsonObject = ho.createOrder(request);
-        if (null == jsonObject) {
-            bl = false;
-        }
 
+    System.out.println("初始化页面,准备执行添加!+orderid:"+orderid);
+    if(StringUtils.isNotEmpty(orderid)){
+        System.out.println("初始化页面,准备执行修改!orderid:"+orderid);
+        //更新
+        String m = ho.modify(request);
+        //是否支付
+        if ("error".equals(m)) {
+            request.getRequestDispatcher("500.jsp").forward(request, response);
+            return;
+        }
+        if ("success".equals(m)) {
+            request.getRequestDispatcher("pay.jsp").forward(request, response);
+            return;
+        }
+    }else{
+        String qorderid = request.getParameter("orderid");
+        String backresult =  "";
+        if(StringUtils.isEmpty(qorderid)){
+            //创建订单
+            backresult = ho.queryOrder(request);
+        }else{
+            backresult = ho.queryOrder(request);
+
+        }
+        if (StringUtils.isEmpty(backresult)) {
+            bl = false;
+        }if ("error".equals(backresult)) {
+            request.getRequestDispatcher("500.jsp").forward(request, response);
+            return;
+        }else{
+            bl = true;
+        }
     }
     if(bl){
         //红包

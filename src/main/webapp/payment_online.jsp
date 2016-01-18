@@ -1,31 +1,49 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.alibaba.fastjson.JSONObject" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
-<%@ page import="org.springframework.util.StringUtils" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
 
 <%
 
     boolean bl = true;
     OrderHandle ho = new OrderHandle();
+    String orderid = request.getParameter("orderid");
+    //判断是否能够获取订单号
+    if(StringUtils.isNotEmpty(orderid)){
+        //更新
+        String m = ho.modify(request);
+        System.out.println("m:"+m);
+        //是否支付
+        if ("error".equals(m)) {
+            request.getRequestDispatcher("500.jsp").forward(request, response);
+            return;
+        }
+        if ("success".equals(m)) {
+            request.getRequestDispatcher("pay.jsp").forward(request, response);
+            return;
+        }
+    }else{
+        String qorderid = request.getParameter("orderid");
+        String backresult =  "";
+        if(StringUtils.isEmpty(qorderid)){
+            //创建订单
+            backresult = ho.createOrder(request);
+        }else{
+            //查询订单
+            backresult = ho.queryOrder(request);
 
-    //更新
-    String m = ho.modify(request);
-    System.out.println("m:"+m);
-    //是否支付
-    if ("error".equals(m)) {
-        request.getRequestDispatcher("500.jsp").forward(request, response);
-        return;
-    }
-    if ("success".equals(m)) {
-        request.getRequestDispatcher("pay.jsp").forward(request, response);
-        return;
+        }
+        if (StringUtils.isEmpty(backresult)) {
+            bl = false;
+        }if ("error".equals(backresult)) {
+            request.getRequestDispatcher("500.jsp").forward(request, response);
+            return;
+        }else{
+            bl = true;
+        }
     }
 
-    //创建订单
-    JSONObject jsonObject = ho.createOrder(request);
-    if (null == jsonObject) {
-        bl = false;
-    }
+
     if(bl){
         //红包
         ho.getUserWXwallet(request);
