@@ -522,7 +522,10 @@ public class OrderHandle {
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
+            openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
         }
+        openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
+
         logger.debug("修改订单开始请求token:" + token);
         logger.debug("修改订单开始请求openid:" + openid);
 
@@ -583,6 +586,7 @@ public class OrderHandle {
 //                e.printStackTrace();
 //            }
 
+            
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
             request.setAttribute("nonceStr", noncestr);
