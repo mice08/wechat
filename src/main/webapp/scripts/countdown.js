@@ -8,7 +8,7 @@ var countdomn = {
         this.differ_time = options.time;
         this.time = setInterval(function () {
             if (that.differ_time <= 1000) {
-                this.options.onStop(that);
+                that.options.onStop(that);
             }
             that.update(that.differ_time);
             var data = {};
