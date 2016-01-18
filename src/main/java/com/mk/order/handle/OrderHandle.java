@@ -537,7 +537,6 @@ public class OrderHandle {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
             openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
         }
-        openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
 
         logger.debug("修改订单开始请求token:" + token);
         logger.debug("修改订单开始请求openid:" + openid);

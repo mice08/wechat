@@ -22,7 +22,7 @@ public class CallBackOTSToken {
 
     public static ApiResult getCallBackToken(String unionid) {
         //请求
-        String apiStringResult = HttpUtils.post(apiUrl+"?ostype=3&unionid="+unionid,"");
+        String apiStringResult = HttpUtils.post("http://huidu.imike.cn/ots/unionidandphone/check?ostype=3&unionid="+unionid,"");
         System.out.println(apiUrl+"?ostype=3&unionid="+unionid);
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
