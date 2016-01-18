@@ -273,7 +273,7 @@ public class OrderHandle {
             if (!"0".equals(backtimeouttime)) {
                 try {
                     System.out.println("backtimeouttime:" + DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"));
-                    request.setAttribute("timeouttime", DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"));
+                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
                 } catch (Exception e) {
                     System.out.println("时间处理错误");
                     e.printStackTrace();
