@@ -233,7 +233,7 @@ public class OrderHandle {
             JSONObject object = this.parseObject(backStr);
 
             if (!"true".equals(object.getString("success"))) {
-                request.setAttribute("errmsg",  DataHander.checkStringNull(object, "errmsg", ""));
+                request.setAttribute("errmsg", DataHander.checkStringNull(object, "errmsg", ""));
                 return null;
             }
 
@@ -258,28 +258,27 @@ public class OrderHandle {
             }
 
 
-            request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
-            request.setAttribute("walletcost", DataHander.checkStringNull(object,"walletcost","0"));
-            request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
-            request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
-            request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
-            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
-            request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price","0"));
-            request.setAttribute("totalprice", DataHander.checkStringNull(object,"roomorder","totalprice","0"));
-            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
-            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
-            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
-            String  backtimeouttime = DataHander.checkStringNull(object,"timeouttime","0");
-            if(!"0".equals(backtimeouttime)){
-                try{
-                    System.out.println("backtimeouttime:"+DateUtil.timesBetween(backtimeouttime,DateUtil.getStringDate("yyyyMMddHHmmss"),"yyyyMMddHHmmss"));
-                    request.setAttribute("timeouttime",DateUtil.timesBetween(backtimeouttime,DateUtil.getStringDate("yyyyMMddHHmmss"),"yyyyMMddHHmmss"));
-                }catch(Exception  e){
+            request.setAttribute("roomtypename", DataHander.checkStringNull(object, "roomorder", "roomtypename", ""));
+            request.setAttribute("walletcost", DataHander.checkStringNull(object, "walletcost", "0"));
+            request.setAttribute("contacts", DataHander.checkStringNull(object, "contacts", ""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(object, "contactsphone", ""));
+            request.setAttribute("usermessage", DataHander.checkStringNull(object, "usermessage", ""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object, "onlinepay", "0"));
+            request.setAttribute("price", DataHander.checkStringNull(object, "roomorder", "payprice", "price", "0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
+            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object, "timeintervalstart", ""));
+            request.setAttribute("timeintervalend", DataHander.checkStringNull(object, "timeintervalend", ""));
+            String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
+            if (!"0".equals(backtimeouttime)) {
+                try {
+                    System.out.println("backtimeouttime:" + DateUtil.timesBetween(backtimeouttime, DateUtil.getStringDate("yyyyMMddHHmmss"), "yyyyMMddHHmmss"));
+                    request.setAttribute("timeouttime", DateUtil.timesBetween(backtimeouttime, DateUtil.getStringDate("yyyyMMddHHmmss"), "yyyyMMddHHmmss"));
+                } catch (Exception e) {
                     System.out.println("时间处理错误");
                     e.printStackTrace();
                 }
             }
-
 
 
             return object;
@@ -295,7 +294,7 @@ public class OrderHandle {
 
         //
         String debug = UrlUtil.getValue(BaseData.debug);
-        System.out.println("获取cookies:"+request.getCookies());
+        System.out.println("获取cookies:" + request.getCookies());
 
         //
         Cookie[] cookies = request.getCookies();
@@ -400,7 +399,7 @@ public class OrderHandle {
         }
         System.out.println("修改订单开始.ordertype:" + ordertype);
 
-        System.out.println("修改订单开始.userName:" + userName+"userMobile:"+userMobile+"orderId:"+orderId);
+        System.out.println("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId);
 
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
@@ -414,8 +413,8 @@ public class OrderHandle {
         parmeter.put("orderid", orderId);
         parmeter.put("walletcost", walletCost);
         parmeter.put("ordertype", ordertype);
-        parmeter.put("contacts",userName);
-        parmeter.put("contactsphone",userMobile);
+        parmeter.put("contacts", userName);
+        parmeter.put("contactsphone", userMobile);
 
         System.out.println("修改订单开始.准备获取cookies:");
 
@@ -456,7 +455,7 @@ public class OrderHandle {
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            request.setAttribute("errmsg",  DataHander.checkStringNull(jsonOrder, "errmsg", ""));
+            request.setAttribute("errmsg", DataHander.checkStringNull(jsonOrder, "errmsg", ""));
             return "error";
         }
 
@@ -466,14 +465,14 @@ public class OrderHandle {
         return "success";
     }
 
-    public String pay(HttpServletRequest request,HttpServletResponse response) {
+    public String pay(HttpServletRequest request, HttpServletResponse response) {
 
         String orderid = (String) request.getAttribute("orderid");
         String ordertype = (String) request.getAttribute("ordertype");
 
         System.out.println("修改订单开始请求orderid:" + orderid);
         System.out.println("修改订单开始请求ordertype:" + ordertype);
-        if (null == orderid || null == ordertype){
+        if (null == orderid || null == ordertype) {
             return "error";
         }
 
@@ -518,7 +517,7 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errmsg",  DataHander.checkStringNull(jsonPay, "errmsg", ""));
+            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
@@ -529,6 +528,7 @@ public class OrderHandle {
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
+                request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
                 return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
@@ -567,7 +567,7 @@ public class OrderHandle {
             request.setAttribute("packagevalue", packagevalue);
 
             request.setAttribute("paySign", sign);
-            request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl));
+            request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
             return "success";
         }
 
