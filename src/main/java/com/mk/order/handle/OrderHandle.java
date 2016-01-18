@@ -447,8 +447,7 @@ public class OrderHandle {
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
         logger.info("修改订单开始请求backStr:" + backStr);
-
-        logger.info("修改订单开始请求backStr:" + backStr);
+        System.out.println("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
             return BaseData.RESULT_BAD;

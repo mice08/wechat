@@ -41,10 +41,10 @@
             <h1>请求不合法</h1>
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
-        String  message = request.getParameter("errormsg");
+        String  obj =  request.getAttribute("errormsg").toString();
     %>
         <script>
-            showMessage("<%=message%>");
+            showMessage("<%=obj%>");
         </script>
     <%
         }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){
