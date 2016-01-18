@@ -203,7 +203,17 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getSignature()
 	{
-		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
+//		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
+//		String fuckU= DateUtil.getCurMis().toString().substring(0,10);
+//
+//		String encryptString = new StringBuilder().append("jsapi_ticket=" + jssdkTicket.getTicket() + "&noncestr=t8bI2mW5Mma0I20Y&timestamp=" + fuckU + "&url=" + getRequest().getRequestURL()+"").toString();
+//		System.out.println("string1="+tempStr);
+//
+//		encryptString = SHA1.sha1Encrypt(tempStr);
+//		System.out.println("加密后="+tempStr);
+//
+//		setAttr("timestamp", fuckU);
+//		setAttr("signature",tempStr);
 		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
 		renderText(str);
 	}
