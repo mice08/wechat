@@ -62,9 +62,9 @@
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
         Object obj =request.getAttribute("errormsg");
-        String  result = "请重试.";
+        String  msg = "请重试.";
         if(null!=obj){
-            result = obj.toString();
+            msg = obj.toString();
         }
 
     %>
