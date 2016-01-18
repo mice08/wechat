@@ -23,7 +23,7 @@
             return;
         }
     }else{
-        String qorderid = request.getParameter("orderid");
+        String qorderid = request.getParameter("qorderid");
         String backresult =  "";
         if(StringUtils.isEmpty(qorderid)){
             //创建订单
