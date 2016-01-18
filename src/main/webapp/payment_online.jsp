@@ -117,13 +117,13 @@
         </div>
     </section>
 </div>
-<footer class="footer bg-white row" style="width:100%;">
+<footer class="footer bg-white row row-no-padding" style="width:100%;">
     <div class="col">
         还需支付：<span id="all_cost" class="orange ">
             ￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" id="show-detail">
+        <a href="javascript:;" id="show-detail gray">
             明细<i class="icon up-icon"></i>
         </a>
         <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
