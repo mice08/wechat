@@ -127,7 +127,7 @@
         <a href="javascript:;" id="show-detail" class="gray">
             明细<i class="icon up-icon"></i>
         </a>
-        <a href="javascript:;" class="order-btn bg-orange white text-right " id="btn-submit">提交订单</a>
+        <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
     </div>
 </footer>
 <div class="mask_layer js_slide_layer"></div>
@@ -193,7 +193,6 @@
         });
         
         $userWallet.on('change',function(){
-            debugger;
             var val = $(this).val()||'0';
             val = Math.abs(parseInt(val));
             if(val>minUserCost){
@@ -203,8 +202,6 @@
             $allCost.text('￥'+(allCost - val));
             $walletLayer.text(val);
         });
-        
-        $userWallet.val(minUserCost).change();
         $userWallet.val(minUserCost).trigger('change');
         
         $('#btn-submit').tap(function (event) {

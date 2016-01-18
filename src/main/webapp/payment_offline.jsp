@@ -92,11 +92,11 @@
         <div class="col">
             还需支付：<span class="orange f-cost">￥${onlinepay}</span>
         </div>
-        <div class="col text-cut">
+        <div class="col text-cut text-right">
             <a href="javascript:;" class="js_slideUp gray">
                 明细<i class="icon up-icon"></i>
             </a>
-            <a href="javascript:;" class="order-btn bg-orange white text-right  js_submit_order">提交订单</a>
+            <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
         </div>
     </footer>
     <div class="mask_layer js_slide_layer"></div>
