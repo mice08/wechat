@@ -25,8 +25,10 @@
     if (null == jsonObject) {
         bl = false;
     }
-    //红包
-    ho.getUserWXwallet(request);
+    if(bl){
+        //红包
+        ho.getUserWXwallet(request);
+    }
 
     Long random = new Random().nextLong();
     request.setAttribute("random",random);

@@ -295,9 +295,12 @@ public class OrderHandle {
 
         //
         String debug = UrlUtil.getValue(BaseData.debug);
+        System.out.println("获取cookies:"+request.getCookies());
+
         //
         Cookie[] cookies = request.getCookies();
         if (null == cookies) {
+            System.out.println("获取cookies为空");
             return null;
         }
         String token = null;
