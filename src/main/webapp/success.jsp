@@ -8,7 +8,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
-    <title>500</title>
+    <title>支付成功</title>
 </head>
 <body>
 
