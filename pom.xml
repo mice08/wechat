@@ -259,7 +259,7 @@
     </profiles>
 
     <build>
-        <finalName>ROOT</finalName>
+        <finalName>wechat</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
