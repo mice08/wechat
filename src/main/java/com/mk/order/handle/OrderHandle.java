@@ -455,7 +455,7 @@ public class OrderHandle {
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            request.setAttribute("errormsg", DataHander.checkStringNull(jsonOrder, "errormsg", ""));
+            request.setAttribute("errormsg", DataHander.checkStringNull(jsonOrder, "errmsg", ""));
             return BaseData.RESULT_EXCEPTION;
         }
 
