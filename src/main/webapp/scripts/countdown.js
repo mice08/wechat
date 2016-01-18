@@ -23,6 +23,14 @@ var countdomn = {
                 data.m = that.mm < 10 ? '0' + that.mm : that.mm;
                 data.s = that.seconds < 10 ? '0' + that.seconds : that.seconds;
             }
+            if(that.differ_time <= 0){
+                data = {
+                    d : '00',
+                    h : '00',
+                    m : '00',
+                    s : '00'
+                }
+            }
             that.options.onChange(data);
         }, 1000);
     },
