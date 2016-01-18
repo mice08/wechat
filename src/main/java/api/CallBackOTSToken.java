@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by Mi on 16/1/18.
  */
 public class CallBackOTSToken {
-    private static String apiUrl = "http://ots.imike.com/ots/unionidandphone/check";
+    private static String apiUrl = "http://huidu.imike.cn/ots/unionidandphone/check";
 
     public CallBackOTSToken() {
     }
