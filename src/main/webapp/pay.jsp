@@ -7,7 +7,11 @@
 <%
 
     OrderHandle ho = new OrderHandle();
-    ho.pay(request);
+    String m = ho.pay(request);
+    if ("error".equals(m)) {
+        request.getRequestDispatcher("500.jsp").forward(request, response);
+        return;
+    }
 %>
     <script>
         function onBridgeReady() {
