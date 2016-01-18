@@ -506,7 +506,8 @@ public class OrderHandle {
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
-        System.out.println("修改订单开始请求token:" + token);
+        logger.debug("修改订单开始请求token:" + token);
+        logger.debug("修改订单开始请求openid:" + openid);
 
         if (StringUtils.isEmpty(token)) {
             return "error";
@@ -516,7 +517,7 @@ public class OrderHandle {
         parmeterPay.put("openid",openid);
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
-        System.out.println("修改订单开始请求backStr:" + backStr);
+        logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
             return "error";
