@@ -47,7 +47,10 @@
             <h1>请求不合法</h1>
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
-        String  obj =  request.getAttribute("errormsg").toString();
+        Object obj =request.getAttribute("errormsg");
+        String  result = "请重试.";
+        if(null!=obj)
+            result = obj.toString();
     %>
         <script>
             showMessage("<%=obj%>");
