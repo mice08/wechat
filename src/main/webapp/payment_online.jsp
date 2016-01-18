@@ -34,6 +34,12 @@
     <link rel="stylesheet" type="text/css" href="styles/pay.css?${random}"/>
     <title>在线支付</title>
 </head>
+<script type="text/javascript">
+    function   showMessage(message){
+        alert(message);
+        history.go(-1);
+    }
+</script>
 <body>
 
 <header class="header">
@@ -238,10 +244,4 @@
 
 </script>
 </body>
-<script type="text/javascript">
-    function   showMessage(message){
-        alert(message);
-        history.go(-1);
-    }
-</script>
 </html>
