@@ -6,6 +6,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -261,12 +262,20 @@ public class DateUtil {
     }
 
     /**
-     * @param lastDayǰ����lastDay��
-     * @param day��ǰʱ��
-     * @param str�õ��ַ�����ʽ
-     * @return
-     * @throws ParseException
+     * 获取两日期的时间差
      */
+    public  static  Long  timesBetween(String  btime,String  etime,String exmple)  throws   ParseException{
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date  dbtime = df.parse(btime);
+        Date  detime = df.parse(etime);
+        Long  diff = detime.getTime()-dbtime.getTime();
+        Long  time = diff/(1000);
+        return  time;
+    }
+
+
+
+
     public static String getDay(Integer lastDay, String day, String str) throws ParseException {
         SimpleDateFormat matter1 = new SimpleDateFormat(str);
         Date d = matter1.parse(day);
@@ -288,11 +297,6 @@ public class DateUtil {
         return uuid;
     }
 
-    public static void main(String[] args) throws ParseException {
-        DateUtil dh = new DateUtil();
-
-
-    }
 
     public static String getStrFormart(String str, String exmple) {
         if (StringUtils.isEmpty(exmple)) {
@@ -326,5 +330,16 @@ public class DateUtil {
             dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
         }
         return dayForWeek;
+    }
+
+    public  static void main(String[] args)throws  Exception{
+        String  time1 ="20160113230000";
+        String  time2 ="20160118233000";
+        String  excemp ="yyyyMMddHHmmss";
+        DateUtil du = new  DateUtil();
+        du.getStringDate(excemp);
+        System.out.println(du.getStringDate(excemp));
+       System.out.println("时间差:"+du.timesBetween(time2,du.getStringDate(excemp),excemp)) ;
+
     }
 }

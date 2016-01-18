@@ -259,18 +259,28 @@ public class OrderHandle {
                 e.printStackTrace();
             }
 
-            request.setAttribute("roomtypename", DataHander.checkStringNull(object, "roomorder", "roomtypename", ""));
-            request.setAttribute("walletcost", DataHander.checkStringNull(object, "walletcost", "0"));
-            request.setAttribute("contacts", DataHander.checkStringNull(object, "contacts", ""));
-            request.setAttribute("contactsphone", DataHander.checkStringNull(object, "contactsphone", ""));
-            request.setAttribute("usermessage", DataHander.checkStringNull(object, "usermessage", ""));
-            request.setAttribute("onlinepay", DataHander.checkStringNull(object, "onlinepay", "0"));
-            request.setAttribute("price", DataHander.checkStringNull(object, "roomorder", "payprice", "price", "0"));
-            request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
-            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
-            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object, "timeintervalstart", ""));
-            request.setAttribute("timeintervalend", DataHander.checkStringNull(object, "timeintervalend", ""));
-            request.setAttribute("timeouttime", DataHander.checkStringNull(object, "timeouttime", "0"));
+
+            request.setAttribute("roomtypename", DataHander.checkStringNull(object,"roomorder","roomtypename",""));
+            request.setAttribute("walletcost", DataHander.checkStringNull(object,"walletcost","0"));
+            request.setAttribute("contacts", DataHander.checkStringNull(object,"contacts",""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(object,"contactsphone",""));
+            request.setAttribute("usermessage", DataHander.checkStringNull(object,"usermessage",""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"onlinepay","0"));
+            request.setAttribute("price", DataHander.checkStringNull(object,"roomorder","payprice","price","0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(object,"roomorder","totalprice","0"));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
+            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
+            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
+            String  backtimeouttime = DataHander.checkStringNull(object,"timeouttime","0");
+            if(!"0".equals(backtimeouttime)){
+                try{
+                    request.setAttribute("timeouttime",DateUtil.timesBetween(backtimeouttime,DateUtil.getStringDate("yyyyMMddHHmmss"),"yyyyMMddHHmmss"));
+                }catch(Exception  e){
+                    System.out.println("时间处理错误");
+                    e.printStackTrace();
+                }
+            }
+
 
 
             return object;
@@ -440,8 +450,6 @@ public class OrderHandle {
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
             return "error";
-        } else {
-
         }
 
         //
