@@ -275,8 +275,15 @@ public class OrderHandle {
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"maxuserwalletcost","0"));
             request.setAttribute("timeintervalstart", DataHander.checkStringNull(object,"timeintervalstart",""));
             request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"timeintervalend",""));
-            request.setAttribute("timeouttime", DataHander.checkStringNull(object,"timeouttime","0"));
-
+            String  backtimeouttime = DataHander.checkStringNull(object,"timeouttime","0");
+            if(!"0".equals(backtimeouttime)){
+                try{
+                    request.setAttribute("timeouttime",DateUtil.timesBetween(backtimeouttime,DateUtil.getStringDate("yyyyMMddHHmmss"),"yyyyMMddHHmmss"));
+                }catch(Exception  e){
+                    System.out.println("时间处理错误");
+                    e.printStackTrace();
+                }
+            }
 
 
 
@@ -450,8 +457,6 @@ public class OrderHandle {
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
             return "error";
-        } else {
-
         }
 
         //
