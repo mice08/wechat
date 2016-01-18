@@ -144,7 +144,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	@Override
 	protected void processInLocationEvent(InLocationEvent inLocationEvent)
 	{
-		logger.debug("发送地理位置事件：" + inLocationEvent.getFromUserName());
+		logger.debug("发送地理位置事件:::：" + inLocationEvent.getFromUserName());
 //		OutTextMsg outMsg = new OutTextMsg(inLocationEvent);
 //		outMsg.setContent("地理位置是：" + inLocationEvent.getLatitude()+inLocationEvent.getLongitude());
 //		render(outMsg);
