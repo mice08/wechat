@@ -1,6 +1,7 @@
 package com.mk.order.handle;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.log.Log;
 import com.mk.common.toolutils.*;
@@ -21,7 +22,6 @@ public class OrderHandle {
 
     //订单路由
     public  String  orderRoute(HttpServletRequest request){
-        System.out.println("进来了!!");
         String  result = BaseData.RESULT_INIT;
         String  orderid = request.getParameter("orderid");
         //判断为修改操作
@@ -447,7 +447,6 @@ public class OrderHandle {
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
         logger.debug("修改订单开始请求backStr:" + backStr);
-        System.out.println("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
             return BaseData.RESULT_BAD;
@@ -576,7 +575,9 @@ public class OrderHandle {
 
     public  String  queryOrder(HttpServletRequest request){
         String  qorderid = request.getParameter("qorderid");
+        logger.debug("查询订单开始请求orderid:" + qorderid);
         if(StringUtils.isEmpty(qorderid)){
+            logger.error("查询订单开始请求orderid:" + qorderid);
             return null;
         }
 
@@ -590,10 +591,10 @@ public class OrderHandle {
         }
         token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
-        System.out.println("修改订单开始.token:" + token);
 
         if (StringUtils.isEmpty(token)) {
-            return  null;
+            logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
+            return  BaseData.RESULT_BAD;
         }
         HashMap  hm = new HashMap();
 
@@ -606,9 +607,16 @@ public class OrderHandle {
         }
         JSONObject object = JSONObject.parseObject(backStr);
         if (!"true".equals(object.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(object, "errmsg", ""));
-            return   "bad";
+            request.setAttribute("errormsg", DataHander.checkStringNull(object, "errmsg", ""));
+            logger.error("查询订单开始请求orderid:" + qorderid+"查询订单数量为空");
+            return   BaseData.RESULT_EXCEPTION;
         } else {
+            JSONArray jsa = object.getJSONArray("order");
+            if(null==jsa||jsa.size()==0){
+                logger.error("查询订单开始请求orderid:" + qorderid+"查询订单数量为空");
+                return BaseData.RESULT_BAD;
+            }
+
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"order", "orderid", "0"));
             request.setAttribute("hotelname", DataHander.checkStringNull(object,"order", "hotelname", ""));
@@ -646,11 +654,11 @@ public class OrderHandle {
                 try {
                     request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
                 } catch (Exception e) {
-                    System.out.println("时间处理错误");
+                    logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
                     e.printStackTrace();
                 }
             }
-            return  "ok";
+            return  BaseData.RESULT_QUERY_SUCCESS;
 
         }
 
