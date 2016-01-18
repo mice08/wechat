@@ -607,6 +607,8 @@ public class OrderHandle {
         }
 
         Cookie[] cookies = request.getCookies();
+
+
         String token = null;
         if(null==cookies||cookies.length==0){
             logger.error("查询订单开始请求orderid:" + qorderid+"获取cookies失败.");
