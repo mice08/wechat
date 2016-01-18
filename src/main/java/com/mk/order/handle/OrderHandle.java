@@ -158,21 +158,26 @@ public class OrderHandle {
 
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
-            return BaseData.RESULT_BAD;
-        }
+//        Cookie[] cookies = request.getCookies();
+//
+//        if (null == cookies) {
+//            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
+//            return BaseData.RESULT_BAD;
+//        }
+//
+//        //
+//        String token = null;
+//        for (int i = 0; i < cookies.length; i++) {
+//            logger.debug("name :" + cookies[i].getName()+token);
+//            if ("m18".equals(cookies[i].getName())) {
+//                token = cookies[i].getValue();
+//                logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+//                break;
+//            }
+//        }
 
-        //
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m18".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-                break;
-            }
-        }
+        String token = request.getParameter("m18");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
@@ -300,19 +305,22 @@ public class OrderHandle {
 
         String debug = UrlUtil.getValue(BaseData.debug);
         //
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取cookies为空");
-            return BaseData.RESULT_BAD;
-        }
-        String token = null;
+//        Cookie[] cookies = request.getCookies();
+//        if (null == cookies) {
+//            logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取cookies为空");
+//            return BaseData.RESULT_BAD;
+//        }
+//        String token = null;
+//
+//        for (int i = 0; i < cookies.length; i++) {
+//            if ("m18".equals(cookies[i].getName())) {
+//                token = cookies[i].getValue();
+//                break;
+//            }
+//        }
 
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m18".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
+        String token = request.getParameter("m18");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
@@ -418,18 +426,22 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("修改订单开始.获取cookies失败");
-            return BaseData.RESULT_BAD;
-        }
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m18".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
+//        Cookie[] cookies = request.getCookies();
+//        if (null == cookies) {
+//            logger.debug("修改订单开始.获取cookies失败");
+//            return BaseData.RESULT_BAD;
+//        }
+//        String token = null;
+//        for (int i = 0; i < cookies.length; i++) {
+//            if ("m18".equals(cookies[i].getName())) {
+//                token = cookies[i].getValue();
+//                break;
+//            }
+//        }
+
+        String token = request.getParameter("m18");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
@@ -484,25 +496,30 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            return "error";
-        }
-        String token = null;
-        String openid = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m18".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m19".equals(cookies[i].getName())) {
-                openid = cookies[i].getValue();
-                break;
-            }
+//        Cookie[] cookies = request.getCookies();
+//        if (null == cookies) {
+//            return "error";
+//        }
+//        String token = null;
+//        String openid = null;
+//        for (int i = 0; i < cookies.length; i++) {
+//            if ("m18".equals(cookies[i].getName())) {
+//                token = cookies[i].getValue();
+//                break;
+//            }
+//        }
+//        for (int i = 0; i < cookies.length; i++) {
+//            if ("m19".equals(cookies[i].getName())) {
+//                openid = cookies[i].getValue();
+//                break;
+//            }
+//
+//        }
 
-        }
+        String token = request.getParameter("m18");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+        String openid = request.getParameter("m19");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
