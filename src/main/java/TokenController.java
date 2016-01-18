@@ -5,7 +5,7 @@ import com.jfinal.core.Controller;
  * Created by BurizaDo on 1/14/16.
  */
 public class TokenController extends Controller {
-    @ActionKey("/")
+    @ActionKey("/wx")
     public void token () {
         if (getPara("echostr")==null){
             renderText("");
