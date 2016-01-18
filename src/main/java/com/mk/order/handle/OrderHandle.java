@@ -456,6 +456,10 @@ public class OrderHandle {
         String ordertype = (String) request.getAttribute("ordertype");
 
         System.out.println("修改订单开始请求orderid:" + orderid);
+        System.out.println("修改订单开始请求ordertype:" + ordertype);
+        if (null == orderid || null == ordertype){
+            return "error";
+        }
 
         //
         String debug = UrlUtil.getValue(BaseData.debug);
