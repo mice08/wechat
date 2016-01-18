@@ -40,11 +40,7 @@
             clickFn: function(e){
                 e.preventDefault();
                 if(e.target.tagName=='BUTTON'){
-                    //                  console.log('111111');
-                    history.go(-1);
-                    this.destroy();
-                    //            window.location.href="";
-
+                    window.location.href="http://dev-h5.imike.cn/#!/myorder/all";
                 }
             }
         })
