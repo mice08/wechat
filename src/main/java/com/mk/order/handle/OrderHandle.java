@@ -146,14 +146,13 @@ public class OrderHandle {
                 break;
             }
         }
-        System.out.println("token:" + token);
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if ("true".equals(debug)) {
-            token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+            token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
 
-        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
-
+        System.out.println("token:" + token);
 
         if (StringUtils.isEmpty(token)) {
             return null;
@@ -310,7 +309,7 @@ public class OrderHandle {
                 break;
             }
         }
-        token = "83d7c5ee-ab61-4436-8538-2f52b16dcf4d";
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         System.out.println("获取红包:token" + token);
 
         if (StringUtils.isEmpty(token)) {
@@ -425,9 +424,9 @@ public class OrderHandle {
                 break;
             }
         }
-        token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         if ("true".equals(debug)) {
-            token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+            token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
         System.out.println("修改订单开始.token:" + token);
 
@@ -490,7 +489,7 @@ public class OrderHandle {
                 break;
             }
         }
-        token = "a3fea418-c922-4781-a2be-2b8474d5dde0";
+        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
