@@ -176,6 +176,19 @@ public class OrderHandle {
 //            }
 //        }
 
+        Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
+        } else {
+            for (int i = 0; i < cookies.length; i++) {
+                if ("m18".equals(cookies[i].getName())) {
+                    String token = cookies[i].getValue();
+                    logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+                    break;
+                }
+            }
+        }
+
         String token = request.getParameter("m18");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
