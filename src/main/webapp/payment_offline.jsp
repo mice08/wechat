@@ -11,7 +11,9 @@
     String m = ho.modify(request);
     //是否支付
     if ("error".equals(m)) {
-      }
+        request.getRequestDispatcher("500.jsp").forward(request, response);
+        return;
+    }
     if ("success".equals(m)) {
         request.getRequestDispatcher("pay.jsp").forward(request, response);
         return;
