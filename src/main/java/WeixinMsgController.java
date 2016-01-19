@@ -113,21 +113,20 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	 */
 	protected void processInFollowEvent(InFollowEvent inFollowEvent)
 	{
-		//BI统计
-		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
-			OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
-			outMsg.setContent("感谢关注眯客~</br></br>注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~现在验证手机,即可获酒店大红包.");
-			render(outMsg);
+			String text = "感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"http://www.imike.com\">现在验证手机,即可获酒店大红包。</a>";
+			renderOutTextMsg(text);
 		}
 		// 如果为取消关注事件，将无法接收到传回的信息
 		if (InFollowEvent.EVENT_INFOLLOW_UNSUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("取消关注：" + inFollowEvent.getFromUserName());
 		}
+		//BI统计
+		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 	}
 
 	@Override
