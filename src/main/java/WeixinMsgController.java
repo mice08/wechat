@@ -126,7 +126,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 			logger.debug("取消关注：" + inFollowEvent.getFromUserName());
 		}
 		//BI统计
-		BIFollowEventApi.sendFollowEvent(inFollowEvent);
+//		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 	}
 
 	@Override
