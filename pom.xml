@@ -207,6 +207,7 @@
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <ots.url>http://huidu.imike.cn/ots/</ots.url>
             </properties>
         </profile>
 
@@ -232,6 +233,7 @@
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <ots.url>http://huidu.imike.cn/ots/</ots.url>
             </properties>
         </profile>
 
@@ -254,6 +256,7 @@
 
                 <create.pay.url>http://ots.imike.com/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <ots.url>http://ots.imike.com/ots/</ots.url>
             </properties>
         </profile>
     </profiles>
