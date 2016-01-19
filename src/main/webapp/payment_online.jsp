@@ -107,7 +107,7 @@
             <div class="usebg-item">
                 <div class="c-title gray-s">使用红包</div>
                 <div class="use-package bg-white  row-no-padding">
-                    <div class="gray-s">使用红包 <span class="gray">￥${balance}<</span></div>
+                    <div class="gray-s">使用红包 <span class="gray">￥${balance}</span></div>
                     <div class="pay-package-r"><span class="gray-s pay-discount">本次下单最多可抵扣${maxuserwalletcost}元</span>
                         <input type="tel" name="walletcost" class="u-p-input gray" id="user-wallet"></div>
                 </div>
@@ -127,7 +127,7 @@
                 <li>
                     <i class="icon wx-icon"></i>
                     <span>微信支付</span>
-                    <span class="u-p-tip gray"></span> 
+                    <span class="u-p-tip gray">红包最多可享${maxuserwalletcost}元</span>
                     <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
                 </li>
             </ul>
