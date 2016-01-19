@@ -43,8 +43,8 @@ a{
 }
 .up-icon{
     background-position:-26px -82px ;
-    width: 20px;
-    height:20px;
+    width: 15px;
+    height:15px;
     vertical-align: middle;
     margin-left: 0.3rem;
 }
@@ -66,7 +66,7 @@ a{
     top: 1.5rem;
 }
 .check-icon.on{
-    background-position: -21px -17px;
+    background-position: -21px -18px;
     width: 18px;
     height: 18px;
     position: absolute;
@@ -280,7 +280,7 @@ footer.footer .order-btn{
     border-bottom: 0.1rem solid #eee;
 }
 .footer_layer{
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 5.6rem;
     display: none;
