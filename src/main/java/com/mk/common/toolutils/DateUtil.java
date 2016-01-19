@@ -384,7 +384,7 @@ public class DateUtil {
         ca.setTime(da);
         int month=ca.get(Calendar.MONTH)+1;
         int day=ca.get(Calendar.DATE);
-        return (month>=9?"0"+month:month)+":"+(day>=9?"0"+day:day);
+        return (month<10?"0"+month:month)+":"+(day<10?"0"+day:day);
     }
 
 
