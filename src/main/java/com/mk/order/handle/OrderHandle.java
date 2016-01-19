@@ -54,13 +54,6 @@ public class OrderHandle {
             return null;
         }
 
-        //
-        String result = (String) request.getParameter(key);
-        logger.debug("获取get参数:"+key+" : "+result);
-
-        if (StringUtils.isNotEmpty(result)) {
-            return result;
-        }
 
         //token
         Cookie[] cookies = request.getCookies();
@@ -70,7 +63,7 @@ public class OrderHandle {
         }
 
         //
-        result = null;
+        String result = null;
         for (int i = 0; i < cookies.length; i++) {
             logger.debug("name :" + cookies[i].getName()+result);
             if (key.equals(cookies[i].getName())) {
@@ -78,8 +71,12 @@ public class OrderHandle {
                 logger.debug("获取cookie参数:"+key+" : "+result);
             }
         }
-        return result;
 
+        //
+        result = (String) request.getParameter(key);
+        logger.debug("获取get参数:"+key+" : "+result);
+
+        return result;
     }
 
     public String createOrder(HttpServletRequest request) throws IOException {
@@ -190,7 +187,7 @@ public class OrderHandle {
 
 
         //token
-        String token = this.getParam(request,"m18");
+        String token = this.getParam(request,"m28");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -317,7 +314,7 @@ public class OrderHandle {
         String debug = UrlUtil.getValue(BaseData.debug);
         //
 
-        String token = this.getParam(request,"m18");
+        String token = this.getParam(request,"m28");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -424,7 +421,7 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-        String token = this.getParam(request,"m18");
+        String token = this.getParam(request,"m28");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -486,9 +483,9 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-        String token = this.getParam(request,"m18");
+        String token = this.getParam(request,"m28");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-        String openid = this.getParam(request,"m19");
+        String openid = this.getParam(request,"m29");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
@@ -582,17 +579,7 @@ public class OrderHandle {
         Cookie[] cookies = request.getCookies();
 
 
-        String token = null;
-        if(null==cookies||cookies.length==0){
-            logger.error("查询订单开始请求orderid:" + qorderid+"获取cookies失败.");
-            return  BaseData.RESULT_BAD;
-        }
-        for (int i = 0; i < cookies.length; i++) {
-            if ("m18".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
+        String token = this.getParam(request,"28");
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
