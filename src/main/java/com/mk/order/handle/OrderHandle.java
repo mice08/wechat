@@ -49,6 +49,35 @@ public class OrderHandle {
         return  result;
     }
 
+    private String getParam(HttpServletRequest request,String key) {
+        if (null == request || StringUtils.isEmpty(key)) {
+            return null;
+        }
+
+        //token
+        Cookie[] cookies = request.getCookies();
+
+        if (null == cookies) {
+            logger.debug("获取cookie参数:"+key+",错误信息:获取cookies失败");
+        }
+
+        //
+        String result = null;
+        for (int i = 0; i < cookies.length; i++) {
+            logger.debug("name :" + cookies[i].getName()+result);
+            if (key.equals(cookies[i].getName())) {
+                result = cookies[i].getValue();
+                logger.debug("获取cookie参数:"+key+" : "+result);
+                return result;
+            }
+        }
+
+        //
+        result = (String) request.getParameter(key);
+        logger.debug("获取get参数:"+key+" : "+result);
+
+        return result;
+    }
 
     public String createOrder(HttpServletRequest request) throws IOException {
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder] ");
@@ -158,38 +187,7 @@ public class OrderHandle {
 
 
         //token
-//        Cookie[] cookies = request.getCookies();
-//
-//        if (null == cookies) {
-//            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
-//            return BaseData.RESULT_BAD;
-//        }
-//
-//        //
-//        String token = null;
-//        for (int i = 0; i < cookies.length; i++) {
-//            logger.debug("name :" + cookies[i].getName()+token);
-//            if ("m18".equals(cookies[i].getName())) {
-//                token = cookies[i].getValue();
-//                logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-//                break;
-//            }
-//        }
-
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
-        } else {
-            for (int i = 0; i < cookies.length; i++) {
-                if ("m18".equals(cookies[i].getName())) {
-                    String token = cookies[i].getValue();
-                    logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-                    break;
-                }
-            }
-        }
-
-        String token = request.getParameter("m18");
+        String token = this.getParam(request,"m18");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -279,14 +277,7 @@ public class OrderHandle {
 
             request.setAttribute("begintime", begintimeOri);
             request.setAttribute("endtime", endtimeOri);
-
-            try {
-                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri, begintimeOri, "yyyyMMdd"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
+            request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object, "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "walletcost", "0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object, "contacts", ""));
@@ -322,21 +313,8 @@ public class OrderHandle {
 
         String debug = UrlUtil.getValue(BaseData.debug);
         //
-//        Cookie[] cookies = request.getCookies();
-//        if (null == cookies) {
-//            logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取cookies为空");
-//            return BaseData.RESULT_BAD;
-//        }
-//        String token = null;
-//
-//        for (int i = 0; i < cookies.length; i++) {
-//            if ("m18".equals(cookies[i].getName())) {
-//                token = cookies[i].getValue();
-//                break;
-//            }
-//        }
 
-        String token = request.getParameter("m18");
+        String token = this.getParam(request,"m18");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -443,20 +421,7 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-//        Cookie[] cookies = request.getCookies();
-//        if (null == cookies) {
-//            logger.debug("修改订单开始.获取cookies失败");
-//            return BaseData.RESULT_BAD;
-//        }
-//        String token = null;
-//        for (int i = 0; i < cookies.length; i++) {
-//            if ("m18".equals(cookies[i].getName())) {
-//                token = cookies[i].getValue();
-//                break;
-//            }
-//        }
-
-        String token = request.getParameter("m18");
+        String token = this.getParam(request,"m18");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -518,29 +483,9 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-//        Cookie[] cookies = request.getCookies();
-//        if (null == cookies) {
-//            return "error";
-//        }
-//        String token = null;
-//        String openid = null;
-//        for (int i = 0; i < cookies.length; i++) {
-//            if ("m18".equals(cookies[i].getName())) {
-//                token = cookies[i].getValue();
-//                break;
-//            }
-//        }
-//        for (int i = 0; i < cookies.length; i++) {
-//            if ("m19".equals(cookies[i].getName())) {
-//                openid = cookies[i].getValue();
-//                break;
-//            }
-//
-//        }
-
-        String token = request.getParameter("m18");
+        String token = this.getParam(request,"m18");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-        String openid = request.getParameter("m19");
+        String openid = this.getParam(request,"m19");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
@@ -686,14 +631,7 @@ public class OrderHandle {
 
             request.setAttribute("begintime", begintimeOri);
             request.setAttribute("endtime", endtimeOri);
-
-            try {
-                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri, begintimeOri, "yyyyMMdd"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
+            request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"order", "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "order","walletcost", "0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object,"order", "contacts", ""));
