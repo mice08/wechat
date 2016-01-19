@@ -4,7 +4,6 @@
 
 <%
 
-    boolean bl = true;
     OrderHandle ho = new OrderHandle();
     System.out.println("12324");
     String  result =  ho.orderRoute(request);
@@ -65,7 +64,7 @@
 
     %>
         <script>
-            showMessage("<%=result%>");
+            showMessage("<%=msg%>");
         </script>
 
     <%
@@ -81,14 +80,14 @@
         <div class="h-info bg-white brown">
             <div class="h-name">${hotelname}</div>
             <div class="o-date">
-                <div class="d-inline">${begintime}<span class="orange">${timeintervalstart}</span>入住</div>|
+                <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalstart}:00-${timeintervalend}:00</span>入住</div>|
                 <span>${endtime}离店</span> |
-                <span>共${orderday}天</span>
+                <span>共${orderday}晚</span>
             </div>
             <div class="h-type row">
                 <div class="col text-left">${roomtypename}</div>
                 <div class="col text-right">
-                    房款：<span class="orange">${price}</span>
+                    房款 ￥<span class="orange">${totalprice}</span>
                 </div>
             </div>
         </div>
@@ -105,21 +104,18 @@
                     </li>
                 </ul>
             </div>
-            <div class="discount-items">
-                <div class="row discount-title d-gray">
-                    <div class="col">使用红包</div>
-                    <div class="col text-right  js_order_totalWallet">红包最多可抵${maxuserwalletcost}元
-                    </div>
+            <div class="usebg-item">
+                <div class="c-title gray-s">使用红包</div>
+                <div class="use-package bg-white  row-no-padding">
+                    <div class="gray-s">使用红包 <span class="gray">￥${balance}</span></div>
+                    <div class="pay-package-r"><span class="gray-s pay-discount">本次下单最多可抵扣${maxuserwalletcost}元</span>
+                        <input type="tel" name="walletcost" class="u-p-input gray" id="user-wallet"></div>
                 </div>
-                <div class="u-p-item ">
-                    <div class="use-package">
-                        使用红包<span class="u-p-tip">（红包余额：￥${balance}）</span>
-                    </div>
-                    <input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
-                </div>
-                <div class="pay-tips">
-                    <span>温馨提示：</span>
-                    <div>${usermessage}</div>
+
+                <div class="pay-tips gray-s">
+                    <span>规则提示：</span>
+                    <div class="pay-pg-tip">1.使用红包可以抵扣部分房款，默认选择您当前能用的最大金额，您也可以自行调整</div>
+                    <div class="pay-pg-tip">2.在您入住成功后，还会根据本次抵扣的金额发放红包奖励</div>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
@@ -131,7 +127,7 @@
                 <li>
                     <i class="icon wx-icon"></i>
                     <span>微信支付</span>
-                    <span class="u-p-tip gray"></span> 
+                    <span class="u-p-tip gray">红包最多可享${maxuserwalletcost}元</span>
                     <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
                 </li>
             </ul>

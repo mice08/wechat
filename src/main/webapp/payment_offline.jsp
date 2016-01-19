@@ -3,8 +3,6 @@
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
-    String path =
-    boolean bl = true;
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -60,11 +58,12 @@
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
         Object obj =request.getAttribute("errormsg");
         String  msg = "请重试.";
-        if(null!=obj)
+        if(null!=obj){
             msg = obj.toString();
+        }
     %>
         <script>
-            showMessage("<%=obj%>");
+            showMessage("<%=msg%>");
         </script>
     <%
         }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){
@@ -81,7 +80,7 @@
                 </div>
                 <div class="h-type row">
                     <div class="col text-left">${roomtypename}</div>
-                    <div class="col text-right">房款：<span class="orange">${price}</span></div>
+                    <div class="col text-right">房款 ￥<span class="orange">${totalprice}</span></div>
                 </div>
             </div>
             <form id="userInfo_form" method="post" name="userInfo_form">

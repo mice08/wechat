@@ -258,7 +258,11 @@ public class OrderHandle {
             JSONObject object = this.parseObject(backStr);
 
             if (!"true".equals(object.getString("success"))) {
-                request.setAttribute("errormsg", DataHander.checkStringNull(object, "errormsg", ""));
+                String errormsg = DataHander.checkStringNull(object, "errormsg", "");
+                if(StringUtils.isEmpty(errormsg)){
+                    errormsg = DataHander.checkStringNull(object, "errmsg", "");
+                }
+                request.setAttribute("errormsg",errormsg);
                 return BaseData.RESULT_EXCEPTION;
             }
 
@@ -467,7 +471,7 @@ public class OrderHandle {
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
-
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],请求参数:"+JSONObject.toJSON(parmeter));
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
         logger.debug("修改订单开始请求backStr:" + backStr);
@@ -478,7 +482,11 @@ public class OrderHandle {
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            request.setAttribute("errormsg", DataHander.checkStringNull(jsonOrder, "errmsg", ""));
+            String errormsg = DataHander.checkStringNull(jsonOrder,"errormsg","");
+            if(StringUtils.isEmpty(errormsg)){
+                errormsg = DataHander.checkStringNull(jsonOrder,"errmsg", "");
+            }
+            request.setAttribute("errormsg", errormsg);
             return BaseData.RESULT_EXCEPTION;
         }
 
@@ -493,9 +501,10 @@ public class OrderHandle {
         String orderid = (String) request.getAttribute("orderid");
         String ordertype = (String) request.getAttribute("ordertype");
 
-        System.out.println("修改订单开始请求orderid:" + orderid);
-        System.out.println("修改订单开始请求ordertype:" + ordertype);
+        logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype);
+
         if (null == orderid || null == ordertype) {
+            logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype+"出现错误");
             return "error";
         }
 
