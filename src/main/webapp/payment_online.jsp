@@ -82,12 +82,12 @@
             <div class="o-date">
                 <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalstart}:00-${timeintervalend}:00</span>入住</div>|
                 <span>${endtime}离店</span> |
-                <span>共${orderday}天</span>
+                <span>共${orderday}晚</span>
             </div>
             <div class="h-type row">
                 <div class="col text-left">${roomtypename}</div>
                 <div class="col text-right">
-                    房款：<span class="orange">${price}</span>
+                    房款 ￥<span class="orange">${totalprice}</span>
                 </div>
             </div>
         </div>

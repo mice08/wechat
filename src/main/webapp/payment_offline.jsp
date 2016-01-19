@@ -80,7 +80,7 @@
                 </div>
                 <div class="h-type row">
                     <div class="col text-left">${roomtypename}</div>
-                    <div class="col text-right">房款：<span class="orange">${price}</span></div>
+                    <div class="col text-right">房款 ￥<span class="orange">${totalprice}</span></div>
                 </div>
             </div>
             <form id="userInfo_form" method="post" name="userInfo_form">
