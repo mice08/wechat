@@ -3,8 +3,6 @@
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
-    String path =
-    boolean bl = true;
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -60,11 +58,12 @@
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
         Object obj =request.getAttribute("errormsg");
         String  msg = "请重试.";
-        if(null!=obj)
+        if(null!=obj){
             msg = obj.toString();
+        }
     %>
         <script>
-            showMessage("<%=obj%>");
+            showMessage("<%=msg%>");
         </script>
     <%
         }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){

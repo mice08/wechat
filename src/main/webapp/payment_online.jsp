@@ -4,7 +4,6 @@
 
 <%
 
-    boolean bl = true;
     OrderHandle ho = new OrderHandle();
     System.out.println("12324");
     String  result =  ho.orderRoute(request);
@@ -65,7 +64,7 @@
 
     %>
         <script>
-            showMessage("<%=result%>");
+            showMessage("<%=msg%>");
         </script>
 
     <%
