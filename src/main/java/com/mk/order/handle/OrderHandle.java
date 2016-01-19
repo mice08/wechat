@@ -276,9 +276,13 @@ public class OrderHandle {
 
             String endtimeOri = DataHander.checkStringNull(object, "endtime", "");
             endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
+            try{
+                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,"yyyyMMhh"));
+                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,"yyyyMMhh"));
+            }catch (Exception  e){
+                e.printStackTrace();
+            }
 
-            request.setAttribute("begintime", begintimeOri);
-            request.setAttribute("endtime", endtimeOri);
             request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object, "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "walletcost", "0"));

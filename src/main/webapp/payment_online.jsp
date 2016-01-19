@@ -102,12 +102,12 @@
             <div class="h-person bg-white">
                 <ul class="p-items">
                     <li>
-                        <span class="item-left">入住人</span>
-                        <input type="text" name="username" class="i-p-input js_order_concact" placeholder="入住人" value="${contacts}"/>
+                        <span class="item-left gray-s">入住人</span>
+                        <input type="text" name="username" class="i-p-input js_order_concact gray" placeholder="入住人" value="${contacts}"/>
                     </li>
                     <li>
-                        <span class="item-left">手机号</span>
-                        <input type="tel" name="usermobile" class="i-p-input js_order_phone" placeholder="联系电话" value="${contactsphone}"/>
+                        <span class="item-left gray-s">手机号</span>
+                        <input type="text" name="usermobile" class="i-p-input js_order_phone gray" placeholder="联系电话" value="${contactsphone}"/>
                     </li>
                 </ul>
             </div>
@@ -116,7 +116,7 @@
                 <div class="use-package bg-white  row-no-padding">
                     <div class="gray-s">使用红包 <span class="gray">￥${balance}</span></div>
                     <div class="pay-package-r"><span class="gray-s pay-discount">本次下单最多可抵扣${maxuserwalletcost}元</span>
-                        <input type="tel" name="walletcost" class="u-p-input gray" id="user-wallet">
+                        <input type="number" name="walletcost" class="u-p-input gray text-center" id="user-wallet">
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
             ￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" id="show-detail" class="gray">
+        <a href="javascript:;" id="show-detail" class="gray pay-detail">
             明细<i class="icon up-icon"></i>
         </a>
         <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
@@ -214,6 +214,7 @@
 
         $('#show-detail').tap(function (event) {
             $('.js_slide_layer').toggleClass('on');
+            $(this).toggleClass('on');
         });
         
         $('.js_pay_check').tap(function (event) {

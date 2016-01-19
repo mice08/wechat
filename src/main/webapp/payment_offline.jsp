@@ -94,8 +94,8 @@
             <form id="userInfo_form" method="post" name="userInfo_form">
                 <div class="h-person bg-white">
                     <ul class="p-items">
-                        <li><span class="item-left">入住人</span><input type="text" class="i-p-input js_order_concact" placeholder="入住人" name="username" value="${contacts}"></li>
-                        <li><span class="item-left">手机号</span><input type="text" class="i-p-input js_order_phone" placeholder="联系电话"  name="usermobile"  value="${contactsphone}"></li>
+                        <li><span class="item-left gray-s">入住人</span><input type="text" class="i-p-input js_order_concact gray" placeholder="入住人" name="username" value="${contacts}"></li>
+                        <li><span class="item-left gray-s">手机号</span><input type="text" class="i-p-input js_order_phone gray" placeholder="联系电话"  name="usermobile"  value="${contactsphone}"></li>
                     </ul>
                 </div>
 
@@ -115,7 +115,7 @@
             还需支付：<span class="orange f-cost">￥${onlinepay}</span>
         </div>
         <div class="col text-cut text-right">
-            <a href="javascript:;" class="js_slideUp gray">
+            <a href="javascript:;" class="js_slideUp gray pay-detail">
                 明细<i class="icon up-icon"></i>
             </a>
             <a href="javascript:;" class="order-btn bg-orange white text-center  js_submit_order">提交订单</a>
@@ -196,6 +196,7 @@
         var slideUp = function (e) {
             var $target = $(e.target);
             $('.js_slide_layer').toggleClass('on');
+            $target.toggleClass('on');
         }
 
     });

@@ -14,6 +14,30 @@ import java.util.*;
 
 public class DateUtil {
 
+      /** 时间格式. */
+    public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
+    /** 时间格式. */
+    public static final String FORMAT_DATE_CN = "yyyy年MM月dd日";
+    /** 时间格式. */
+    public static final String FORMAT_TIMESTAMP = "yyyy-MM-dd HH:mm:ss:SSS";
+    /** 到小时分钟的日期格式. */
+    public static final String FORMAT_DATETIME_HM = "yyyy-MM-dd HH:mm";
+    /** 全时间格式. */
+    public static final String FORMAT_FULLTIME = "yyMMddHHmmssSSS";
+    /** 日期格式. */
+    public static final String FORMAT_DATE = "yyyy-MM-dd";
+    /** 日期格式. */
+    public static final String FORMAT_YEARMONTH = "yyyy-MM";
+    /** 纯时间格式. */
+    public static final String FORMAT_TIME = "HH:mm:ss";
+
+    public static final String FORMAT_HOURMIN = "HHmm";
+
+
+    public static final String FORMATDATETIME = "yyyyMMddHHmmss";
+
+    public static final String FORMATSHORTDATETIME = "yyyyMMdd";
+
     public static Date toDate(String time) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -332,14 +356,40 @@ public class DateUtil {
         return dayForWeek;
     }
 
+    /**
+     * 获取时间的时间和分
+     * @param time
+     * @return
+     */
+    public  static  String  getTime(String  time,String  exmple)throws  Exception{
+        if(StringUtils.isEmpty(exmple)){
+            exmple = FORMAT_DATETIME;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(exmple);
+        Date da = sdf.parse(time);
+        int hours = da.getHours();
+        int minutes =da.getMinutes();
+
+        return  hours+":" + (minutes<10?("0"+minutes):minutes);
+
+    }
+    public  static  String  getMonthAndDay(String dateTime,String  exmple)throws  Exception{
+        if(StringUtils.isEmpty(exmple)){
+            exmple = FORMATDATETIME;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(exmple);
+
+        Date  da = sdf.parse(dateTime);
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(da);
+        int month=ca.get(Calendar.MONTH)+1;
+        int day=ca.get(Calendar.DATE);
+        return (month>=9?"0"+month:month)+":"+(day>=9?"0"+day:day);
+    }
+
+
     public  static void main(String[] args)throws  Exception{
-        String  time1 ="20160113230000";
-        String  time2 ="20160118233000";
-        String  excemp ="yyyyMMddHHmmss";
-        DateUtil du = new  DateUtil();
-        du.getStringDate(excemp);
-        System.out.println(du.getStringDate(excemp));
-       System.out.println("时间差:"+du.timesBetween(time2,du.getStringDate(excemp),excemp)) ;
+      System.out.println(DateUtil.getTime("20160109101920109",FORMATDATETIME));
 
     }
 }
