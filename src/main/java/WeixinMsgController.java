@@ -114,7 +114,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	protected void processInFollowEvent(InFollowEvent inFollowEvent)
 	{
 		//BI统计
-		BIFollowEventApi.sendFollowEvent(inFollowEvent);
+//		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
