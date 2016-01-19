@@ -110,7 +110,7 @@ div.main .o-d-info{
 }
 div.main .o-d-info .h-info{
     position: relative;
-    padding: 1.2rem;
+    padding: 1.2rem 1.2rem 0.5rem 1.2rem;
 }
 div.main .o-d-info .h-info .h-name{
     font-size:1.6rem ;
@@ -123,11 +123,12 @@ div.main .o-d-info .h-info .o-date{
     line-height: 1.5rem;
 }
 div.main .o-d-info .h-info .o-date span{
-    margin-right:0.2rem;
+    margin-right:1.5rem;
 }
 div.main .o-d-info .h-info .h-type{
     font-size: 1.3rem;
     padding: 0;
+    margin-top:0.5rem;
     line-height: 3rem;
     height: 3rem;
 }
@@ -261,7 +262,7 @@ footer.footer .order-btn{
     width: 8rem;
     height: 3rem;
     line-height:3rem;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     border-radius: 0.3rem;
     display: inline-block;
     vertical-align: middle;
@@ -340,4 +341,8 @@ footer.footer .order-btn{
     position: absolute;
     right: 1rem;
     top:0;
+}
+.pay-detail.on .up-icon{
+    transform: rotate(180deg);
+    margin-top: -0.6rem;
 }
