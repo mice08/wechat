@@ -4,19 +4,27 @@
 <html>
 <head lang="en">
     <title>在线支付</title>
-<%
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
 
-    OrderHandle ho = new OrderHandle();
-    String m = ho.pay(request,response);
-    if ("error".equals(m)) {
-        request.getRequestDispatcher("500.jsp").forward(request, response);
-        return;
-    }
-    if ("redirect".equals(m)) {
-//        request.getRequestDispatcher("success.jsp").forward(request, response);
-        return;
-    }
-%>
+    <%
+
+        response.setHeader("Pragma","No-cache");
+        response.setHeader("Cache-Control","no-cache");
+        response.setDateHeader("Expires", 0);
+
+        OrderHandle ho = new OrderHandle();
+        String m = ho.pay(request,response);
+        if ("error".equals(m)) {
+            request.getRequestDispatcher("500.jsp").forward(request, response);
+            return;
+        }
+        if ("redirect".equals(m)) {
+    //        request.getRequestDispatcher("success.jsp").forward(request, response);
+            return;
+        }
+    %>
     <script>
         function onBridgeReady() {
             WeixinJSBridge.invoke(
