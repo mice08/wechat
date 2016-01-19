@@ -115,7 +115,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
 			OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
-			outMsg.setContent("这是Jfinal-weixin测试服务</br>\r\n感谢您的关注");
+			outMsg.setContent("感谢关注眯客~</br></br>注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~</br></br><a href=\"http://www.baidu.com\">现在验证手机,即可获酒店大红包.");
 			render(outMsg);
 		}
 		// 如果为取消关注事件，将无法接收到传回的信息
