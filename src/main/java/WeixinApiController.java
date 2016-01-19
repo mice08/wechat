@@ -44,7 +44,7 @@ public class WeixinApiController extends ApiController {
 				"        {\n" +
 				"            \"type\": \"view\", \n" +
 				"            \"name\": \"我要预订\", \n" +
-				"            \"url\": \"http://dev-h5.imike.cn\"\n" +
+				"            \"url\": \"http://weixin.imike.cn\"\n" +
 				"        }, \n" +
 				"        {\n" +
 				"            \"type\": \"view\", \n" +
@@ -151,7 +151,7 @@ public class WeixinApiController extends ApiController {
 	public void getQrcode()
 	{
 		//永久二维码
-        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
+        String str = "{\"action_name\": \"QR_LIMIT_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
         ApiResult apiResult = QrcodeApi.create(str);
         renderText(apiResult.getJson());
 	}
@@ -254,10 +254,89 @@ public class WeixinApiController extends ApiController {
 	
 	/**
 	 * 获取用户增减数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
 	 */
 	public void getUserSummary()
 	{
-		ApiResult apiResult = DatacubeApi.getUserSummary("2015-12-31","2015-12-31");
+		ApiResult apiResult = DatacubeApi.getUserSummary(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取累计用户数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserCumulate()
+	{
+		ApiResult apiResult = DatacubeApi.getUserCumulate(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文群发每日数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticleSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getArticleSummary(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文群发总数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticlEtotal()
+	{
+		ApiResult apiResult = DatacubeApi.getArticlEtotal(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserRead()
+	{
+		ApiResult apiResult = DatacubeApi.getUserRead(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserReadHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserReadHour(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShare()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShare(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShareHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShareHour(getPara("begin_date"),getPara("end_date"));
 		renderText(apiResult.getJson());
 	}
 }

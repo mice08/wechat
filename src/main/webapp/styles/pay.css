@@ -1,5 +1,5 @@
 body{
-     background: #f6f6f6;
+    background: #f6f6f6;
 }
 .header{
     position: relative;
@@ -194,10 +194,9 @@ div.main .discount-items{
 
 }
 div.main .discount-items .u-p-item{
-   background: #fff;
+    background: #fff;
 }
 div.main .o-d-info  .use-package{
-    display: inline-block;
     font-size: 1.3rem;
 
 }
@@ -300,4 +299,45 @@ footer.footer .order-btn{
 }
 .mask_layer.on{
     display: block;
+}
+
+.pay-bgye{
+    color:#616161;
+    font-style: normal;
+}
+.usebg-item{
+    font-size: 1.3rem;
+    margin-top:1.2rem;
+}
+.usebg-item .c-title{
+    padding-left: 1.5rem;
+    color: #616161;
+    line-height: 1.5rem;
+}
+.usebg-item .col{
+    height: 4.6rem;
+    line-height: 4.6rem;
+}
+.usebg-item .use-package{
+    height: 4.6rem;
+    line-height: 4.6rem;
+    font-size: 1.3rem;
+    box-sizing: border-box;
+    padding: 0 0 0 1.5rem ;
+    margin-top:0.5rem;
+    position: relative;
+}
+.pay-discount{
+    font-size: 1.2rem;
+}
+.gray{
+    color:#616161;
+}
+.gray-s{
+    color:#9e9e9e;
+}
+.pay-package-r{
+    position: absolute;
+    right: 1rem;
+    top:0;
 }

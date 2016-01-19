@@ -1,6 +1,7 @@
 package com.mk.order.handle;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.log.Log;
 import com.mk.common.toolutils.*;
@@ -21,7 +22,6 @@ public class OrderHandle {
 
     //订单路由
     public  String  orderRoute(HttpServletRequest request){
-        System.out.println("进来了!!");
         String  result = BaseData.RESULT_INIT;
         String  orderid = request.getParameter("orderid");
         //判断为修改操作
@@ -49,6 +49,34 @@ public class OrderHandle {
         return  result;
     }
 
+    private String getParam(HttpServletRequest request,String key) {
+        if (null == request || StringUtils.isEmpty(key)) {
+            return null;
+        }
+
+
+        //token
+        Cookie[] cookies = request.getCookies();
+
+        if (null == cookies) {
+            logger.debug("获取cookie参数:"+key+",错误信息:获取cookies失败");
+        } else {
+            //
+            String result = null;
+            for (int i = 0; i < cookies.length; i++) {
+                logger.debug("name :" + cookies[i].getName() + result);
+                if (key.equals(cookies[i].getName())) {
+                    result = cookies[i].getValue();
+                    logger.debug("获取cookie参数:" + key + " : " + result);
+                }
+            }
+        }
+        //
+        String result = (String) request.getParameter(key);
+        logger.debug("获取get参数:"+key+" : "+result);
+
+        return result;
+    }
 
     public String createOrder(HttpServletRequest request) throws IOException {
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder] ");
@@ -158,28 +186,12 @@ public class OrderHandle {
 
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("准备创建订单--执行 [OrderHandle : createOrder],出现错误,错误信息:获取cookies失败");
-            return BaseData.RESULT_BAD;
-        }
-
-        //
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("token".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-                break;
-            }
-        }
-
+        String token = this.getParam(request,"m28");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
-
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if (StringUtils.isEmpty(token)) {
             logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token为空");
@@ -243,7 +255,11 @@ public class OrderHandle {
             JSONObject object = this.parseObject(backStr);
 
             if (!"true".equals(object.getString("success"))) {
-                request.setAttribute("errormsg", DataHander.checkStringNull(object, "errormsg", ""));
+                String errormsg = DataHander.checkStringNull(object, "errormsg", "");
+                if(StringUtils.isEmpty(errormsg)){
+                    errormsg = DataHander.checkStringNull(object, "errmsg", "");
+                }
+                request.setAttribute("errormsg",errormsg);
                 return BaseData.RESULT_EXCEPTION;
             }
 
@@ -260,14 +276,7 @@ public class OrderHandle {
 
             request.setAttribute("begintime", begintimeOri);
             request.setAttribute("endtime", endtimeOri);
-
-            try {
-                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri, begintimeOri, "yyyyMMdd"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
+            request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object, "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "walletcost", "0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object, "contacts", ""));
@@ -303,20 +312,13 @@ public class OrderHandle {
 
         String debug = UrlUtil.getValue(BaseData.debug);
         //
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取cookies为空");
-            return BaseData.RESULT_BAD;
-        }
-        String token = null;
 
-        for (int i = 0; i < cookies.length; i++) {
-            if ("token".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
+        String token = this.getParam(request,"m28");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+
+        if ("true".equals(debug)) {
+            token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
         if (StringUtils.isEmpty(token)) {
             logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] 获取token为空");
@@ -418,19 +420,9 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            logger.debug("修改订单开始.获取cookies失败");
-            return BaseData.RESULT_BAD;
-        }
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("token".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
+        String token = this.getParam(request,"m28");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
         }
@@ -443,11 +435,10 @@ public class OrderHandle {
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
-
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],请求参数:"+JSONObject.toJSON(parmeter));
         //
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.modifyOrderUrl), parmeter);
         logger.debug("修改订单开始请求backStr:" + backStr);
-        System.out.println("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
             return BaseData.RESULT_BAD;
@@ -455,7 +446,11 @@ public class OrderHandle {
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            request.setAttribute("errormsg", DataHander.checkStringNull(jsonOrder, "errmsg", ""));
+            String errormsg = DataHander.checkStringNull(jsonOrder,"errormsg","");
+            if(StringUtils.isEmpty(errormsg)){
+                errormsg = DataHander.checkStringNull(jsonOrder,"errmsg", "");
+            }
+            request.setAttribute("errormsg", errormsg);
             return BaseData.RESULT_EXCEPTION;
         }
 
@@ -470,9 +465,10 @@ public class OrderHandle {
         String orderid = (String) request.getAttribute("orderid");
         String ordertype = (String) request.getAttribute("ordertype");
 
-        System.out.println("修改订单开始请求orderid:" + orderid);
-        System.out.println("修改订单开始请求ordertype:" + ordertype);
+        logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype);
+
         if (null == orderid || null == ordertype) {
+            logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype+"出现错误");
             return "error";
         }
 
@@ -486,31 +482,27 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            return "error";
-        }
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("token".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
+        String token = this.getParam(request,"m28");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+        String openid = this.getParam(request,"m29");
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
+            openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
         }
-        System.out.println("修改订单开始请求token:" + token);
+
+        logger.debug("修改订单开始请求token:" + token);
+        logger.debug("修改订单开始请求openid:" + openid);
 
         if (StringUtils.isEmpty(token)) {
             return "error";
         }
 
         parmeterPay.put("token", token);
+        parmeterPay.put("openid",openid);
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
-        System.out.println("修改订单开始请求backStr:" + backStr);
+        logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
             return "error";
@@ -540,7 +532,7 @@ public class OrderHandle {
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String key = "WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7";
+            String key = "IAYG8HpT1f4tosODIryb2BqKSqxIod2S";
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
@@ -559,6 +551,7 @@ public class OrderHandle {
 //                e.printStackTrace();
 //            }
 
+
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
             request.setAttribute("nonceStr", noncestr);
@@ -576,24 +569,20 @@ public class OrderHandle {
 
     public  String  queryOrder(HttpServletRequest request){
         String  qorderid = request.getParameter("qorderid");
+        logger.debug("查询订单开始请求orderid:" + qorderid);
         if(StringUtils.isEmpty(qorderid)){
-            return null;
+            logger.error("查询订单开始请求orderid:" + qorderid);
+            return BaseData.RESULT_BAD;
         }
 
         Cookie[] cookies = request.getCookies();
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if ("token".equals(cookies[i].getName())) {
-                token = cookies[i].getValue();
-                break;
-            }
-        }
-        token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
 
-        System.out.println("修改订单开始.token:" + token);
+
+        String token = this.getParam(request,"28");
 
         if (StringUtils.isEmpty(token)) {
-            return  null;
+            logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
+            return  BaseData.RESULT_BAD;
         }
         HashMap  hm = new HashMap();
 
@@ -602,13 +591,22 @@ public class OrderHandle {
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
         if (StringUtils.isEmpty(backStr)) {
-            return  null;
+            logger.error("查询订单开始请求orderid:" + qorderid);
+            return BaseData.RESULT_BAD;
         }
+
         JSONObject object = JSONObject.parseObject(backStr);
         if (!"true".equals(object.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(object, "errmsg", ""));
-            return   "bad";
+            request.setAttribute("errormsg", DataHander.checkStringNull(object, "errmsg", ""));
+            logger.error("查询订单开始请求orderid:" + qorderid+"查询订单数量为空");
+            return   BaseData.RESULT_EXCEPTION;
         } else {
+            JSONArray jsa = object.getJSONArray("order");
+            if(null==jsa||jsa.size()==0){
+                logger.error("查询订单开始请求orderid:" + qorderid+"查询订单数量为空");
+                return BaseData.RESULT_BAD;
+            }
+
             //
             request.setAttribute("orderid", DataHander.checkStringNull(object,"order", "orderid", "0"));
             request.setAttribute("hotelname", DataHander.checkStringNull(object,"order", "hotelname", ""));
@@ -622,14 +620,7 @@ public class OrderHandle {
 
             request.setAttribute("begintime", begintimeOri);
             request.setAttribute("endtime", endtimeOri);
-
-            try {
-                request.setAttribute("orderday", DateUtil.daysBetween(endtimeOri, begintimeOri, "yyyyMMdd"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
+            request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"order", "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "order","walletcost", "0"));
             request.setAttribute("contacts", DataHander.checkStringNull(object,"order", "contacts", ""));
@@ -646,11 +637,11 @@ public class OrderHandle {
                 try {
                     request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
                 } catch (Exception e) {
-                    System.out.println("时间处理错误");
+                    logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
                     e.printStackTrace();
                 }
             }
-            return  "ok";
+            return  BaseData.RESULT_QUERY_SUCCESS;
 
         }
 

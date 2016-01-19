@@ -3,7 +3,10 @@
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
-    boolean bl = true;
+    response.setHeader("Pragma","No-cache");
+    response.setHeader("Cache-Control","no-cache");
+    response.setDateHeader("Expires", 0);
+
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -23,6 +26,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head lang="en">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
     <meta charset="UTF-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -40,11 +47,7 @@
             clickFn: function(e){
                 e.preventDefault();
                 if(e.target.tagName=='BUTTON'){
-  //                  console.log('111111');
-                    history.go(-1);
-                    this.destroy();
-        //            window.location.href="";
-
+                    window.location.href="http://dev-h5.imike.cn/#!/myorder/all";
                 }
             }
         })
@@ -63,17 +66,18 @@
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
         Object obj =request.getAttribute("errormsg");
         String  msg = "请重试.";
-        if(null!=obj)
+        if(null!=obj){
             msg = obj.toString();
+        }
     %>
         <script>
-            showMessage("<%=obj%>");
+            showMessage("<%=msg%>");
         </script>
     <%
         }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){
     %>
     <div class="main">
-        <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em class="p-timer">00</em>时<em class="p-timer">00</em>分</div>
+        <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单!距结束<em class="p-timer">00</em>时<em class="p-timer">00</em>分</div>
         <section class="o-d-info ">
             <div class="h-info bg-white brown">
                 <div class="h-name">${hotelname}</div>
@@ -84,7 +88,7 @@
                 </div>
                 <div class="h-type row">
                     <div class="col text-left">${roomtypename}</div>
-                    <div class="col text-right">房款：<span class="orange">${price}</span></div>
+                    <div class="col text-right">房款 ￥<span class="orange">${totalprice}</span></div>
                 </div>
             </div>
             <form id="userInfo_form" method="post" name="userInfo_form">
