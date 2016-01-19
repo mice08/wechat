@@ -28,7 +28,7 @@ public class BIQrCodeEventApi {
         params.put("eventKey", inQrCodeEvent.getEventKey());
         params.put("ticket", inQrCodeEvent.getTicket());
         params.put("eventType", "enterservice");
-        String apiStringResult = HttpUtils.post(apiUrl, JsonUtils.toJson(params));
+        String apiStringResult = HttpUtils.post(apiUrl, JsonUtils.toJson(params).replace("\"","'"));
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }
