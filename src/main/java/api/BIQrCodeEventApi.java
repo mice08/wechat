@@ -28,11 +28,11 @@ public class BIQrCodeEventApi {
         params.put("eventKey", inQrCodeEvent.getEventKey());
         params.put("ticket", inQrCodeEvent.getTicket());
         params.put("eventType", "enterservice");
-        String paramsString = "?";
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
-        }
-        String apiStringResult = HttpUtils.post(apiUrl+paramsString, "");
+//        String paramsString = "?";
+//        for (Map.Entry<String, Object> entry : params.entrySet()) {
+//            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
+//        }
+        String apiStringResult = HttpUtils.post(apiUrl, JsonUtils.toJson(params).replace("\"","'"));
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }
