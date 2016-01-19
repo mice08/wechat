@@ -3,6 +3,7 @@ package com.mk.order.handle;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.mk.common.toolutils.*;
 import com.mk.enums.CallMethodEnum;
@@ -538,7 +539,7 @@ public class OrderHandle {
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String key = "IAYG8HpT1f4tosODIryb2BqKSqxIod2S";
+            String key = PropKit.get("otsHttpUrl");
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
