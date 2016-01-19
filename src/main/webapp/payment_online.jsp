@@ -105,7 +105,7 @@
                 </ul>
             </div>
             <div class="discount-items">
-                <div class="discount-title d-gray">
+                <div class="row discount-title d-gray">
                     <div>使用红包</div>
 
                     </div>
@@ -114,12 +114,12 @@
                     <div class="use-package">
                         红包余额<span class="u-p-tip">￥${balance}</span>
                     </divy
-                    <span class="gray">本次下单最多可抵${maxuserwalletcost}元</span><input type="number" name="walletcost" class="u-p-input" id="user-wallet"/>
+                    <span class="gray">本次下单最多可抵${maxuserwalletcost}元</span><input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
                 </div>
                 <div class="pay-tips">
                     <span>规则提示：</span>
-                    <div>1</div>
-                    <div>1</div>
+                    <div>1.使用红包可以抵扣部分房款，默认选择您当前能用的最大金额，您也可以自行调整</div>
+                    <div>2.在您入住成功后，还会根据本次抵扣的金额发放红包奖励</div>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
