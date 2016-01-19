@@ -106,20 +106,21 @@
                 </ul>
             </div>
             <div class="discount-items">
-                <div class="row discount-title d-gray">
-                    <div class="col">使用红包</div>
-                    <div class="col text-right  js_order_totalWallet">红包最多可抵${maxuserwalletcost}元
+                <div class="discount-title d-gray">
+                    <div>使用红包</div>
+
                     </div>
                 </div>
                 <div class="u-p-item ">
                     <div class="use-package">
-                        使用红包<span class="u-p-tip">（红包余额：￥${balance}）</span>
-                    </div>
-                    <input type="tel" name="walletcost" class="u-p-input" id="user-wallet"/>
+                        红包余额<span class="u-p-tip">￥${balance}</span>
+                    </divy
+                    <span class="gray">本次下单最多可抵40元</span><input type="number" name="walletcost" class="u-p-input" id="user-wallet"/>
                 </div>
                 <div class="pay-tips">
-                    <span>温馨提示：</span>
-                    <div>${usermessage}</div>
+                    <span>规则提示：</span>
+                    <div>1</div>
+                    <div>1</div>
                 </div>
             </div>
             <input type="hidden" name="orderid"  value="${orderid}"/>
