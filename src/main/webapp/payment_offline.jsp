@@ -3,6 +3,10 @@
 <%@ page import="com.mk.order.handle.OrderHandle" %>
 
 <%
+    response.setHeader("Pragma","No-cache");
+    response.setHeader("Cache-Control","no-cache");
+    response.setDateHeader("Expires", 0);
+
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -22,6 +26,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head lang="en">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
     <meta charset="UTF-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
