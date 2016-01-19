@@ -115,7 +115,7 @@
                     <div class="use-package">
                         红包余额<span class="u-p-tip">￥${balance}</span>
                     </divy
-                    <span class="gray">本次下单最多可抵40元</span><input type="number" name="walletcost" class="u-p-input" id="user-wallet"/>
+                    <span class="gray">本次下单最多可抵${maxuserwalletcost}元</span><input type="number" name="walletcost" class="u-p-input" id="user-wallet"/>
                 </div>
                 <div class="pay-tips">
                     <span>规则提示：</span>
