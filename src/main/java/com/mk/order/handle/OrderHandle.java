@@ -54,6 +54,14 @@ public class OrderHandle {
             return null;
         }
 
+        //
+        String result = (String) request.getParameter(key);
+        logger.debug("获取get参数:"+key+" : "+result);
+
+        if (StringUtils.isNotEmpty(result)) {
+            return result;
+        }
+
         //token
         Cookie[] cookies = request.getCookies();
 
@@ -62,21 +70,16 @@ public class OrderHandle {
         }
 
         //
-        String result = null;
+        result = null;
         for (int i = 0; i < cookies.length; i++) {
             logger.debug("name :" + cookies[i].getName()+result);
             if (key.equals(cookies[i].getName())) {
                 result = cookies[i].getValue();
                 logger.debug("获取cookie参数:"+key+" : "+result);
-                return result;
             }
         }
-
-        //
-        result = (String) request.getParameter(key);
-        logger.debug("获取get参数:"+key+" : "+result);
-
         return result;
+
     }
 
     public String createOrder(HttpServletRequest request) throws IOException {
