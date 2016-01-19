@@ -254,11 +254,25 @@ public class WeixinApiController extends ApiController {
 	
 	/**
 	 * 获取用户增减数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
 	 */
 	public void getUserSummary()
 	{
-		ApiResult apiResult = DatacubeApi.getUserSummary("2015-12-31","2015-12-31");
+		ApiResult apiResult = DatacubeApi.getUserSummary(getPara("begin_date"),getPara("end_date"));
 		renderText(apiResult.getJson());
 	}
+
+	/**
+	 * 获取累计用户数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserCumulate()
+	{
+		ApiResult apiResult = DatacubeApi.getUserCumulate(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
 }
 
