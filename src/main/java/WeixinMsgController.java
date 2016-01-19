@@ -4,6 +4,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
+import api.BIFollowEventApi;
+import api.BIQrCodeEventApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiConfig;
@@ -111,6 +113,9 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	 */
 	protected void processInFollowEvent(InFollowEvent inFollowEvent)
 	{
+		//BI统计
+		BIFollowEventApi.sendFollowEvent(inFollowEvent);
+		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
@@ -128,6 +133,9 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	@Override
 	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent)
 	{
+		//BI统计
+		BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
 		{
 			logger.debug("扫码未关注：" + inQrCodeEvent.getFromUserName());
