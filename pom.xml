@@ -211,7 +211,7 @@
         </profile>
 
         <profile>
-            <id>bgp-simulation</id>
+            <id>z</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
