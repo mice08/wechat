@@ -26,11 +26,7 @@ public class BIFollowEventApi {
         params.put("msgType", inFollowEvent.getMsgType());
         params.put("event", inFollowEvent.getEvent());
         params.put("eventType", "followservice");
-        String paramsString = "?";
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
-        }
-        String apiStringResult = HttpUtils.post(apiUrl+paramsString,"");
+        String apiStringResult = HttpUtils.post(apiUrl,JsonUtils.toJson(params).replace("\"","'"));
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }

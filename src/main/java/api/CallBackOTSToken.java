@@ -2,6 +2,7 @@ package api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiResult;
 import com.jfinal.weixin.sdk.utils.HttpUtils;
@@ -15,7 +16,7 @@ import java.util.Map;
  * Created by Mi on 16/1/18.
  */
 public class CallBackOTSToken {
-    private static String apiUrl = "http://huidu.imike.cn/ots/unionidandphone/check";
+    private static String apiUrl = PropKit.get("otsHttpUrl")+"unionidandphone/check";
 
     public CallBackOTSToken() {
     }
