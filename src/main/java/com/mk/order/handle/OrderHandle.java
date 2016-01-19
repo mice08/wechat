@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class OrderHandle {
@@ -415,7 +416,11 @@ public class OrderHandle {
         HashMap parmeter = new HashMap();
         parmeter.put("checkinuser", _checkinuser);
         parmeter.put("orderid", orderId);
-        parmeter.put("walletcost", walletCost);
+        if (null != walletCost && new BigDecimal(walletCost).compareTo(BigDecimal.ZERO) > 0) {
+            parmeter.put("walletcost", walletCost);
+            parmeter.put("isuselewallet", "T");
+        }
+
         parmeter.put("ordertype", ordertype);
         parmeter.put("contacts", userName);
         parmeter.put("contactsphone", userMobile);
