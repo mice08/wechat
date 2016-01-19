@@ -68,6 +68,7 @@ public class OrderHandle {
                 if (key.equals(cookies[i].getName())) {
                     result = cookies[i].getValue();
                     logger.debug("获取cookie参数:" + key + " : " + result);
+                    return result;
                 }
             }
         }
