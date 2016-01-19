@@ -274,5 +274,70 @@ public class WeixinApiController extends ApiController {
 		renderText(apiResult.getJson());
 	}
 
+	/**
+	 * 获取图文群发每日数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticleSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getArticleSummary(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文群发总数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticlEtotal()
+	{
+		ApiResult apiResult = DatacubeApi.getArticlEtotal(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserRead()
+	{
+		ApiResult apiResult = DatacubeApi.getUserRead(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserReadHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserReadHour(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShare()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShare(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShareHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShareHour(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
 }
 
