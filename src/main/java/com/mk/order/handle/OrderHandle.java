@@ -60,20 +60,19 @@ public class OrderHandle {
 
         if (null == cookies) {
             logger.debug("获取cookie参数:"+key+",错误信息:获取cookies失败");
-        }
-
-        //
-        String result = null;
-        for (int i = 0; i < cookies.length; i++) {
-            logger.debug("name :" + cookies[i].getName()+result);
-            if (key.equals(cookies[i].getName())) {
-                result = cookies[i].getValue();
-                logger.debug("获取cookie参数:"+key+" : "+result);
+        } else {
+            //
+            String result = null;
+            for (int i = 0; i < cookies.length; i++) {
+                logger.debug("name :" + cookies[i].getName() + result);
+                if (key.equals(cookies[i].getName())) {
+                    result = cookies[i].getValue();
+                    logger.debug("获取cookie参数:" + key + " : " + result);
+                }
             }
         }
-
         //
-        result = (String) request.getParameter(key);
+        String result = (String) request.getParameter(key);
         logger.debug("获取get参数:"+key+" : "+result);
 
         return result;
