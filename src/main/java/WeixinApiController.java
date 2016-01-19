@@ -151,7 +151,7 @@ public class WeixinApiController extends ApiController {
 	public void getQrcode()
 	{
 		//永久二维码
-        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
+        String str = "{\"action_name\": \"QR_LIMIT_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
         ApiResult apiResult = QrcodeApi.create(str);
         renderText(apiResult.getJson());
 	}
