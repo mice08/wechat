@@ -1,5 +1,5 @@
 body{
-     background: #f6f6f6;
+    background: #f6f6f6;
 }
 .header{
     position: relative;
@@ -194,7 +194,7 @@ div.main .discount-items{
 
 }
 div.main .discount-items .u-p-item{
-   background: #fff;
+    background: #fff;
 }
 div.main .o-d-info  .use-package{
     display: inline-block;
