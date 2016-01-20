@@ -293,8 +293,22 @@ public class OrderHandle {
             request.setAttribute("price", DataHander.checkStringNull(object, "roomorder", "payprice", "price", "0"));
             request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
-            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object, "timeintervalstart", ""));
-            request.setAttribute("timeintervalend", DataHander.checkStringNull(object, "timeintervalend", ""));
+
+            String  timeintervalStr ="";
+            String  timeintervalstartStr = DataHander.checkStringNull(object, "timeintervalstart", "");
+            String  timeintervalendStr = DataHander.checkStringNull(object, "timeintervalend", "");
+            if(StringUtils.isNotEmpty(timeintervalstartStr)){
+                timeintervalstartStr = timeintervalstartStr +":00";
+            }
+            if(StringUtils.isNotEmpty(timeintervalendStr)){
+                timeintervalendStr = timeintervalendStr +":00";
+            }
+
+            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
+            request.setAttribute("timeintervalstart", timeintervalstartStr);
+            request.setAttribute("timeintervalend", timeintervalendStr);
+            request.setAttribute("timeintervalStr", timeintervalStr);
+
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
             if (!"0".equals(backtimeouttime)) {
                 try {
@@ -629,8 +643,13 @@ public class OrderHandle {
             String endtimeOri = DataHander.checkStringNull(object,"order", "endtime", "");
             endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
 
-            request.setAttribute("begintime", begintimeOri);
-            request.setAttribute("endtime", endtimeOri);
+            try{
+                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,"yyyyMMhh"));
+                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,"yyyyMMhh"));
+            }catch (Exception  e){
+                e.printStackTrace();
+            }
+
             request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(object,"order", "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(object, "order","walletcost", "0"));
@@ -641,8 +660,20 @@ public class OrderHandle {
             request.setAttribute("price", DataHander.checkStringNull(object,"order",  "price", "0"));
             request.setAttribute("totalprice", DataHander.checkStringNull(object,"order","totalprice", "0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"order", "maxuserwalletcost", "0"));
-            request.setAttribute("timeintervalstart", DataHander.checkStringNull(object, "order","timeintervalstart", ""));
-            request.setAttribute("timeintervalend", DataHander.checkStringNull(object,"order", "timeintervalend", ""));
+            String  timeintervalstartStr  = DataHander.checkStringNull(object, "order","timeintervalstart", "");
+            String  timeintervalendStr = DataHander.checkStringNull(object,"order", "timeintervalend", "");
+
+            String   timeintervalStr = "";
+            if(StringUtils.isNotEmpty(timeintervalstartStr)){
+                timeintervalstartStr = timeintervalstartStr +":00";
+            }
+            if(StringUtils.isNotEmpty(timeintervalendStr)){
+                timeintervalendStr = timeintervalendStr +":00";
+            }
+            request.setAttribute("timeintervalstart", timeintervalstartStr);
+            request.setAttribute("timeintervalend", timeintervalendStr);
+            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
+
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
             if (!"0".equals(backtimeouttime)) {
                 try {
