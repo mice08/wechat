@@ -20,8 +20,8 @@ import java.util.*;
 
 public class OrderHandle {
 
-    private  final  String  timeSample = "yyyyMMddHHmmss";
-    private  final  String  dataSample = "yyyyMMdd";
+    private   final  String  timeSample = "yyyyMMddHHmmss";
+    private   final  String  dataSample = "yyyyMMdd";
 
     static Log logger = Log.getLog(OrderHandle.class);
 
@@ -705,15 +705,17 @@ public class OrderHandle {
      * @return
      */
     public  Long   getBetweenDateFromNow(String time,String  exp)throws Exception{
-        System.out.println(time);
+        System.out.println("time"+time);
         if(StringUtils.isEmpty(time)){
             return  new Long(0);
         }
         String nowTime = DateUtil.getStringDate(timeSample);
         if(StringUtils.isEmpty(exp)){
-            exp = "yyyyMMddHHmmss";
+            exp = timeSample;
         }
         Long  secondLong = DateUtil.timesBetween(nowTime,time,exp);
+        System.out.println("time222"+secondLong*1000);
+
         return  secondLong*1000;
 
     }
@@ -723,10 +725,4 @@ public class OrderHandle {
         return MD5.MD5Encode(keys).toUpperCase();
     }
 
-    public static void main(String[] args) {
-        String url = "http://huidu.imike.cn/ots/order/create";
-        HashMap hm = new HashMap();
-        hm.put("hotelid", 2803);
-        SmsHttpClient.post(url, hm);
-    }
 }
