@@ -297,26 +297,18 @@ public class OrderHandle {
             request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
 
-            String  timeintervalStr ="";
             String  timeintervalstartStr = DataHander.checkStringNull(object, "timeintervalstart", "");
             String  timeintervalendStr = DataHander.checkStringNull(object, "timeintervalend", "");
-            if(StringUtils.isNotEmpty(timeintervalstartStr)){
-                timeintervalstartStr = timeintervalstartStr +":00";
-            }
-            if(StringUtils.isNotEmpty(timeintervalendStr)){
-                timeintervalendStr = timeintervalendStr +":00";
-            }
 
-            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
-            request.setAttribute("timeintervalstart", timeintervalstartStr);
-            request.setAttribute("timeintervalend", timeintervalendStr);
-            request.setAttribute("timeintervalStr", timeintervalStr);
+            //设置时分
+            request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
 
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
 
             try {
+                //设置倒计时时间
                 request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
             } catch (Exception e) {
                 System.out.println("时间处理错误");
@@ -655,18 +647,8 @@ public class OrderHandle {
             String  timeintervalstartStr  = DataHander.checkStringNull(object, "order","timeintervalstart", "");
             String  timeintervalendStr = DataHander.checkStringNull(object,"order", "timeintervalend", "");
 
-            String   timeintervalStr = "";
-            if(StringUtils.isNotEmpty(timeintervalstartStr)){
-                timeintervalstartStr = timeintervalstartStr +":00";
-            }
-            if(StringUtils.isNotEmpty(timeintervalendStr)){
-                timeintervalendStr = timeintervalendStr +":00";
-            }
-            request.setAttribute("timeintervalstart", timeintervalstartStr);
-            request.setAttribute("timeintervalend", timeintervalendStr);
-            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
-
-            request.setAttribute("timeintervalStr", timeintervalStr);
+            request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
+            
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
@@ -718,6 +700,16 @@ public class OrderHandle {
 
         return  secondLong*1000;
 
+    }
+
+    public String   adjustTimeShow(String timeintervalstartStr,String  timeintervalendStr){
+        String result = "";
+        if(StringUtils.isNotEmpty(timeintervalstartStr)&&StringUtils.isNotEmpty(timeintervalendStr)){
+            timeintervalstartStr = timeintervalstartStr + ":00";
+            timeintervalendStr = timeintervalendStr + ":00";
+            result = timeintervalstartStr + "-" + timeintervalendStr;
+        }
+        return  result;
     }
 
     public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key) {
