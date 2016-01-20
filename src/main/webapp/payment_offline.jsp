@@ -157,7 +157,7 @@
     var  orderid = ${orderid};
     $(function () {
         countdomn.init({
-            time: ${timeouttime},
+            time: parseInt('${timeouttime}'),
             onStop: function (data) {
                 // 倒计时停止时触发
             },
