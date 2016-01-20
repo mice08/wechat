@@ -113,6 +113,8 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	 */
 	protected void processInFollowEvent(InFollowEvent inFollowEvent)
 	{
+		//BI统计
+		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
@@ -125,8 +127,6 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		{
 			logger.debug("取消关注：" + inFollowEvent.getFromUserName());
 		}
-		//BI统计
-//		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 	}
 
 	@Override
