@@ -17,7 +17,7 @@ public class BIQrCodeEventApi {
     public BIQrCodeEventApi() {
     }
 
-    public static ApiResult sendQrCodeEvent(InQrCodeEvent inQrCodeEvent) {
+    public static void sendQrCodeEvent(InQrCodeEvent inQrCodeEvent) {
         //请求
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("toUserName", inQrCodeEvent.getToUserName());
@@ -32,8 +32,6 @@ public class BIQrCodeEventApi {
 //        for (Map.Entry<String, Object> entry : params.entrySet()) {
 //            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
 //        }
-        String apiStringResult = HttpUtils.post(apiUrl, JsonUtils.toJson(params).replace("\"","'"));
-        ApiResult apiResult= new ApiResult(apiStringResult);
-        return new ApiResult(apiResult.getJson());
+        HttpUtils.post(apiUrl, JsonUtils.toJson(params).replace("\"","'"));
     }
 }
