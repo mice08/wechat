@@ -183,9 +183,17 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	protected void processInMenuEvent(InMenuEvent inMenuEvent)
 	{
 		logger.debug("菜单事件：" + inMenuEvent.getFromUserName());
-		OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
-		outMsg.setContent("菜单事件内容是：" + inMenuEvent.getEventKey());
-		render(outMsg);
+        if(inMenuEvent.getEvent().equals("CUSTOM_SERVICE")){
+            String content = "遇到问题可随时骚扰↓↓\n" +
+                    "美女客服电话：<a href=\"tel:4001-888-733\">4001-888-733</a>\n" +
+                    "客服美眉在线时间：\n" +
+                    "9:00~ 02:00";
+            renderOutTextMsg(content);
+        }else {
+            OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
+            outMsg.setContent("菜单事件内容是：" + inMenuEvent.getEventKey());
+            render(outMsg);
+        }
 	}
 
 	@Override
