@@ -445,6 +445,7 @@ public class OrderHandle {
 
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
+        parmeter.put("ordermethod", CallMethodEnum.WEIXIN.getId());
 
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],请求参数:"+JSONObject.toJSON(parmeter));
         //
