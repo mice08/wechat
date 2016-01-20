@@ -20,6 +20,9 @@ import java.util.*;
 
 public class OrderHandle {
 
+    private   final  String  timeSample = "yyyyMMddHHmmss";
+    private   final  String  dataSample = "yyyyMMdd";
+
     static Log logger = Log.getLog(OrderHandle.class);
 
     //订单路由
@@ -272,13 +275,13 @@ public class OrderHandle {
 
             //
             String begintimeOri = DataHander.checkStringNull(object, "begintime", "");
-            begintimeOri = DateUtil.getStrFormart(begintimeOri, "yyyyMMhh");
+            begintimeOri = DateUtil.getStrFormart(begintimeOri, dataSample);
 
             String endtimeOri = DataHander.checkStringNull(object, "endtime", "");
-            endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
+            endtimeOri = DateUtil.getStrFormart(endtimeOri, dataSample);
             try{
-                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,"yyyyMMhh"));
-                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,"yyyyMMhh"));
+                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,dataSample));
+                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,dataSample));
             }catch (Exception  e){
                 e.printStackTrace();
             }
@@ -294,32 +297,23 @@ public class OrderHandle {
             request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
 
-            String  timeintervalStr ="";
             String  timeintervalstartStr = DataHander.checkStringNull(object, "timeintervalstart", "");
             String  timeintervalendStr = DataHander.checkStringNull(object, "timeintervalend", "");
-            if(StringUtils.isNotEmpty(timeintervalstartStr)){
-                timeintervalstartStr = timeintervalstartStr +":00";
-            }
-            if(StringUtils.isNotEmpty(timeintervalendStr)){
-                timeintervalendStr = timeintervalendStr +":00";
-            }
 
-            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
-            request.setAttribute("timeintervalstart", timeintervalstartStr);
-            request.setAttribute("timeintervalend", timeintervalendStr);
-            request.setAttribute("timeintervalStr", timeintervalStr);
+            //设置时分
+            request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
 
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
-            if (!"0".equals(backtimeouttime)) {
-                try {
-                    System.out.println("backtimeouttime:" + DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"));
-                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
-                } catch (Exception e) {
-                    System.out.println("时间处理错误");
-                    e.printStackTrace();
-                }
-            }
 
+            backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+
+            try {
+                //设置倒计时时间
+                request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
+            } catch (Exception e) {
+                System.out.println("时间处理错误");
+                e.printStackTrace();
+            }
 
             return BaseData.RESULT_ADD_SUCCESS;
         }
@@ -395,6 +389,7 @@ public class OrderHandle {
         logger.debug("修改订单开始.orderId:" + orderId);
 
         if (StringUtils.isEmpty(orderId)) {
+            request.setAttribute("errormsg","无状态的非法请求");
             return BaseData.RESULT_BAD;
         }
 
@@ -428,6 +423,7 @@ public class OrderHandle {
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
             logger.debug("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId+"参数不正确");
+            request.setAttribute("errormsg","有状态的非法请求");
             return BaseData.RESULT_BAD;
         }
         //
@@ -454,11 +450,13 @@ public class OrderHandle {
 
         if (StringUtils.isEmpty(token)) {
             logger.debug("修改订单开始.获取token失败");
+            request.setAttribute("errormsg","修改订单,无用户身份");
             return BaseData.RESULT_BAD;
         }
 
         parmeter.put("token", token);
         parmeter.put("callmethod", CallMethodEnum.WEIXIN.getId());
+        parmeter.put("ordermethod", CallMethodEnum.WEIXIN.getId());
 
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],请求参数:"+JSONObject.toJSON(parmeter));
         //
@@ -466,6 +464,7 @@ public class OrderHandle {
         logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
+            request.setAttribute("errormsg","修改,无远程结果");
             return BaseData.RESULT_BAD;
         }
 
@@ -494,6 +493,7 @@ public class OrderHandle {
 
         if (null == orderid || null == ordertype) {
             logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype+"出现错误");
+            request.setAttribute("errormsg","非法的支付请求");
             return "error";
         }
 
@@ -520,6 +520,7 @@ public class OrderHandle {
         logger.debug("修改订单开始请求openid:" + openid);
 
         if (StringUtils.isEmpty(token)) {
+            request.setAttribute("errormsg","支付,无用户身份");
             return "error";
         }
 
@@ -530,18 +531,17 @@ public class OrderHandle {
         logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
+            request.setAttribute("errormsg","支付,无远程结果");
             return "error";
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
+            request.setAttribute("errormsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
                 try {
-                    System.out.println("in handle redirect to detail start");
                     response.sendRedirect(UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
-                    System.out.println("in handle redirect to detail end");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -549,6 +549,7 @@ public class OrderHandle {
                 return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
+                request.setAttribute("errormsg","无微信支付信息");
                 return "error";
             }
             JSONObject json = jsonPay.getJSONObject("weinxinpay");
@@ -557,25 +558,8 @@ public class OrderHandle {
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String key = PropKit.get("otsHttpUrl");
+            String key = PropKit.get("weixin.key");
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
-
-            //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
-            // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
-//            StringBuilder stringBuilder = new StringBuilder()
-//                    .append("appid=").append(appid)
-//                    .append("&noncestr=").append(noncestr)
-//                    .append("&package=WAP")
-//                    .append("&prepayid=").append(prepayid)
-//                    .append("&sign=").append(sign)
-//                    .append("&timestamp=").append(timestamp);
-//            try {
-//                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
-//                request.setAttribute("url", "weixin://wap/pay?" + url);
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-
 
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
@@ -663,25 +647,16 @@ public class OrderHandle {
             String  timeintervalstartStr  = DataHander.checkStringNull(object, "order","timeintervalstart", "");
             String  timeintervalendStr = DataHander.checkStringNull(object,"order", "timeintervalend", "");
 
-            String   timeintervalStr = "";
-            if(StringUtils.isNotEmpty(timeintervalstartStr)){
-                timeintervalstartStr = timeintervalstartStr +":00";
-            }
-            if(StringUtils.isNotEmpty(timeintervalendStr)){
-                timeintervalendStr = timeintervalendStr +":00";
-            }
-            request.setAttribute("timeintervalstart", timeintervalstartStr);
-            request.setAttribute("timeintervalend", timeintervalendStr);
-            timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
-
+            request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
+            
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
-            if (!"0".equals(backtimeouttime)) {
-                try {
-                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
-                } catch (Exception e) {
-                    logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
-                    e.printStackTrace();
-                }
+
+            backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+            try {
+                request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
+            } catch (Exception e) {
+                logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
+                e.printStackTrace();
             }
             return  BaseData.RESULT_QUERY_SUCCESS;
 
@@ -689,16 +664,57 @@ public class OrderHandle {
 
     }
 
+    /**
+     * 时间格式处理
+     * @param str
+     * @param exp
+     * @return
+     */
+    public  String   stringDateToString(String  str,String  exp){
+        if(StringUtils.isEmpty(str)){
+            return null;
+        }
+        if("0".equals(str)){
+            return str;
+        }
+        str = str.substring(0,exp.length());
+        return  str;
+    }
+
+    /**
+     *  获取当前时间和制定日期的差
+     * @param time
+     * @return
+     */
+    public  Long   getBetweenDateFromNow(String time,String  exp)throws Exception{
+        System.out.println("time"+time);
+        if(StringUtils.isEmpty(time)){
+            return  new Long(0);
+        }
+        String nowTime = DateUtil.getStringDate(timeSample);
+        if(StringUtils.isEmpty(exp)){
+            exp = timeSample;
+        }
+        Long  secondLong = DateUtil.timesBetween(nowTime,time,exp);
+        System.out.println("time222"+secondLong*1000);
+
+        return  secondLong*1000;
+
+    }
+
+    public String   adjustTimeShow(String timeintervalstartStr,String  timeintervalendStr){
+        String result = "";
+        if(StringUtils.isNotEmpty(timeintervalstartStr)&&StringUtils.isNotEmpty(timeintervalendStr)){
+            timeintervalstartStr = timeintervalstartStr + ":00";
+            timeintervalendStr = timeintervalendStr + ":00";
+            result = timeintervalstartStr + "-" + timeintervalendStr;
+        }
+        return  result;
+    }
 
     public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key) {
         String keys = "appId=" + appId + "&nonceStr=" + noncestr + "&package=prepay_id=" + prepay_id + "&signType=MD5&timeStamp=" + timestamp + "&key=" + key;
         return MD5.MD5Encode(keys).toUpperCase();
     }
 
-    public static void main(String[] args) {
-        String url = "http://huidu.imike.cn/ots/order/create";
-        HashMap hm = new HashMap();
-        hm.put("hotelid", 2803);
-        SmsHttpClient.post(url, hm);
-    }
 }
