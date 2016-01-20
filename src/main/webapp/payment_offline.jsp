@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.mk.common.toolutils.BaseData" %>
 <%@ page import="com.mk.order.handle.OrderHandle" %>
+<%@ page import="com.mk.common.toolutils.UrlUtil" %>
 
 <%
     response.setHeader("Pragma","No-cache");
@@ -47,7 +48,7 @@
             clickFn: function(e){
                 e.preventDefault();
                 if(e.target.tagName=='BUTTON'){
-                    window.location.href="http://dev-h5.imike.cn/#!/myorder/all";
+                    window.location.href=<%=UrlUtil.getValue(BaseData.wechatMyOrder)%>;
                 }
             }
         })

@@ -205,6 +205,9 @@
                 <max.wallet.url>http://huidu.imike.cn/ots/pay/create</max.wallet.url>
                 <wallet.url>http://huidu.imike.cn/ots/redpacket/balance</wallet.url>
 
+                <wechat.myorder.url>http://weixin.imike.cn/#!/myorder/all</wechat.myorder.url>
+
+
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
                 <ots.url>http://huidu.imike.cn/ots/</ots.url>
@@ -235,6 +238,8 @@
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
                 <ots.url>http://huidu.imike.cn/ots/</ots.url>
+                <wechat.myorder.url>http://weixin.imike.cn/#!/myorder/all</wechat.myorder.url>
+
                 <weixin.key>IAYG8HpT1f4tosODIryb2BqKSqxIod2S</weixin.key>
             </properties>
         </profile>
@@ -255,6 +260,8 @@
 
                 <max.wallet.url>http://ots.imike.com/ots/pay/create</max.wallet.url>
                 <wallet.url>http://ots.imike.com/ots/redpacket/balance</wallet.url>
+
+                <wechat.myorder.url>http://weixin.imike.cm/#!/myorder/all</wechat.myorder.url>
 
                 <create.pay.url>http://ots.imike.com/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
