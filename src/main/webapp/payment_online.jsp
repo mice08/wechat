@@ -88,7 +88,7 @@
             <div class="h-name">${hotelname}</div>
             <div class="o-date">
                 <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalStr}</span>入住</div>|
-                <span>${endtime}离店</span> |
+                <span>&nbsp;${endtime}离店</span> |
                 <span>共${orderday}晚</span>
             </div>
             <div class="h-type row">
@@ -114,7 +114,7 @@
             <div class="usebg-item">
                 <div class="c-title gray-s">使用红包</div>
                 <div class="use-package bg-white  row-no-padding">
-                    <div class="gray-s">使用红包 <span class="gray">￥${balance}</span></div>
+                    <div class="gray-s">红包余额 <span class="gray">￥${balance}</span></div>
                     <div class="pay-package-r"><span class="gray-s pay-discount">本次下单最多可抵扣${maxuserwalletcost}元</span>
                         <input type="number" name="walletcost" class="u-p-input gray text-center" id="user-wallet">
                     </div>
