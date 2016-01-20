@@ -37,7 +37,7 @@
 </head>
 <body>
 <header class="header">
-    在线支付页面<br/>
+    在线支付页面<br/><%=request.getHeader("Referer") %><br/>
     在线支付页面<br/>
     "appId": "wx83cc02790df41a2b", //公众号名称，由商户传入<br/>
     "timeStamp": "1452940678", //时间戳，自1970年以来的秒数<br/>

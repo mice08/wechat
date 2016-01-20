@@ -509,7 +509,7 @@ public class OrderHandle {
         //token
         String token = this.getParam(request,"m28");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
-        String openid = this.getParam(request,"m29");
+        String openid = this.getParam(request,"m30");
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
