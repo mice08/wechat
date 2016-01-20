@@ -111,10 +111,16 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	/**
 	 * 实现父类抽方法，处理关注/取消关注消息
 	 */
-	protected void processInFollowEvent(InFollowEvent inFollowEvent)
+	protected void processInFollowEvent(final InFollowEvent inFollowEvent)
 	{
 		//BI统计
-		BIFollowEventApi.sendFollowEvent(inFollowEvent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIFollowEventApi.sendFollowEvent(inFollowEvent);
+            }
+        }).start();
+
 		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
@@ -130,10 +136,16 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	}
 
 	@Override
-	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent)
+	protected void processInQrCodeEvent(final InQrCodeEvent inQrCodeEvent)
 	{
 		//BI统计
-		BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+            }
+        });
+
 		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
 		{

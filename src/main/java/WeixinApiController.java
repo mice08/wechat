@@ -40,38 +40,34 @@ public class WeixinApiController extends ApiController {
 	public void createMenu()
 	{
 		String str = "{\n" +
-				"    \"button\": [\n" +
-				"        {\n" +
-				"            \"type\": \"view\", \n" +
-				"            \"name\": \"我要预订\", \n" +
-				"            \"url\": \"http://weixin.imike.cn\"\n" +
-				"        }, \n" +
-				"        {\n" +
-				"            \"type\": \"view\", \n" +
-				"            \"name\": \"我的订单\", \n" +
-				"            \"url\": \"http://www.imike.com\"\n" +
-				"        }, \n" +
-				"        {\n" +
-				"            \"name\": \"个人中心\", \n" +
-				"            \"sub_button\": [\n" +
-				"                {\n" +
-				"                    \"type\": \"view\", \n" +
-				"                    \"name\": \"下载APP\", \n" +
-				"                    \"url\": \"http://www.imike.com\"\n" +
-				"                }, \n" +
-				"                {\n" +
-				"                    \"type\": \"view\", \n" +
-				"                    \"name\": \"验证手机\", \n" +
-				"                    \"url\": \"http://www.imike.com\"\n" +
-				"                }, \n" +
-				"                {\n" +
-				"                    \"type\": \"scancode_push\", \n" +
-				"                    \"name\": \"扫一扫\", \n" +
-				"                    \"key\": \"scan\"\n" +
-				"                }\n" +
-				"            ]\n" +
-				"        }\n" +
-				"    ]\n" +
+				"\t\"button\": [{\n" +
+				"\t\t\"type\": \"view\",\n" +
+				"\t\t\"name\": \"我要预订\",\n" +
+				"\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2findex&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"\n" +
+				"\t}, {\n" +
+				"\t\t\"type\": \"view\",\n" +
+				"\t\t\"name\": \"我的订单\",\n" +
+				"\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fmyorder%2fall&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"\n" +
+				"\t}, {\n" +
+				"\t\t\"name\": \"个人中心\",\n" +
+				"\t\t\"sub_button\": [{\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"下载APP\",\n" +
+				"\t\t\t\"url\": \"http://weixin.imike.com/app\"\n" +
+				"\t\t}, {\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"验证手机\",\n" +
+				"\t\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2findex&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"\n" +
+				"\t\t}, {\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"红包兑换\",\n" +
+				"\t\t\t\"url\": \"http://www.imike.com\"\n" +
+				"\t\t}, {\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"联系客服\",\n" +
+				"\t\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"\n" +
+				"\t\t}]\n" +
+				"\t}]\n" +
 				"}";
 		ApiResult apiResult = MenuApi.createMenu(str);
 		if (apiResult.isSucceed())
