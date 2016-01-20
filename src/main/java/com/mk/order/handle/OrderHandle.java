@@ -396,6 +396,7 @@ public class OrderHandle {
         logger.debug("修改订单开始.orderId:" + orderId);
 
         if (StringUtils.isEmpty(orderId)) {
+            request.setAttribute("errormsg","无状态的非法请求");
             return BaseData.RESULT_BAD;
         }
 
@@ -429,6 +430,7 @@ public class OrderHandle {
 
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(userMobile) || StringUtils.isEmpty(orderId)) {
             logger.debug("修改订单开始.userName:" + userName + "userMobile:" + userMobile + "orderId:" + orderId+"参数不正确");
+            request.setAttribute("errormsg","有状态的非法请求");
             return BaseData.RESULT_BAD;
         }
         //
@@ -455,6 +457,7 @@ public class OrderHandle {
 
         if (StringUtils.isEmpty(token)) {
             logger.debug("修改订单开始.获取token失败");
+            request.setAttribute("errormsg","修改订单,无用户身份");
             return BaseData.RESULT_BAD;
         }
 
@@ -468,6 +471,7 @@ public class OrderHandle {
         logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
+            request.setAttribute("errormsg","修改,无远程结果");
             return BaseData.RESULT_BAD;
         }
 
@@ -496,6 +500,7 @@ public class OrderHandle {
 
         if (null == orderid || null == ordertype) {
             logger.debug("支付订单开始请求orderid:" + orderid  +"ordertype:" + ordertype+"出现错误");
+            request.setAttribute("errormsg","非法的支付请求");
             return "error";
         }
 
@@ -522,6 +527,7 @@ public class OrderHandle {
         logger.debug("修改订单开始请求openid:" + openid);
 
         if (StringUtils.isEmpty(token)) {
+            request.setAttribute("errormsg","支付,无用户身份");
             return "error";
         }
 
@@ -532,18 +538,17 @@ public class OrderHandle {
         logger.debug("修改订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
+            request.setAttribute("errormsg","支付,无远程结果");
             return "error";
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
+            request.setAttribute("errormsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
                 try {
-                    System.out.println("in handle redirect to detail start");
                     response.sendRedirect(UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
-                    System.out.println("in handle redirect to detail end");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -551,6 +556,7 @@ public class OrderHandle {
                 return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
+                request.setAttribute("errormsg","无微信支付信息");
                 return "error";
             }
             JSONObject json = jsonPay.getJSONObject("weinxinpay");
