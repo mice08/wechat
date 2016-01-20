@@ -57,7 +57,7 @@
 <body>
     <header class="header">
         <a class="back-icon" href="javascript:;"></a>
-        <span class="title brown">支付订单'${timeouttime}'</span>
+        <span class="title brown">支付订单</span>
     </header>
     <%  if(BaseData.RESULT_BAD.equals(result)){ %>
         <div>
