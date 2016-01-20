@@ -558,13 +558,13 @@ public class OrderHandle {
             String packagevalue = json.getString("packagevalue");
             String prepayid = json.getString("prepayid");
             String timestamp = json.getString("timestamp");
-            String key = PropKit.get("otsHttpUrl");
+            String key = PropKit.get("weixin.key");
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
             //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
             // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
 //            StringBuilder stringBuilder = new StringBuilder()
-//                    .append("appid=").append(appid)
+//                    .append("appId=").append(appid)
 //                    .append("&noncestr=").append(noncestr)
 //                    .append("&package=WAP")
 //                    .append("&prepayid=").append(prepayid)
