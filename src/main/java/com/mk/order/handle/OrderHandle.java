@@ -20,6 +20,9 @@ import java.util.*;
 
 public class OrderHandle {
 
+    private  final  String  timeSample = "yyyyMMddHHmmss";
+    private  final  String  dataSample = "yyyyMMdd";
+
     static Log logger = Log.getLog(OrderHandle.class);
 
     //订单路由
@@ -272,13 +275,13 @@ public class OrderHandle {
 
             //
             String begintimeOri = DataHander.checkStringNull(object, "begintime", "");
-            begintimeOri = DateUtil.getStrFormart(begintimeOri, "yyyyMMhh");
+            begintimeOri = DateUtil.getStrFormart(begintimeOri, dataSample);
 
             String endtimeOri = DataHander.checkStringNull(object, "endtime", "");
-            endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
+            endtimeOri = DateUtil.getStrFormart(endtimeOri, dataSample);
             try{
-                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,"yyyyMMhh"));
-                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,"yyyyMMhh"));
+                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,dataSample));
+                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,dataSample));
             }catch (Exception  e){
                 e.printStackTrace();
             }
@@ -310,17 +313,15 @@ public class OrderHandle {
             request.setAttribute("timeintervalStr", timeintervalStr);
 
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
-            System.out.println("backtimeouttime: "+backtimeouttime);
-            if (!"0".equals(backtimeouttime)) {
-                try {
-                    System.out.println("backtimeouttime:" + DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"));
-                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
-                } catch (Exception e) {
-                    System.out.println("时间处理错误");
-                    e.printStackTrace();
-                }
-            }
 
+            backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+
+            try {
+                request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
+            } catch (Exception e) {
+                System.out.println("时间处理错误");
+                e.printStackTrace();
+            }
 
             return BaseData.RESULT_ADD_SUCCESS;
         }
@@ -562,23 +563,6 @@ public class OrderHandle {
             String key = PropKit.get("otsHttpUrl");
             String sign = this.getSign(appid, noncestr, prepayid, timestamp, key);
 
-            //appid=wxf5b5e87a6a0fde94&noncestr=123&package=WAP
-            // &prepayid=wx201412101630480281750c890475924233&sign=53D411FB74FE0B0C79CC94F2AB0E2333&timestamp=1417511263
-//            StringBuilder stringBuilder = new StringBuilder()
-//                    .append("appid=").append(appid)
-//                    .append("&noncestr=").append(noncestr)
-//                    .append("&package=WAP")
-//                    .append("&prepayid=").append(prepayid)
-//                    .append("&sign=").append(sign)
-//                    .append("&timestamp=").append(timestamp);
-//            try {
-//                String url = URLEncoder.encode(stringBuilder.toString(),"UTF8");
-//                request.setAttribute("url", "weixin://wap/pay?" + url);
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-
-
             request.setAttribute("appId", appid);
             request.setAttribute("timeStamp", timestamp);
             request.setAttribute("nonceStr", noncestr);
@@ -676,14 +660,15 @@ public class OrderHandle {
             request.setAttribute("timeintervalend", timeintervalendStr);
             timeintervalStr = timeintervalstartStr + "-" + timeintervalendStr;
 
+            request.setAttribute("timeintervalStr", timeintervalStr);
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
-            if (!"0".equals(backtimeouttime)) {
-                try {
-                    request.setAttribute("timeouttime", (DateUtil.timesBetween(DateUtil.getStringDate("yyyyMMddHHmmss"),backtimeouttime, "yyyyMMddHHmmss"))*1000);
-                } catch (Exception e) {
-                    logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
-                    e.printStackTrace();
-                }
+
+            backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+            try {
+                request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
+            } catch (Exception e) {
+                logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误");
+                e.printStackTrace();
             }
             return  BaseData.RESULT_QUERY_SUCCESS;
 
@@ -691,6 +676,41 @@ public class OrderHandle {
 
     }
 
+    /**
+     * 时间格式处理
+     * @param str
+     * @param exp
+     * @return
+     */
+    public  String   stringDateToString(String  str,String  exp){
+        if(StringUtils.isEmpty(str)){
+            return null;
+        }
+        if("0".equals(str)){
+            return str;
+        }
+        str = str.substring(0,exp.length());
+        return  str;
+    }
+
+    /**
+     *  获取当前时间和制定日期的差
+     * @param time
+     * @return
+     */
+    public  Long   getBetweenDateFromNow(String time,String  exp)throws Exception{
+        System.out.println(time);
+        if(StringUtils.isEmpty(time)){
+            return  new Long(0);
+        }
+        String nowTime = DateUtil.getStringDate(timeSample);
+        if(StringUtils.isEmpty(exp)){
+            exp = "yyyyMMddHHmmss";
+        }
+        Long  secondLong = DateUtil.timesBetween(nowTime,time,exp);
+        return  secondLong*1000;
+
+    }
 
     public String getSign(String appId, String noncestr, String prepay_id, String timestamp, String key) {
         String keys = "appId=" + appId + "&nonceStr=" + noncestr + "&package=prepay_id=" + prepay_id + "&signType=MD5&timeStamp=" + timestamp + "&key=" + key;
