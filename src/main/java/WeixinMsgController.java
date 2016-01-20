@@ -111,13 +111,21 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	/**
 	 * 实现父类抽方法，处理关注/取消关注消息
 	 */
-	protected void processInFollowEvent(InFollowEvent inFollowEvent)
+	protected void processInFollowEvent(final InFollowEvent inFollowEvent)
 	{
+		//BI统计
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIFollowEventApi.sendFollowEvent(inFollowEvent);
+            }
+        }).start();
+
 		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
-			String text = "感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"http://www.imike.com\">现在验证手机,即可获酒店大红包。</a>";
+			String text = "感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2findex&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\">现在验证手机,即可获酒店大红包。</a>";
 			renderOutTextMsg(text);
 		}
 		// 如果为取消关注事件，将无法接收到传回的信息
@@ -125,15 +133,19 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		{
 			logger.debug("取消关注：" + inFollowEvent.getFromUserName());
 		}
-		//BI统计
-//		BIFollowEventApi.sendFollowEvent(inFollowEvent);
 	}
 
 	@Override
-	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent)
+	protected void processInQrCodeEvent(final InQrCodeEvent inQrCodeEvent)
 	{
 		//BI统计
-		BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+            }
+        }).start();
+
 		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
 		{

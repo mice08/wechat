@@ -87,7 +87,7 @@
         <div class="h-info bg-white brown">
             <div class="h-name">${hotelname}</div>
             <div class="o-date">
-                <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalstart}:00-${timeintervalend}:00</span>入住</div>|
+                <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalStr}</span>入住</div>|
                 <span>${endtime}离店</span> |
                 <span>共${orderday}晚</span>
             </div>
