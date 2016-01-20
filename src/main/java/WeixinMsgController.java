@@ -144,7 +144,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
             public void run() {
                 BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
             }
-        });
+        }).start();
 
 		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
