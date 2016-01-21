@@ -37,8 +37,17 @@
 </head>
 <body>
 <header class="header">
+    <%
+        String t = request.getHeader("Referer");
+        if (null != t) {
+            int end = t.indexOf("test.jsp");
+            if(end >0) {
+                System.out.println(t);
+            }
+        }
+    %>
     在线支付页面<br/><%=request.getHeader("Referer") %><br/>
-    在线支付页面<br/>
+    在线支付页面<br/><a href="test.jsp">test</a><br/>
     "appId": "wx83cc02790df41a2b", //公众号名称，由商户传入<br/>
     "timeStamp": "1452940678", //时间戳，自1970年以来的秒数<br/>
     "nonceStr": "ow542c8h8jpdj8678sgelmex8lkkh3j5", //随机串<br/>

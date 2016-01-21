@@ -8,6 +8,17 @@
     response.setHeader("Cache-Control","no-cache");
     response.setDateHeader("Expires", 0);
 
+    //
+    String ref = request.getHeader("Referer");
+
+    int orderDetailUrl = ref.indexOf("/#!/orderdetail/");
+    int wechatPaymentUrl = ref.indexOf("/wechat/");
+    System.out.println("wechatPaymentUrl:"+wechatPaymentUrl);
+    if (orderDetailUrl > 0) {
+        response.sendRedirect("/#!/index");
+    }
+
+    //
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -154,7 +165,7 @@
 <script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js?v=2"></script>
 <script>
-    var  orderid = ${orderid};
+    var  orderid = parseInt('${timeouttime}'),
     $(function () {
         countdomn.init({
             time: parseInt(${timeouttime}),
