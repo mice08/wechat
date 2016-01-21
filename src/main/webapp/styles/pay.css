@@ -302,6 +302,18 @@ footer.footer .order-btn{
     display: block;
 }
 
+
+@media only screen and (max-width:320px){
+    div.main .o-d-info  .u-p-input{
+        margin: 0.8rem 0 0.8rem 0.8rem;
+    }
+    .pay-discount{
+        font-size: 0.9rem;
+    }
+    .o-date{
+        font-size: 1.1rem;
+    }
+}
 .pay-bgye{
     color:#616161;
     font-style: normal;
