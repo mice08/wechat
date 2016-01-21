@@ -165,7 +165,7 @@
 <script src="scripts/zepto.min.js?v=3"></script>
 <script src="scripts/countdown.js?v=2"></script>
 <script>
-    var  orderid = parseInt('${timeouttime}'),
+    var  orderid = ${orderid};
     $(function () {
         countdomn.init({
             time: parseInt(${timeouttime}),
