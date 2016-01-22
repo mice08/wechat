@@ -39,7 +39,7 @@
         }
     %>
     <script>
-        showMessage("${msg}");
+        showMessage("<%=msg%>");
     </script>
 </div>
 
