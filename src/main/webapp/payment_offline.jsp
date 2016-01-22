@@ -59,10 +59,6 @@
             }
         })
     }
-
-    WeixinJSBridge.onclose(function(){
-        alert(504);
-    });
 </script>
 <body>
     <header class="header">
