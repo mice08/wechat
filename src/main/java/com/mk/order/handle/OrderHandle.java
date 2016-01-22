@@ -20,8 +20,9 @@ import java.util.*;
 
 public class OrderHandle {
 
-    private   final  String  timeSample = "yyyyMMddHHmmss";
-    private   final  String  dataSample = "yyyyMMdd";
+    private   final   String  timeSample = "yyyyMMddHHmmss";
+    private   final   String  dataSample = "yyyyMMdd";
+    private   final  String  tokenMark = "m28";
 
     static Log logger = Log.getLog(OrderHandle.class);
 
@@ -191,7 +192,7 @@ public class OrderHandle {
 
 
         //token
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -330,7 +331,7 @@ public class OrderHandle {
         String debug = UrlUtil.getValue(BaseData.debug);
         //
 
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -447,8 +448,8 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-        String token = this.getParam(request,"m28");
-        logger.debug("修改订单 [OrderHandle : createOrder],获取token:"+token);
+        String token = this.getParam(request,tokenMark);
+        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
@@ -521,7 +522,7 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("支付订单--执行 [OrderHandle : createOrder],获取token:"+token);
         String openid = this.getParam(request,"m30");
         logger.debug("支付订单--执行 [OrderHandle : createOrder],openid:"+openid);
@@ -600,10 +601,8 @@ public class OrderHandle {
             return BaseData.RESULT_BAD;
         }
 
-        Cookie[] cookies = request.getCookies();
 
-
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
@@ -614,6 +613,7 @@ public class OrderHandle {
         hm.put("token",token);
         hm.put("orderid",qorderid);
 
+        logger.info(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl));
         String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);

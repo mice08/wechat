@@ -307,10 +307,10 @@ footer.footer .order-btn{
     div.main .o-d-info  .u-p-input{
         margin: 0.8rem 0 0.8rem 0.8rem;
     }
-    .pay-discount{
+    div.main  .use-package  .pay-discount{
         font-size: 0.9rem;
     }
-    .o-date{
+    div.main  .o-date{
         font-size: 1.1rem;
     }
 }
