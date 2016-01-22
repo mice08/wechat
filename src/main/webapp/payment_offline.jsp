@@ -11,6 +11,8 @@
     //
     String ref = request.getHeader("Referer");
 
+    System.out.println("Referer:"+ref);
+
     int orderDetailUrl = ref.indexOf("/#!/orderdetail/");
     int wechatPaymentUrl = ref.indexOf("/wechat/");
     System.out.println("wechatPaymentUrl:"+wechatPaymentUrl);
