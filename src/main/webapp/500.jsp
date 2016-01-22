@@ -17,7 +17,7 @@
                 clickFn: function (e) {
                     e.preventDefault();
                     if (e.target.tagName == 'BUTTON') {
-                        alert('123');
+                        window.location.href = "/index.jsp";
                     }
                 }
             })
