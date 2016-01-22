@@ -587,11 +587,16 @@ public class OrderHandle {
 
 
         String token = this.getParam(request,tokenMark);
+        logger.info("queryOrderUrl:token"+"|||||||||||||2"+token);
+
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
             return  BaseData.RESULT_BAD;
         }
+
+        logger.info("queryOrderUrl:"+"|||||||||||||2");
+
         HashMap  hm = new HashMap();
 
         hm.put("token",token);
