@@ -14,7 +14,6 @@
     <script type="text/javascript">
         function showMessage(message) {
             alert(message);
-            window.location.href = "/index.jsp";
         }
     </script>
 </head>
@@ -34,6 +33,7 @@
     %>
     <script>
         showMessage("<%=msg%>");
+        window.location.href = "/index.jsp";
     </script>
     <%=msg%>
 </div>
