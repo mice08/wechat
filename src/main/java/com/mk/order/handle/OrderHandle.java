@@ -609,7 +609,6 @@ public class OrderHandle {
             return  BaseData.RESULT_BAD;
         }
 
-        logger.info("queryOrderUrl:"+"|||||||||||||2");
         logger.info("queryOrderUrl:"+"000"+BaseData.queryOrderUrl);
 
 

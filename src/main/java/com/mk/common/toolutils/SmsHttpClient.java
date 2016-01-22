@@ -23,7 +23,8 @@ import java.util.*;
 public class SmsHttpClient {
    
       
-    public static String post(String url, Map<String, String> params) {  
+    public static String post(String url, Map<String, String> params) {
+        System.out.println("url\\:\\\\"+url);
         DefaultHttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 15000);
         httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 15000);
@@ -111,7 +112,7 @@ public class SmsHttpClient {
    }  
     
     public static void main(String[] args){
-        String url = "http://ota2test.imike.cn/ots/roomstate/querylist";
+        String url = "http://huidu.imike.cn/ots/order/querylist";
     	Map m = new HashMap();
     	m.put("hotelid", "2188");
     	m.put("roomstatus", "1" );
