@@ -49,7 +49,7 @@
             clickFn: function(e){
                 e.preventDefault();
                 if(e.target.tagName=='BUTTON'){
-                    window.location.href=<%=UrlUtil.getValue(BaseData.wechatMyOrder)%>;
+                    window.location.href="<%=UrlUtil.getValue(BaseData.wechatMyOrder)%>";
                 }
             }
         })
