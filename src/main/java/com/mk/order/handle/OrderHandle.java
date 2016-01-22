@@ -672,6 +672,8 @@ public class OrderHandle {
             String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+            logger.error("查询订单开始请求orderid:" + qorderid+"时间处理错误" +backtimeouttime + "|  " + backtimeouttime);
+
             try {
                 request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
             } catch (Exception e) {
