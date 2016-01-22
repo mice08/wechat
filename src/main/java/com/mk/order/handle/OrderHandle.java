@@ -551,14 +551,17 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
+            logger.debug("!success:" + backStr);
             //
             String errormsg =  DataHander.checkStringNull(jsonPay, "errormsg", "");
             if (StringUtils.isNotEmpty(errormsg)) {
+                logger.debug("errormsg:" + errormsg);
                 request.setAttribute("errmsg", errormsg);
             }
             //
             String errmsg = DataHander.checkStringNull(jsonPay, "errmsg", "");
             if (StringUtils.isNotEmpty(errmsg)) {
+                logger.debug("errmsg:" + errmsg);
                 request.setAttribute("errmsg", errmsg);
             }
             return "error";
