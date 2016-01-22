@@ -72,7 +72,6 @@
     </header>
     <%  if(BaseData.RESULT_BAD.equals(result)){ %>
         <div>
-
             <h1>请求不合法</h1>
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
