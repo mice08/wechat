@@ -465,12 +465,12 @@ public class OrderHandle {
 
         if (StringUtils.isEmpty(backStr)) {
             request.setAttribute("errormsg","修改,无远程结果");
-            return BaseData.RESULT_BAD;
+            return BaseData.RESULT_EXCEPTION;
         }
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonOrder.getString("success"))) {
-            String errormsg = DataHander.checkStringNull(jsonOrder,"errormsg","");
+            String errormsg = DataHander.checkStringNull(jsonOrder,"errmsg","");
             if(StringUtils.isEmpty(errormsg)){
                 errormsg = DataHander.checkStringNull(jsonOrder,"errmsg", "");
             }

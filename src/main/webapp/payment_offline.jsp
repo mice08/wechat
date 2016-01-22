@@ -8,6 +8,19 @@
     response.setHeader("Cache-Control","no-cache");
     response.setDateHeader("Expires", 0);
 
+    //
+    String ref = request.getHeader("Referer");
+
+    System.out.println("Referer:"+ref);
+
+    int orderDetailUrl = ref.indexOf("/#!/orderdetail/");
+    int wechatPaymentUrl = ref.indexOf("/wechat/");
+    System.out.println("wechatPaymentUrl:"+wechatPaymentUrl);
+    if (orderDetailUrl > 0) {
+        response.sendRedirect("/#!/index");
+    }
+
+    //
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -61,7 +74,6 @@
     </header>
     <%  if(BaseData.RESULT_BAD.equals(result)){ %>
         <div>
-
             <h1>请求不合法</h1>
         </div>
     <%}else if(BaseData.RESULT_EXCEPTION.endsWith(result)){
@@ -158,7 +170,7 @@
     $(function () {
         debugger;
         countdomn.init({
-            time: parseInt(${timeouttime}),
+            time: parseInt('${timeouttime}'),
             onStop: function (data) {
                 // 倒计时停止时触发
             },
