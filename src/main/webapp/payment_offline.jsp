@@ -15,6 +15,8 @@
 
     int orderDetailUrl = ref.indexOf("/#!/orderdetail/");
     int wechatPaymentUrl = ref.indexOf("/wechat/");
+
+
     System.out.println("wechatPaymentUrl:"+wechatPaymentUrl);
     if (orderDetailUrl > 0) {
         response.sendRedirect("/#!/index");
