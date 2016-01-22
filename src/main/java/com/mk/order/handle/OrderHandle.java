@@ -584,8 +584,6 @@ public class OrderHandle {
             return BaseData.RESULT_BAD;
         }
 
-        Cookie[] cookies = request.getCookies();
-
 
         String token = this.getParam(request,"28");
 
