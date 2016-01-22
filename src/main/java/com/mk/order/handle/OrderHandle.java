@@ -603,8 +603,6 @@ public class OrderHandle {
 
 
         String token = this.getParam(request,tokenMark);
-        logger.info("queryOrderUrl:token"+"|||||||||||||2"+token);
-
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
@@ -612,6 +610,8 @@ public class OrderHandle {
         }
 
         logger.info("queryOrderUrl:"+"|||||||||||||2");
+        logger.info("queryOrderUrl:"+"000"+BaseData.queryOrderUrl);
+
 
         HashMap  hm = new HashMap();
 
