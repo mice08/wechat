@@ -32,7 +32,7 @@
 <div>
     <h1>请求错误</h1>
     <%
-        Object obj = request.getAttribute("errormsg");
+        Object obj = request.getAttribute("errmsg");
         String msg = "请重试.";
         if (null != obj) {
             msg = obj.toString();

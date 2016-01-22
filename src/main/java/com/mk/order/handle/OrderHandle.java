@@ -536,7 +536,7 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
+            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errormsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
