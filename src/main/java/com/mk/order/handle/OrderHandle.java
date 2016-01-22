@@ -613,7 +613,7 @@ public class OrderHandle {
         hm.put("token",token);
         hm.put("orderid",qorderid);
 
-        logger.info("queryOrderUrl:"+UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl));
+        logger.info("queryOrderUrl:"+UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)));
         String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);
