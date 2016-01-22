@@ -126,6 +126,10 @@
                     <div class="pay-pg-tip">2.在您入住成功后，还会根据本次抵扣的金额发放红包奖励</div>
                 </div>
             </div>
+            <input type="hidden" name="timeintervalstart"  value="${timeintervalstart}"/>
+            <input type="hidden" name="timeintervalend"  value="${timeintervalend}"/>
+
+            <input type="hidden" name="hotelid"  value="${hotelid}"/>
             <input type="hidden" name="orderid"  value="${orderid}"/>
             <input type="hidden" name="ordertype"  value="1"/>
         </form>

@@ -10,6 +10,9 @@ public class BaseData {
     public static String orderDetailUrl = "order.detail.url";
     public static String wechatMyOrder = "wechat.myorder.url";
 
+    public static String hotelDetailUrl = "hotel.detail.url";
+
+
 
 
     public  static  String  RESULT_EDIT_SUCCESS = "editok";
