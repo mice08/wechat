@@ -670,12 +670,9 @@ public class OrderHandle {
 
             request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
             
-            String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
-
-            logger.info("查询订单开始请求orderid:" + qorderid+"时间处理错误" +backtimeouttime +" ppppp");
+            String backtimeouttime = DataHander.checkStringNull(object,"order", "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
-            logger.info("查询订单开始请求orderid:" + qorderid+"时间处理错误" +backtimeouttime + "|  " + backtimeouttime);
 
             try {
                 request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
