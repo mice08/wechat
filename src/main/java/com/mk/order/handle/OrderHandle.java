@@ -20,8 +20,9 @@ import java.util.*;
 
 public class OrderHandle {
 
-    private   final  String  timeSample = "yyyyMMddHHmmss";
-    private   final  String  dataSample = "yyyyMMdd";
+    private   final   String  timeSample = "yyyyMMddHHmmss";
+    private   final   String  dataSample = "yyyyMMdd";
+    private   final  String  tokenMark = "m28";
 
     static Log logger = Log.getLog(OrderHandle.class);
 
@@ -192,7 +193,7 @@ public class OrderHandle {
 
 
         //token
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -328,7 +329,7 @@ public class OrderHandle {
         String debug = UrlUtil.getValue(BaseData.debug);
         //
 
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -441,7 +442,7 @@ public class OrderHandle {
         parmeter.put("contactsphone", userMobile);
 
         //token
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
 
         if ("true".equals(debug)) {
@@ -507,7 +508,7 @@ public class OrderHandle {
         parmeterPay.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //token
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
         logger.debug("支付订单--执行 [OrderHandle : createOrder],获取token:"+token);
         String openid = this.getParam(request,"m30");
         logger.debug("支付订单--执行 [OrderHandle : createOrder],openid:"+openid);
@@ -585,7 +586,7 @@ public class OrderHandle {
         }
 
 
-        String token = this.getParam(request,"m28");
+        String token = this.getParam(request,tokenMark);
 
         if (StringUtils.isEmpty(token)) {
             logger.error("查询订单开始请求orderid:" + qorderid+"获取token失败");
