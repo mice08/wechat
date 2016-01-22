@@ -551,7 +551,16 @@ public class OrderHandle {
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errormsg", ""));
+            //
+            String errormsg =  DataHander.checkStringNull(jsonPay, "errormsg", "");
+            if (StringUtils.isNotEmpty(errormsg)) {
+                request.setAttribute("errmsg", errormsg);
+            }
+            //
+            String errmsg = DataHander.checkStringNull(jsonPay, "errmsg", "");
+            if (StringUtils.isNotEmpty(errmsg)) {
+                request.setAttribute("errmsg", errmsg);
+            }
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {

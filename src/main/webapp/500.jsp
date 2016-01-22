@@ -13,14 +13,8 @@
 
     <script type="text/javascript">
         function showMessage(message) {
-            alert(message, {
-                clickFn: function (e) {
-                    e.preventDefault();
-                    if (e.target.tagName == 'BUTTON') {
-                        window.location.href = "/index.jsp";
-                    }
-                }
-            })
+            alert(message);
+            window.location.href = "/index.jsp";
         }
     </script>
 </head>
@@ -40,7 +34,6 @@
     %>
     <script>
         showMessage("<%=msg%>");
-        window.location.href = "/index.jsp";
     </script>
     <%=msg%>
 </div>
