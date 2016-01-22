@@ -15,20 +15,6 @@
         response.setDateHeader("Expires", 0);
 
         //
-        String ref = request.getHeader("Referer");
-
-        System.out.println("Referer:"+ref);
-
-        int orderDetailUrl = ref.indexOf("/#!/orderdetail/");
-        int wechatPaymentUrl = ref.indexOf("/wechat/");
-
-
-        System.out.println("wechatPaymentUrl:"+wechatPaymentUrl);
-        if (orderDetailUrl > 0) {
-            response.sendRedirect("/#!/index");
-        }
-
-        //
         OrderHandle ho = new OrderHandle();
         String m = ho.pay(request,response);
         if ("error".equals(m)) {
