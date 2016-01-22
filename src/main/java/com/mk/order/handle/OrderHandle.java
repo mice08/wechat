@@ -469,7 +469,6 @@ public class OrderHandle {
         }
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
-        logger.debug("modify backStr:" +  DataHander.checkStringNull(jsonOrder,"errmsg",""));
         if (!"true".equals(jsonOrder.getString("success"))) {
             String errormsg = DataHander.checkStringNull(jsonOrder,"errmsg","");
             if(StringUtils.isEmpty(errormsg)){
@@ -509,19 +508,19 @@ public class OrderHandle {
 
         //token
         String token = this.getParam(request,"m28");
-        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
+        logger.debug("支付订单--执行 [OrderHandle : createOrder],获取token:"+token);
         String openid = this.getParam(request,"m30");
-        logger.debug("准备创建订单--执行 [OrderHandle : createOrder],openid:"+openid);
+        logger.debug("支付订单--执行 [OrderHandle : createOrder],openid:"+openid);
         if ("true".equals(debug)) {
             token = "4d2d9a6b-bf8d-46a8-b883-132bdb4321e7";
             openid = "oOcMFs30gdxVDvCj9QI15SdM8G2A";
         }
 
-        logger.debug("修改订单开始请求token:" + token);
-        logger.debug("修改订单开始请求openid:" + openid);
+        logger.debug("支付订单开始请求token:" + token);
+        logger.debug("支付订单开始请求openid:" + openid);
 
         if (StringUtils.isEmpty(token)) {
-            request.setAttribute("errormsg","支付,无用户身份");
+            request.setAttribute("errmsg","支付,无用户身份");
             return "error";
         }
 
@@ -529,15 +528,15 @@ public class OrderHandle {
         parmeterPay.put("openid",openid);
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.createPayUrl), parmeterPay);
-        logger.debug("修改订单开始请求backStr:" + backStr);
+        logger.debug("支付订单开始请求backStr:" + backStr);
 
         if (StringUtils.isEmpty(backStr)) {
-            request.setAttribute("errormsg","支付,无远程结果");
+            request.setAttribute("errmsg","支付,无远程结果");
             return "error";
         }
         JSONObject jsonPay = JSONObject.parseObject(backStr);
         if (!"true".equals(jsonPay.getString("success"))) {
-            request.setAttribute("errormsg", DataHander.checkStringNull(jsonPay, "errmsg", ""));
+            request.setAttribute("errmsg", DataHander.checkStringNull(jsonPay, "errormsg", ""));
             return "error";
         } else {
             if (OrderTypenum.DF.getId().equals(ordertype)) {
@@ -550,7 +549,7 @@ public class OrderHandle {
                 return "redirect";
             }
             if (!jsonPay.containsKey("weinxinpay")) {
-                request.setAttribute("errormsg","无微信支付信息");
+                request.setAttribute("errmsg","无微信支付信息");
                 return "error";
             }
             JSONObject json = jsonPay.getJSONObject("weinxinpay");
