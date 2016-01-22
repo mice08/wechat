@@ -170,6 +170,7 @@
 <script>
     var  orderid = ${orderid};
     $(function () {
+        debugger;
         countdomn.init({
             time: parseInt('${timeouttime}'),
             onStop: function (data) {
