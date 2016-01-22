@@ -17,7 +17,7 @@
                 clickFn: function (e) {
                     e.preventDefault();
                     if (e.target.tagName == 'BUTTON') {
-                        window.location.href = "/index.jsp";
+                        alert('123');
                     }
                 }
             })
@@ -40,7 +40,9 @@
     %>
     <script>
         showMessage("<%=msg%>");
+        window.location.href = "/index.jsp";
     </script>
+    <%=msg%>
 </div>
 
 </body>
