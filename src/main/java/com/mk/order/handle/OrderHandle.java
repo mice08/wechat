@@ -617,8 +617,9 @@ public class OrderHandle {
         hm.put("token",token);
         hm.put("orderid",qorderid);
 
-        logger.info("queryOrderUrl:"+UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)));
-        String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
+
+        String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.queryOrderUrl), hm);
+        logger.error("查询订单开始请求orderid:" + qorderid+"出参backStr:"+backStr);
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);
             return BaseData.RESULT_BAD;
@@ -669,9 +670,10 @@ public class OrderHandle {
 
             request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
             
-            String backtimeouttime = DataHander.checkStringNull(object, "timeouttime", "0");
+            String backtimeouttime = DataHander.checkStringNull(object,"order", "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
+
             try {
                 request.setAttribute("timeouttime", this.getBetweenDateFromNow(backtimeouttime,timeSample));
             } catch (Exception e) {
