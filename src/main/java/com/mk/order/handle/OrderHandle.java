@@ -619,6 +619,7 @@ public class OrderHandle {
 
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.queryOrderUrl), hm);
+        logger.error("查询订单开始请求orderid:" + qorderid+"出参backStr:"+backStr);
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);
             return BaseData.RESULT_BAD;
