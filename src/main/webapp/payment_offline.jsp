@@ -9,6 +9,11 @@
     response.setDateHeader("Expires", 0);
 
     //
+
+    UrlUtil.getValue(BaseData.createPayUrl);
+
+
+    //
     OrderHandle ho = new OrderHandle();
     String  orderid = request.getParameter("orderid");
 
@@ -54,6 +59,10 @@
             }
         })
     }
+
+    WeixinJSBridge.onclose(function(){
+        alert(504);
+    });
 </script>
 <body>
     <header class="header">
