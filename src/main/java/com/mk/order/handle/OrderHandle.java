@@ -469,6 +469,7 @@ public class OrderHandle {
         }
 
         JSONObject jsonOrder = JSONObject.parseObject(backStr);
+        logger.debug("modify backStr:" +  DataHander.checkStringNull(jsonOrder,"errmsg",""));
         if (!"true".equals(jsonOrder.getString("success"))) {
             String errormsg = DataHander.checkStringNull(jsonOrder,"errmsg","");
             if(StringUtils.isEmpty(errormsg)){
