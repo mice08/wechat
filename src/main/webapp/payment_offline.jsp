@@ -104,7 +104,10 @@
                         <li><span class="item-left gray-s">手机号</span><input type="text" class="i-p-input js_order_phone gray" placeholder="联系电话"  name="usermobile"  value="${contactsphone}"></li>
                     </ul>
                 </div>
+                <input type="hidden" name="timeintervalstart"  value="${timeintervalstart}"/>
+                <input type="hidden" name="timeintervalend"  value="${timeintervalend}"/>
 
+                <input type="hidden" name="hotelid"  value="${hotelid}"/>
                 <input type="hidden" name="orderid"  value="${orderid}"/>
                 <input type="hidden" name="ordertype"  value="2"/>
             </form>

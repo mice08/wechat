@@ -210,6 +210,7 @@
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <hotel.detail.url>/#!/detail</hotel.detail.url>
                 <ots.url>http://huidu.imike.cn/ots/</ots.url>
                 <weixin.key>IAYG8HpT1f4tosODIryb2BqKSqxIod2S</weixin.key>
             </properties>
@@ -237,6 +238,7 @@
 
                 <create.pay.url>http://huidu.imike.cn/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <hotel.detail.url>/#!/detail</hotel.detail.url>
                 <ots.url>http://huidu.imike.cn/ots/</ots.url>
                 <wechat.myorder.url>http://weixin.imike.cn/#!/myorder/all</wechat.myorder.url>
 
@@ -265,6 +267,7 @@
 
                 <create.pay.url>http://ots.imike.com/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <hotel.detail.url>/#!/detail</hotel.detail.url>
                 <ots.url>http://ots.imike.com/ots/</ots.url>
                 <weixin.key>WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7</weixin.key>
             </properties>

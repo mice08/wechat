@@ -60,7 +60,6 @@ public class OrderHandle {
             return null;
         }
 
-
         //token
         Cookie[] cookies = request.getCookies();
 
@@ -297,6 +296,9 @@ public class OrderHandle {
             request.setAttribute("price", DataHander.checkStringNull(object, "roomorder", "payprice", "price", "0"));
             request.setAttribute("totalprice", DataHander.checkStringNull(object, "roomorder", "totalprice", "0"));
             request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object, "maxuserwalletcost", "0"));
+            request.setAttribute("hotelid", hotelid);
+            request.setAttribute("timeintervalstart", timeintervalstart);
+            request.setAttribute("timeintervalend", timeintervalend);
 
             String  timeintervalstartStr = DataHander.checkStringNull(object, "timeintervalstart", "");
             String  timeintervalendStr = DataHander.checkStringNull(object, "timeintervalend", "");
@@ -386,6 +388,10 @@ public class OrderHandle {
         String userMobile = request.getParameter("usermobile");
         String walletCost = request.getParameter("walletcost");
         String ordertype = request.getParameter("ordertype");
+
+        String hotelid = request.getParameter("hotelid");
+        String timeintervalstart = request.getParameter("timeintervalstart");
+        String timeintervalend = request.getParameter("timeintervalend");
 
         logger.debug("修改订单开始.orderId:" + orderId);
 
@@ -480,12 +486,20 @@ public class OrderHandle {
         }
 
         //
+        request.setAttribute("hotelid", hotelid);
+        request.setAttribute("timeintervalstart", timeintervalstart);
+        request.setAttribute("timeintervalend", timeintervalend);
+
         request.setAttribute("orderid", orderId);
         request.setAttribute("ordertype", ordertype);
         return BaseData.RESULT_EDIT_SUCCESS;
     }
 
     public String pay(HttpServletRequest request, HttpServletResponse response) {
+
+        String hotelid = (String) request.getAttribute("hotelid");
+        String timeintervalstart = (String) request.getAttribute("timeintervalstart");
+        String timeintervalend = (String) request.getAttribute("timeintervalend");
 
         String orderid = (String) request.getAttribute("orderid");
         String ordertype = (String) request.getAttribute("ordertype");
@@ -571,6 +585,8 @@ public class OrderHandle {
 
             request.setAttribute("paySign", sign);
             request.setAttribute("orderDetailUrl", UrlUtil.getValue(BaseData.orderDetailUrl) + orderid);
+            request.setAttribute("hotelDetailUrl", UrlUtil.getValue(BaseData.hotelDetailUrl) + "?hotelid=" +hotelid
+            + "&timeintervalstart=" + timeintervalstart + "&timeintervalend=" + timeintervalend);
             return "success";
         }
 
@@ -602,7 +618,7 @@ public class OrderHandle {
         hm.put("token",token);
         hm.put("orderid",qorderid);
 
-        logger.info("queryOrderUrl:"+UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl));
+        logger.info("queryOrderUrl:"+UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)));
         String backStr = SmsHttpClient.post(UrlUtil.getValue(UrlUtil.getValue(BaseData.queryOrderUrl)), hm);
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);
