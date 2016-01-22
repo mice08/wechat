@@ -230,7 +230,7 @@
                 <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
                 <create.order.url>http://huidu.imike.cn/ots/order/createByRoomType</create.order.url>
                 <modify.order.url>http://huidu.imike.cn/ots/order/modifyByRoomType</modify.order.url>
-                <query.order.url>http://huidu.imike.cn/ots/order/querylist </query.order.url>
+                <query.order.url>http://huidu.imike.cn/ots/order/querylist</query.order.url>
 
                 <max.wallet.url>http://huidu.imike.cn/ots/pay/create</max.wallet.url>
                 <wallet.url>http://huidu.imike.cn/ots/redpacket/balance</wallet.url>
@@ -256,7 +256,7 @@
                 <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
                 <create.order.url>http://ots.imike.com/ots/order/createByRoomType</create.order.url>
                 <modify.order.url>http://ots.imike.com/ots/order/modifyByRoomType</modify.order.url>
-                <query.order.url>http://ots.imike.com/ots/order/querylist </query.order.url>
+                <query.order.url>http://ots.imike.com/ots/order/querylist</query.order.url>
 
                 <max.wallet.url>http://ots.imike.com/ots/pay/create</max.wallet.url>
                 <wallet.url>http://ots.imike.com/ots/redpacket/balance</wallet.url>
