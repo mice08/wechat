@@ -113,9 +113,9 @@
             </div>
             <div class="usebg-item">
                 <div class="c-title gray-s">使用红包</div>
-                <div class="use-package bg-white  row-no-padding">
+                <div class="use-package bg-white">
                     <div class="gray-s">红包余额 <span class="gray">￥${balance}</span></div>
-                    <div class="pay-package-r"><span class="gray-s pay-discount" style="display: none;">本次下单最多可抵扣${maxuserwalletcost}元</span>
+                    <div class="pay-package-r"><span class="gray-s pay-discount" >本次下单最多可抵扣${maxuserwalletcost}元</span>
                         <input type="number" name="walletcost" class="u-p-input gray text-center" id="user-wallet">
                     </div>
                 </div>

@@ -168,7 +168,7 @@ div.main .o-d-info  .u-p-item{
     padding: 0 0 0 1.6rem;
 }
 div.main .o-d-info  .u-p-input{
-    width: 3.5rem;
+    width: 3rem;
     height: 2.5rem;
     border: 0.1rem solid #eee;
     float: right;
@@ -341,7 +341,7 @@ footer.footer .order-btn{
     position: relative;
 }
 .pay-discount{
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 .gray{
     color:#616161;
