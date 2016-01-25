@@ -672,8 +672,8 @@ public class OrderHandle {
             request.setAttribute("orderday", DataHander.checkStringNull(orderJson, "roomorder", "orderday", ""));
             request.setAttribute("roomtypename", DataHander.checkStringNull(orderJson, "roomorder", "roomtypename", ""));
             request.setAttribute("walletcost", DataHander.checkStringNull(orderJson,"walletcost", "0"));
-            request.setAttribute("contacts", DataHander.checkStringNull(orderJson, "contacts", ""));
-            request.setAttribute("contactsphone", DataHander.checkStringNull(orderJson,"contactsphone", ""));
+            request.setAttribute("contacts", DataHander.checkStringNull(orderJson,"roomorder","checkinuser", "cpname", ""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(orderJson,"roomorder","checkinuser", "phone", ""));
             request.setAttribute("usermessage", DataHander.checkStringNull(orderJson, "usermessage", ""));
             request.setAttribute("onlinepay", DataHander.checkStringNull(orderJson, "onlinepay", "0"));
             request.setAttribute("price", DataHander.checkStringNull(orderJson,  "price", "0"));
