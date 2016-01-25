@@ -631,7 +631,8 @@ public class OrderHandle {
 
 
         String backStr = SmsHttpClient.post(UrlUtil.getValue(BaseData.queryOrderUrl), hm);
-        logger.error("查询订单开始请求orderid:" + qorderid+"出参backStr:"+backStr);
+        logger.debug("查询订单开始请求orderid:" + qorderid+"出参backStr:"+backStr);
+
         if (StringUtils.isEmpty(backStr)) {
             logger.error("查询订单开始请求orderid:" + qorderid);
             return BaseData.RESULT_BAD;
@@ -649,6 +650,8 @@ public class OrderHandle {
                 return BaseData.RESULT_BAD;
             }
             JSONObject orderJson = jsa.getJSONObject(0);
+
+            logger.debug("查询订单开始请求orderid:" + qorderid+"出参orderJson信息:"+orderJson.toString());
             //
             request.setAttribute("orderid", DataHander.checkStringNull(orderJson, "orderid", "0"));
             request.setAttribute("hotelname", DataHander.checkStringNull(orderJson, "hotelname", ""));
