@@ -34,7 +34,7 @@ public class DataHander {
 
         if (null != jsonObject && StringUtils.isNotEmpty(jsonArrayKey) && StringUtils.isNotEmpty(key)) {
             JSONArray jsonArray = jsonObject.getJSONArray(jsonArrayKey);
-            if (null != jsonArray) {
+            if (null != jsonArray&&jsonArray.size()>0) {
                 JSONObject jso = jsonArray.getJSONObject(0);
                 if (null != jso && jso.containsKey(key)) {
                     if(StringUtils.isEmpty(jso.getString(key))){
@@ -57,11 +57,11 @@ public class DataHander {
 
         if (null != jsonObject && StringUtils.isNotEmpty(jsonArrayKey) && StringUtils.isNotEmpty(jsonObject2) && StringUtils.isNotEmpty(key)) {
             JSONArray jsonArray = jsonObject.getJSONArray(jsonArrayKey);
-            if (null != jsonArray) {
+            if (null != jsonArray&&jsonArray.size()>0) {
                 JSONObject jso = jsonArray.getJSONObject(0);
                 if (null != jso) {
                     JSONArray jsa = jso.getJSONArray(jsonObject2);
-                    if (null != jsa) {
+                    if (null != jsa&&jsa.size()>0) {
                         JSONObject json = jsa.getJSONObject(0);
                         if (null != json && json.containsKey(key)) {
                             String  value = json.getString(key);
