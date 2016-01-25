@@ -648,41 +648,40 @@ public class OrderHandle {
                 logger.error("查询订单开始请求orderid:" + qorderid+"查询订单数量为空");
                 return BaseData.RESULT_BAD;
             }
+            JSONObject orderJson = jsa.getJSONObject(0);
+            //
+            request.setAttribute("orderid", DataHander.checkStringNull(orderJson, "orderid", "0"));
+            request.setAttribute("hotelname", DataHander.checkStringNull(orderJson, "hotelname", ""));
 
             //
-            request.setAttribute("orderid", DataHander.checkStringNull(object,"order", "orderid", "0"));
-            request.setAttribute("hotelname", DataHander.checkStringNull(object,"order", "hotelname", ""));
+            String begintimeOri = DataHander.checkStringNull(orderJson, "begintime", "");
+            begintimeOri = DateUtil.getStrFormart(begintimeOri, dataSample);
 
-            //
-            String begintimeOri = DataHander.checkStringNull(object,"order", "begintime", "");
-            begintimeOri = DateUtil.getStrFormart(begintimeOri, "yyyyMMhh");
-
-            String endtimeOri = DataHander.checkStringNull(object,"order", "endtime", "");
-            endtimeOri = DateUtil.getStrFormart(endtimeOri, "yyyyMMhh");
-
+            String endtimeOri = DataHander.checkStringNull(orderJson, "endtime", "");
+            endtimeOri = DateUtil.getStrFormart(endtimeOri, dataSample);
             try{
-                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,"yyyyMMhh"));
-                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,"yyyyMMhh"));
+                request.setAttribute("begintime", DateUtil.getMonthAndDay(begintimeOri,dataSample));
+                request.setAttribute("endtime", DateUtil.getMonthAndDay(endtimeOri,dataSample));
             }catch (Exception  e){
                 e.printStackTrace();
             }
 
-            request.setAttribute("orderday", DataHander.checkStringNull(object, "roomorder", "orderday", ""));
-            request.setAttribute("roomtypename", DataHander.checkStringNull(object,"order", "roomorder", "roomtypename", ""));
-            request.setAttribute("walletcost", DataHander.checkStringNull(object, "order","walletcost", "0"));
-            request.setAttribute("contacts", DataHander.checkStringNull(object,"order", "contacts", ""));
-            request.setAttribute("contactsphone", DataHander.checkStringNull(object,"order","contactsphone", ""));
-            request.setAttribute("usermessage", DataHander.checkStringNull(object,"order", "usermessage", ""));
-            request.setAttribute("onlinepay", DataHander.checkStringNull(object,"order", "onlinepay", "0"));
-            request.setAttribute("price", DataHander.checkStringNull(object,"order",  "price", "0"));
-            request.setAttribute("totalprice", DataHander.checkStringNull(object,"order","totalprice", "0"));
-            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(object,"order", "maxuserwalletcost", "0"));
-            String  timeintervalstartStr  = DataHander.checkStringNull(object, "order","timeintervalstart", "");
-            String  timeintervalendStr = DataHander.checkStringNull(object,"order", "timeintervalend", "");
+            request.setAttribute("orderday", DataHander.checkStringNull(orderJson, "roomorder", "orderday", ""));
+            request.setAttribute("roomtypename", DataHander.checkStringNull(orderJson, "roomorder", "roomtypename", ""));
+            request.setAttribute("walletcost", DataHander.checkStringNull(orderJson,"walletcost", "0"));
+            request.setAttribute("contacts", DataHander.checkStringNull(orderJson, "contacts", ""));
+            request.setAttribute("contactsphone", DataHander.checkStringNull(orderJson,"contactsphone", ""));
+            request.setAttribute("usermessage", DataHander.checkStringNull(orderJson, "usermessage", ""));
+            request.setAttribute("onlinepay", DataHander.checkStringNull(orderJson, "onlinepay", "0"));
+            request.setAttribute("price", DataHander.checkStringNull(orderJson,  "price", "0"));
+            request.setAttribute("totalprice", DataHander.checkStringNull(orderJson,"totalprice", "0"));
+            request.setAttribute("maxuserwalletcost", DataHander.checkStringNull(orderJson, "maxuserwalletcost", "0"));
+            String  timeintervalstartStr  = DataHander.checkStringNull(orderJson,"timeintervalstart", "");
+            String  timeintervalendStr = DataHander.checkStringNull(orderJson, "timeintervalend", "");
 
             request.setAttribute("timeintervalStr", this.adjustTimeShow(timeintervalstartStr,timeintervalendStr));
             
-            String backtimeouttime = DataHander.checkStringNull(object,"order", "timeouttime", "0");
+            String backtimeouttime = DataHander.checkStringNull(orderJson, "timeouttime", "0");
 
             backtimeouttime = this.stringDateToString(backtimeouttime,timeSample);
 
