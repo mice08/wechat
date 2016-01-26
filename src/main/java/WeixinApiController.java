@@ -5,6 +5,8 @@ import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -200,19 +202,49 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getSignature()
 	{
-//		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
-//		String fuckU= DateUtil.getCurMis().toString().substring(0,10);
-//
-//		String encryptString = new StringBuilder().append("jsapi_ticket=" + jssdkTicket.getTicket() + "&noncestr=t8bI2mW5Mma0I20Y&timestamp=" + fuckU + "&url=" + getRequest().getRequestURL()+"").toString();
-//		System.out.println("string1="+tempStr);
-//
-//		encryptString = SHA1.sha1Encrypt(tempStr);
-//		System.out.println("加密后="+tempStr);
-//
-//		setAttr("timestamp", fuckU);
-//		setAttr("signature",tempStr);
-		String str = "{\"token\": \""+AccessTokenApi.getAccessTokenStr()+"\"}";
-		renderText(str);
+//		String nonce_str = "t8bI2mW5Mma0I20Y";
+//		getRequest().getRequestURL()+"").toString();
+		long timestamp = System.currentTimeMillis()/1000;
+		String appId = getApiConfig().getAppId();
+		String nonceStr = getApiConfig().getToken();
+		String signature = null;
+		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
+		if (jsTicket.isAvailable()) {
+			String encryptStr = "jsapi_ticket=" + jsTicket.getTicket() + "&noncestr=" + nonceStr
+					+ "&timestamp=" + timestamp + "&url=" + getPara("url");
+			signature = SHA1(encryptStr);
+		}
+
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("timestamp", timestamp);
+		result.put("appId", appId);
+		result.put("nonceStr", nonceStr);
+		result.put("signature", signature);
+		renderJson(result);
+	}
+
+	public static String SHA1(String decript) {
+		try {
+			MessageDigest digest = java.security.MessageDigest
+					.getInstance("SHA-1");
+			digest.update(decript.getBytes());
+			byte messageDigest[] = digest.digest();
+			// Create Hex String
+			StringBuffer hexString = new StringBuffer();
+			// 字节数组转换为 十六进制 数
+			for (int i = 0; i < messageDigest.length; i++) {
+				String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
+				if (shaHex.length() < 2) {
+					hexString.append(0);
+				}
+				hexString.append(shaHex);
+			}
+			return hexString.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	/**
