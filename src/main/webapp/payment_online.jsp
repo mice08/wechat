@@ -196,7 +196,7 @@
 <script>
     $(function () {
         var minUserCost = parseInt(Math.min('${balance}','${maxuserwalletcost}'));
-        var allCost = parseInt('${onlinepay}')
+        var allCost = parseInt('${totalprice}')
         var $userWallet = $("#user-wallet");
         var $walletLayer = $("#wallet-layer");
         var $allCost = $("#all_cost");
