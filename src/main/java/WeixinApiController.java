@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class WeixinApiController extends ApiController {
 
@@ -202,11 +203,10 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getSignature()
 	{
-//		String nonce_str = "t8bI2mW5Mma0I20Y";
-//		getRequest().getRequestURL()+"").toString();
-		long timestamp = System.currentTimeMillis()/1000;
+		String timestamp = Long.toString(System.currentTimeMillis()/1000);
 		String appId = getApiConfig().getAppId();
-		String nonceStr = getApiConfig().getToken();
+		String nonceStr = UUID.randomUUID().toString();
+		nonceStr = nonceStr.replace("-","").toLowerCase();
 		String signature = null;
 		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
 		if (jsTicket.isAvailable()) {
@@ -214,7 +214,6 @@ public class WeixinApiController extends ApiController {
 					+ "&timestamp=" + timestamp + "&url=" + getPara("url");
 			signature = SHA1(encryptStr);
 		}
-
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("timestamp", timestamp);
 		result.put("appId", appId);
