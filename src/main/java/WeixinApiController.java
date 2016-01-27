@@ -5,6 +5,7 @@ import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -208,10 +209,16 @@ public class WeixinApiController extends ApiController {
 		String nonceStr = UUID.randomUUID().toString();
 		nonceStr = nonceStr.replace("-","").toLowerCase();
 		String signature = null;
+		String url = null;
+		try {
+			url = java.net.URLDecoder.decode(getPara("url"),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
 		if (jsTicket.isAvailable()) {
 			String encryptStr = "jsapi_ticket=" + jsTicket.getTicket() + "&noncestr=" + nonceStr
-					+ "&timestamp=" + timestamp + "&url=" + getPara("url");
+					+ "&timestamp=" + timestamp + "&url=" + url;
 			signature = SHA1(encryptStr);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
