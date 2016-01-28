@@ -85,23 +85,31 @@
     <div class="main">
         <div class="t-tips"><i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单!距结束<em class="p-timer js_time_min">00</em>分<em class="p-timer js_time_ss">00</em>秒</div>
         <section class="o-d-info ">
-            <div class="h-info bg-white brown">
+            <div class="h-info bg-white border-bottom">
                 <div class="h-name">${hotelname}</div>
-                <div class="o-date">
-                    <span>${begintime}入住</span>|
-                    <span>${endtime}离店</span>|
+                <div class="o-date gray-s">
+                    <div class="d-inline">${begintime}<span class="orange">${timeintervalStr}</span>入住</div><em class="m-r">|</em>
+                    <span>${endtime}离店</span><em class="m-r">|</em>
                     <span>共${orderday}晚</span>
                 </div>
-                <div class="h-type row">
+                <div class="h-type row gray-s">
                     <div class="col text-left">${roomtypename}</div>
-                    <div class="col text-right">房款 ￥<span class="orange">${totalprice}</span></div>
+                    <div class="col text-right">
+                        房款 ￥<span>${totalprice}</span>
+                    </div>
                 </div>
             </div>
             <form id="userInfo_form" method="post" name="userInfo_form">
-                <div class="h-person bg-white">
+                <div class="h-person bg-white border-top border-bottom">
                     <ul class="p-items">
-                        <li><span class="item-left gray-s">入住人</span><input type="text" class="i-p-input js_order_concact gray" placeholder="入住人" name="username" value="${contacts}"></li>
-                        <li><span class="item-left gray-s">手机号</span><input type="text" class="i-p-input js_order_phone gray" placeholder="联系电话"  name="usermobile"  value="${contactsphone}"></li>
+                        <li class="border-bottom">
+                            <span class="item-left gray-s">入住人</span>
+                            <input type="text" name="username" class="i-p-input js_order_concact gray" placeholder="入住人" value="${contacts}">
+                        </li>
+                        <li class="no-border">
+                            <span class="item-left gray-s">手机号</span>
+                            <input type="text" name="usermobile" class="i-p-input js_order_phone gray" placeholder="联系电话" value="${contactsphone}">
+                        </li>
                     </ul>
                 </div>
                 <input type="hidden" name="timeintervalstart"  value="${timeintervalstart}"/>

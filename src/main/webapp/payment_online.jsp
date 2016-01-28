@@ -56,7 +56,7 @@
 <body>
 
 <header class="header">
-    <a class="back-icon"  href="javascript:;"></a> <span class="title brown">支付订单</span>
+    <a class="back-icon" href="javascript:;"></a> <span class="title brown">支付订单</span>
 </header>
     <%  if(BaseData.RESULT_BAD.equals(result)){ %>
         <div>
@@ -77,47 +77,48 @@
     <%
         }else if(BaseData.RESULT_QUERY_SUCCESS.equals(result)||(BaseData.RESULT_ADD_SUCCESS.equals(result))){
     %>
-<div class="main">
 
+
+<div class="main">
     <div class="t-tips">
-        <i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em
-            class="p-timer js_time_min">00</em>分<em class="p-timer js_time_ss">00</em>秒
+        <i class="icon timer-icon"></i>请在<span class="yellow">15分钟</span>确认订单及付款!距结束<em class="p-timer js_time_min">00</em>分<em class="p-timer js_time_ss">00</em>秒
     </div>
     <section class="o-d-info ">
-        <div class="h-info bg-white brown">
+        <div class="h-info bg-white border-bottom">
             <div class="h-name">${hotelname}</div>
-            <div class="o-date">
-                <div class="d-inline">${begintime}&nbsp;<span class="orange">${timeintervalStr}</span>入住</div>|
-                <span>&nbsp;${endtime}离店</span> |
+            <div class="o-date gray-s">
+                <div class="d-inline">${begintime}<span class="orange">${timeintervalStr}</span>入住</div><em class="m-r">|</em>
+                <span>${endtime}离店</span><em class="m-r">|</em>
                 <span>共${orderday}晚</span>
             </div>
-            <div class="h-type row">
+            <div class="h-type row gray-s">
                 <div class="col text-left">${roomtypename}</div>
                 <div class="col text-right">
-                    房款 ￥<span class="orange">${totalprice}</span>
+                    房款 ￥<span>${totalprice}</span>
                 </div>
             </div>
         </div>
         <form id="userInfo_form" method="post" name="userInfo_form">
-            <div class="h-person bg-white">
+            <div class="h-person bg-white border-top border-bottom">
                 <ul class="p-items">
-                    <li>
+                    <li class="border-bottom">
                         <span class="item-left gray-s">入住人</span>
-                        <input type="text" name="username" class="i-p-input js_order_concact gray" placeholder="入住人" value="${contacts}"/>
+                        <input type="text" name="username" class="i-p-input js_order_concact gray" placeholder="入住人" value="${contacts}">
                     </li>
-                    <li>
+                    <li class="no-border">
                         <span class="item-left gray-s">手机号</span>
-                        <input type="text" name="usermobile" class="i-p-input js_order_phone gray" placeholder="联系电话" value="${contactsphone}"/>
+                        <input type="text" name="usermobile" class="i-p-input js_order_phone gray" placeholder="联系电话" value="${contactsphone}">
                     </li>
                 </ul>
             </div>
             <div class="usebg-item">
-                <div class="c-title gray-s">使用红包</div>
-                <div class="use-package bg-white">
-                    <div class="gray-s">红包余额 <span class="gray">￥${balance}</span></div>
-                    <div class="pay-package-r"><span class="gray-s pay-discount" >本次下单最多可抵扣${maxuserwalletcost}元</span>
-                        <input type="number" name="walletcost" class="u-p-input gray text-center" id="user-wallet">
+                <div class="c-title gray-s ">使用红包</div>
+                <div class="use-package bg-white row row-no-padding border-top border-bottom">
+                    <div class="gray-s col">红包余额 <span class="black hb-balance">￥${balance}</span></div>
+                    <div class="pay-package-r col text-right"><span class="gray-s pay-discount">本次下单最多可抵扣${maxuserwalletcost}元</span>
+
                     </div>
+                    <input type="tel" name="walletcost" class="u-p-input black text-center" id="user-wallet">
                 </div>
 
                 <div class="pay-tips gray-s">
@@ -134,8 +135,8 @@
             <input type="hidden" name="ordertype"  value="1"/>
         </form>
         <div class="pay-items">
-            <div class="c-title">选择支付方式</div>
-            <ul class="pay-item bg-white">
+            <div class="c-title gray-s">选择支付方式</div>
+            <ul class="pay-item bg-white border-top border-bottom">
                 <li>
                     <i class="icon wx-icon"></i>
                     <span>微信支付</span>
@@ -143,7 +144,7 @@
                     <a href="javascript:;" class="icon check-icon on js_pay_check"></a>
                 </li>
             </ul>
-            <div class="pay-tips">
+            <div class="pay-tips last-tips">
                 <span>温馨提示：</span>
                 <div>${usermessage}</div>
             </div>
@@ -151,30 +152,29 @@
     </section>
 </div>
 <footer class="footer bg-white row row-no-padding" style="width:100%;">
-    <div class="col">
-        还需支付：<span id="all_cost" class="orange ">
-            ￥${onlinepay}</span>
+    <div class="col black">
+        实际金额：<span id="all_cost" class="orange pay-price">￥${onlinepay}</span>
     </div>
     <div class="col text-right">
-        <a href="javascript:;" id="show-detail" class="gray pay-detail">
+        <a href="javascript:;" id="show-detail" class="gray-s pay-detail">
             明细<i class="icon up-icon"></i>
         </a>
         <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
     </div>
 </footer>
-<div class="mask_layer js_slide_layer"></div>
-<div class="footer_layer bg-white js_slide_layer">
+<div class="mask_layer js_slide_layer on"></div>
+<div class="footer_layer bg-white js_slide_layer on">
     <ul class="p-items">
         <li>
-            <p class="d-gray">房费</p>
-            <div class="row row-no-padding gray">
+            <p class="gray">房费</p>
+            <div class="row row-no-padding gray-s">
                 <div class="col">${hotelname}</div>
                 <div class="col text-right">￥${totalprice}</div>
             </div>
         </li>
         <li>
-            <p class="d-gray">优惠</p>
-            <div class="row row-no-padding gray">
+            <p class="gray">优惠</p>
+            <div class="row row-no-padding gray-s">
                 <div class="col">红包</div>
                 <div class="col text-right">
                     ￥<span id="wallet-layer">${walletcost}</span>
