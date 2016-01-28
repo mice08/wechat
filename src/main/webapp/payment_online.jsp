@@ -162,8 +162,8 @@
         <a href="javascript:;" class="order-btn bg-orange white text-center " id="btn-submit">提交订单</a>
     </div>
 </footer>
-<div class="mask_layer js_slide_layer on"></div>
-<div class="footer_layer bg-white js_slide_layer on">
+<div class="mask_layer js_slide_layer"></div>
+<div class="footer_layer bg-white js_slide_layer">
     <ul class="p-items">
         <li>
             <p class="gray">房费</p>
