@@ -17,6 +17,8 @@ import java.util.Map;
 public class OTSQrCodeEventApi {
     private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
 
+    static Log logger = Log.getLog(OTSQrCodeEventApi.class);
+
     public OTSQrCodeEventApi() {
     }
 
@@ -29,11 +31,14 @@ public class OTSQrCodeEventApi {
         params.put("msgtype", inQrCodeEvent.getMsgType());
         params.put("event", inQrCodeEvent.getEvent());
         params.put("eventkey", inQrCodeEvent.getEventKey());
-//        String paramsString = "?";
-//        for (Map.Entry<String, Object> entry : params.entrySet()) {
-//            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
-//        }
-        HttpUtils.post(apiUrl, JsonUtils.toJson(params));
+
+        logger.debug("time：" + inQrCodeEvent.getCreateTime());
+
+        String paramsString = "?";
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
+        }
+        HttpUtils.post(apiUrl+paramsString, "");
     }
 }
 
