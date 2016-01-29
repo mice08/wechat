@@ -6,6 +6,7 @@
 
 import api.BIFollowEventApi;
 import api.BIQrCodeEventApi;
+import api.OTSQrCodeEventApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiConfig;
@@ -145,7 +146,13 @@ public class WeixinMsgController extends MsgControllerAdapter {
                 BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
             }
         }).start();
-
+		//OTS统计
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				OTSQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+			}
+		}).start();
 		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
 		{

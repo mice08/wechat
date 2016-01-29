@@ -246,7 +246,6 @@ public class WeixinApiController extends ApiController {
 				hexString.append(shaHex);
 			}
 			return hexString.toString();
-
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -280,6 +279,19 @@ public class WeixinApiController extends ApiController {
 		}else{
 			renderText("{\"success\": 0 }");
 		}
+	}
+
+	/**
+	 * 发送模板
+	 */
+	public void sendTemplateMsg()
+	{
+		TemplateData templateData=TemplateData.New();
+		templateData.setTemplate_id(getPara("templateid"));
+		templateData.setTouser("openid");
+		templateData.setUrl("url");
+		ApiResult apiResult = TemplateMsgApi.send(templateData.toString());
+		renderText(apiResult.getJson());
 	}
 	
 	/**
