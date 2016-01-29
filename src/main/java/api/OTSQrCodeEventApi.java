@@ -19,6 +19,8 @@ public class OTSQrCodeEventApi {
 
     private static String apiUrl = "http://huidu.imike.cn/ots/login/scan";
 
+    static Log logger = Log.getLog(OTSQrCodeEventApi.class);
+
     public OTSQrCodeEventApi() {
     }
 
@@ -37,7 +39,8 @@ public class OTSQrCodeEventApi {
 //        for (Map.Entry<String, Object> entry : params.entrySet()) {
 //            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
 //        }
-        HttpUtils.post(apiUrl, JsonUtils.toJson(params));
+        String test = HttpUtils.post(apiUrl, JsonUtils.toJson(params));
+        logger.debug(test);
     }
 }
 
