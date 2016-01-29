@@ -15,10 +15,9 @@ import java.util.Map;
  * Created by Mi on 16/1/28.
  */
 public class OTSQrCodeEventApi {
-    private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
+//    private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
 
-    static Log logger = Log.getLog(OTSQrCodeEventApi.class);
-
+    private static String apiUrl = "http://huidu.imike.cn/ots/login/scan";
 
     public OTSQrCodeEventApi() {
     }
@@ -38,7 +37,6 @@ public class OTSQrCodeEventApi {
 //        for (Map.Entry<String, Object> entry : params.entrySet()) {
 //            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
 //        }
-        logger.debug(apiUrl);
         HttpUtils.post(apiUrl, JsonUtils.toJson(params));
     }
 }

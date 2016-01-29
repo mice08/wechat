@@ -147,11 +147,9 @@ public class WeixinMsgController extends MsgControllerAdapter {
             }
         }).start();
 		//OTS统计
-		logger.debug("code event");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				logger.debug("enter thread" + inQrCodeEvent.toString());
 				OTSQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
 			}
 		}).start();
