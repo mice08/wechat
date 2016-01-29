@@ -1,5 +1,6 @@
 import api.CallBackCityApi;
 import api.CallBackOTSToken;
+import api.OTSQrCodeEventApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;

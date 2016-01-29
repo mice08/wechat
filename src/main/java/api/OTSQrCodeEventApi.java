@@ -1,6 +1,7 @@
 package api;
 
 import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiResult;
 import com.jfinal.weixin.sdk.api.UserApi;
 import com.jfinal.weixin.sdk.msg.in.event.InQrCodeEvent;
@@ -15,6 +16,9 @@ import java.util.Map;
  */
 public class OTSQrCodeEventApi {
     private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
+
+    static Log logger = Log.getLog(OTSQrCodeEventApi.class);
+
 
     public OTSQrCodeEventApi() {
     }
@@ -34,6 +38,7 @@ public class OTSQrCodeEventApi {
 //        for (Map.Entry<String, Object> entry : params.entrySet()) {
 //            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
 //        }
+        logger.debug(apiUrl);
         HttpUtils.post(apiUrl, JsonUtils.toJson(params));
     }
 }

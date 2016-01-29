@@ -147,9 +147,11 @@ public class WeixinMsgController extends MsgControllerAdapter {
             }
         }).start();
 		//OTS统计
+		logger.debug("code event");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				logger.debug("enter thread" + inQrCodeEvent.toString());
 				OTSQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
 			}
 		}).start();
@@ -158,7 +160,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		{
 			logger.debug("扫码未关注：" + inQrCodeEvent.getFromUserName());
 			OutTextMsg outMsg = new OutTextMsg(inQrCodeEvent);
-			outMsg.setContent("感谢您的关注，二维码内容：" + inQrCodeEvent.getEventKey());
+			outMsg.setContent("感谢您的关注");
 			render(outMsg);
 		}
 		if (InQrCodeEvent.EVENT_INQRCODE_SCAN.equals(inQrCodeEvent.getEvent()))
