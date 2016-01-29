@@ -15,20 +15,14 @@ import java.util.Map;
  * Created by Mi on 16/1/28.
  */
 public class OTSQrCodeEventApi {
-//    private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
-
-    private static String apiUrl = "http://huidu.imike.cn/ots/login/scan";
-
-    static Log logger = Log.getLog(OTSQrCodeEventApi.class);
+    private static String apiUrl = PropKit.get("otsHttpUrl")+"login/scan";
 
     public OTSQrCodeEventApi() {
     }
 
     public static void sendQrCodeEvent(InQrCodeEvent inQrCodeEvent) {
         //请求
-        ApiResult apiResult = UserApi.getUserInfo(inQrCodeEvent.getFromUserName());
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("unionid", apiResult.getStr("unionid"));
         params.put("openid", inQrCodeEvent.getFromUserName());
         params.put("ticket", inQrCodeEvent.getTicket());
         params.put("createtime", inQrCodeEvent.getCreateTime());
@@ -39,8 +33,7 @@ public class OTSQrCodeEventApi {
 //        for (Map.Entry<String, Object> entry : params.entrySet()) {
 //            paramsString = paramsString + entry.getKey() + "=" + entry.getValue()+"&";
 //        }
-        String test = HttpUtils.post(apiUrl, JsonUtils.toJson(params));
-        logger.debug(test);
+        HttpUtils.post(apiUrl, JsonUtils.toJson(params));
     }
 }
 
