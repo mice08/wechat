@@ -330,6 +330,14 @@ public class OrderHandle {
 
         String debug = UrlUtil.getValue(BaseData.debug);
         //
+        String qorderid = request.getParameter("qorderid");
+        Long orderid = null;
+
+        try{
+            orderid = Long.parseLong(qorderid);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
@@ -348,7 +356,14 @@ public class OrderHandle {
         hmap.put("callmethod", CallMethodEnum.WEIXIN.getId());
 
         //
-        String url = UrlUtil.getValue(BaseData.queryWXUserWallet);
+        String url = null;
+
+        if (null == orderid) {
+            url = UrlUtil.getValue(BaseData.queryWXUserWallet);
+        } else {
+            hmap.put("orderid", orderid);
+            url = UrlUtil.getValue(BaseData.queryWXUserWalletWithFreeze);
+        }
 
         logger.debug("开始查询红包总额--执行 [OrderHandle : getUserWXwallet] url"+url);
 
