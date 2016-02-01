@@ -71,7 +71,7 @@
 </head>
 <body>
 
-    <section class="redpackageCoverLayer js_redPackage_layer hide">
+    <section class="redpackageCoverLayer js_redPackage_layer" style="display: none;">
         <div class="redpackageCoverLayer-mask"></div>
         <div class="redpackageCoverLayer-container">
             <section>
