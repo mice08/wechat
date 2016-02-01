@@ -45,8 +45,6 @@
                         "paySign": "${paySign}" //微信签名
                     },
                     function (res) {
-                        console.log(res);
-                        alert(res.err_msg + '----' + window.show);
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
                            window.show();
                         }else{
@@ -90,7 +88,6 @@
     </section>
 <script>
      window.show = function(){
-        console.log('succ');
         $('.js_redPackage_layer').show();
     }
      window.hide = function(){
