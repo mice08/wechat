@@ -8,6 +8,13 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="../src/commons/styles/normalize.css">
+    <link rel="stylesheet" href="../src/commons/styles/common.css">
+    <link rel="stylesheet" href="../src/commons/styles/redPackage.css">
+    <script src="scripts/zepto.min.js?v=3"></script>
+
     <%
 
         response.setHeader("Pragma","No-cache");
@@ -39,8 +46,7 @@
                     },
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
-                            alert("支付成功");
-                            window.location.href="${orderDetailUrl}";
+                           show();
                         }else{
                             //返回跳转到酒店详情页面
                             alert("支付失败");
@@ -59,10 +65,32 @@
         } else {
             onBridgeReady();
         }
+        function show(){
+            $('.js_redPackage_layer').show();
+        }
+        function hide(){
+            $('.js_redPackage_layer').hide();
+        }
     </script>
 </head>
 <body>
-<header class="header">
-</header>
+
+    <section class="redpackageCoverLayer js_redPackage_layer hide">
+        <div class="redpackageCoverLayer-mask"></div>
+        <div class="redpackageCoverLayer-container">
+            <section>
+                <img src="images/redpackage_bg.png">
+                <div>
+                    <p>恭喜您</p>
+                    <p>获得眯客分享红包</p>
+                    <footer class="row ">
+                        <a href="/wallet.html#/walletshare?orderid=${orderid}" class="col">分享</a>
+                        <a href="${hotelDetailUrl}" class="col">取消</a>
+                    </footer>
+
+                </div>
+            </section>
+        </div>
+    </section>
 </body>
 </html>
