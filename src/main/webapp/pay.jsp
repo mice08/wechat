@@ -46,10 +46,9 @@
                     },
                     function (res) {
                         console.log(res);
-                        alert(res.err_msg + '----');
-                        debugger;
+                        alert(res.err_msg + '----' + window.show);
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
-                           show();
+                           window.show();
                         }else{
                             //返回跳转到酒店详情页面
                             alert("支付失败");
@@ -67,15 +66,6 @@
             }
         } else {
             onBridgeReady();
-        }
-        function show(){
-            console.log('succ');
-            debugger;
-
-            $('.js_redPackage_layer').show();
-        }
-        function hide(){
-            $('.js_redPackage_layer').hide();
         }
     </script>
 </head>
@@ -98,5 +88,14 @@
             </section>
         </div>
     </section>
+<script>
+     window.show = function(){
+        console.log('succ');
+        $('.js_redPackage_layer').show();
+    }
+     window.hide = function(){
+        $('.js_redPackage_layer').hide();
+    }
+</script>
 </body>
 </html>
