@@ -46,6 +46,7 @@
                     },
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            debugger;
                            show();
                         }else{
                             //返回跳转到酒店详情页面
@@ -66,6 +67,8 @@
             onBridgeReady();
         }
         function show(){
+            debugger;
+
             $('.js_redPackage_layer').show();
         }
         function hide(){
