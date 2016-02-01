@@ -45,8 +45,10 @@
                         "paySign": "${paySign}" //微信签名
                     },
                     function (res) {
+                        console.log(res);
+                        alert(res.err_msg + '----');
+                        debugger;
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
-                            debugger;
                            show();
                         }else{
                             //返回跳转到酒店详情页面
@@ -67,6 +69,7 @@
             onBridgeReady();
         }
         function show(){
+            console.log('succ');
             debugger;
 
             $('.js_redPackage_layer').show();
