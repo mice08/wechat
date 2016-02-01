@@ -331,13 +331,6 @@ public class OrderHandle {
         String debug = UrlUtil.getValue(BaseData.debug);
         //
         String qorderid = request.getParameter("qorderid");
-        Long orderid = null;
-
-        try{
-            orderid = Long.parseLong(qorderid);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
 
         String token = this.getParam(request,tokenMark);
         logger.debug("准备创建订单--执行 [OrderHandle : createOrder],获取token:"+token);
@@ -358,10 +351,10 @@ public class OrderHandle {
         //
         String url = null;
 
-        if (null == orderid) {
+        if (null == qorderid) {
             url = UrlUtil.getValue(BaseData.queryWXUserWallet);
         } else {
-            hmap.put("orderid", orderid);
+            hmap.put("orderid", qorderid);
             url = UrlUtil.getValue(BaseData.queryWXUserWalletWithFreeze);
         }
 
