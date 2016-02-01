@@ -10,9 +10,9 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
-    <link rel="stylesheet" href="../src/commons/styles/normalize.css">
-    <link rel="stylesheet" href="../src/commons/styles/common.css">
-    <link rel="stylesheet" href="../src/commons/styles/redPackage.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/redPackage.css">
     <script src="scripts/zepto.min.js?v=3"></script>
 
     <%
