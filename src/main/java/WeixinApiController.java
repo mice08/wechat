@@ -291,8 +291,8 @@ public class WeixinApiController extends ApiController {
 	{
 		TemplateData templateData=TemplateData.New();
 		templateData.setTemplate_id(getPara("templateid"));
-		templateData.setTouser("openid");
-		templateData.setUrl("url");
+		templateData.setTouser(getPara("openid"));
+		templateData.setUrl(getPara("url"));
 		Map<String,Object> dataMap = (Map<String,Object>)JSON.parse(getPara("data"));
 		Object key[] = dataMap.keySet().toArray();
 		for(int i = 0; i < dataMap.size(); i++) {
