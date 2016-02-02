@@ -299,7 +299,7 @@ public class WeixinApiController extends ApiController {
 			Map<String,String> data = (Map<String,String>) dataMap.get(key[i]);
 			templateData.add((String)key[i],data.get("value"),data.get("color"));
 		}
-		ApiResult apiResult = TemplateMsgApi.send(templateData.toString());
+		ApiResult apiResult = TemplateMsgApi.send(templateData.build());
 		renderText(apiResult.getJson());
 	}
 	
