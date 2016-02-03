@@ -1,6 +1,8 @@
 import api.CallBackCityApi;
 import api.CallBackOTSToken;
 import api.OTSQrCodeEventApi;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
@@ -148,7 +150,7 @@ public class WeixinApiController extends ApiController {
 	public void getQrcode()
 	{
 		//永久二维码
-        String str = "{\"action_name\": \"QR_LIMIT_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
+		String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": "+getPara("sceneid")+"}}}";
         ApiResult apiResult = QrcodeApi.create(str);
         renderText(apiResult.getJson());
 	}
@@ -289,9 +291,15 @@ public class WeixinApiController extends ApiController {
 	{
 		TemplateData templateData=TemplateData.New();
 		templateData.setTemplate_id(getPara("templateid"));
-		templateData.setTouser("openid");
-		templateData.setUrl("url");
-		ApiResult apiResult = TemplateMsgApi.send(templateData.toString());
+		templateData.setTouser(getPara("openid"));
+		templateData.setUrl(getPara("url"));
+		Map<String,Object> dataMap = (Map<String,Object>)JSON.parse(getPara("data"));
+		Object key[] = dataMap.keySet().toArray();
+		for(int i = 0; i < dataMap.size(); i++) {
+			Map<String,String> data = (Map<String,String>) dataMap.get(key[i]);
+			templateData.add((String)key[i],data.get("value"),data.get("color"));
+		}
+		ApiResult apiResult = TemplateMsgApi.send(templateData.build());
 		renderText(apiResult.getJson());
 	}
 	

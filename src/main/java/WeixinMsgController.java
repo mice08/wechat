@@ -126,7 +126,8 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
-			String text = "感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\">现在验证手机,即可获酒店大红包。</a>";
+//			String text = "【眯客】感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\">现在验证手机,即可获酒店大红包。</a>";
+			String text = "【眯客】感谢关注眯客~\r\n\r\n现在验证手机,即可享受眯客优惠。注册眯客,全天特价,<a href=\\\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\\\">住酒店30元起</a>";
 			renderOutTextMsg(text);
 		}
 		// 如果为取消关注事件，将无法接收到传回的信息
