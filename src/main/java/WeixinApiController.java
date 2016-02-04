@@ -138,8 +138,8 @@ public class WeixinApiController extends ApiController {
 	public void getExpireQrcode()
 	{
 		//临时二维码
-		String str = "{\"expire_seconds\": "+getPara("expire")+", \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
-		ApiResult apiResult = QrcodeApi.create(str);
+//		String str = "{\"expire_seconds\": "+getPara("expire")+", \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
+		ApiResult apiResult = QrcodeApi.createTemporary(getParaToInt("expire"),getParaToInt("sceneid"));
 		renderText(apiResult.getJson());
 	}
 
@@ -150,8 +150,8 @@ public class WeixinApiController extends ApiController {
 	public void getQrcode()
 	{
 		//永久二维码
-		String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": "+getPara("sceneid")+"}}}";
-        ApiResult apiResult = QrcodeApi.create(str);
+//		String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": "+getPara("sceneid")+"}}}";
+        ApiResult apiResult = QrcodeApi.createPermanent(getPara("sceneid"));
         renderText(apiResult.getJson());
 	}
 
