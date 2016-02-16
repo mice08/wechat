@@ -266,13 +266,13 @@ public class WeixinApiController extends ApiController {
 
 		logger.info("WeixinApiController.getIds start");
 		String code = getPara("code");
-		logger.info(String.format("WeixinApiController.getIds code:{}",code));
+		logger.info("WeixinApiController.getIds code:"+ code);
 
 		SnsAccessToken snsResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),code);
 		String openid = snsResult.getOpenid();
 		String unionid = snsResult.getUnionid();
 
-		logger.info(String.format("WeixinApiController.getIds openid:{} unionid:{}",openid,unionid));
+		logger.info("WeixinApiController.getIds openid:"+openid + " unionid:"+unionid);
 		if (unionid!=null){
 			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid,openid);
 			//结果
