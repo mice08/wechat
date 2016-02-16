@@ -21,9 +21,9 @@ public class CallBackOTSToken {
     public CallBackOTSToken() {
     }
 
-    public static ApiResult getCallBackToken(String unionid) {
+    public static ApiResult getCallBackToken(String unionid, String openid) {
         //请求
-        String apiStringResult = HttpUtils.post(apiUrl+"?ostype=3&unionid="+unionid,"");
+        String apiStringResult = HttpUtils.post(apiUrl+"?ostype=3&unionid="+unionid + "&openid=" + openid,"");
         ApiResult apiResult= new ApiResult(apiStringResult);
         return new ApiResult(apiResult.getJson());
     }

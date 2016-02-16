@@ -264,7 +264,7 @@ public class WeixinApiController extends ApiController {
 		String openid = snsResult.getOpenid();
 		String unionid = snsResult.getUnionid();
 		if (unionid!=null){
-			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid);
+			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid,openid);
 			//结果
 			Map<String, Object> result = new HashMap<String, Object>();
 			result.put("unionid", unionid);
