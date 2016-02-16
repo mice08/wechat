@@ -301,15 +301,17 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void sendTemplateMsg()
 	{
+		logger.info("WeixinApiController.sendTemplateMsg start");
+
 		TemplateData templateData=TemplateData.New();
 		templateData.setTemplate_id(getPara("templateid"));
 		templateData.setTouser(getPara("openid"));
 		templateData.setUrl(getPara("url"));
 
 		String paramData = getPara("data");
-		System.out.println(paramData);
+		logger.info("WeixinApiController.sendTemplateMsg paramData:"+paramData);
 		Map<String,Object> dataMap = (Map<String,Object>)JSON.parse(paramData);
-		System.out.println(dataMap);
+		logger.info("WeixinApiController.sendTemplateMsg dataMap:"+dataMap);
 
 		Object key[] = dataMap.keySet().toArray();
 		for(int i = 0; i < dataMap.size(); i++) {
@@ -317,7 +319,10 @@ public class WeixinApiController extends ApiController {
 			templateData.add((String)key[i],data.get("value"),data.get("color"));
 		}
 		ApiResult apiResult = TemplateMsgApi.send(templateData.build());
+		logger.info("WeixinApiController.sendTemplateMsg apiResult:"+apiResult.getJson());
 		renderText(apiResult.getJson());
+
+		logger.info("WeixinApiController.sendTemplateMsg end");
 	}
 	
 	/**
