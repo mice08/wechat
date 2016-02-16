@@ -4,6 +4,7 @@ import api.OTSQrCodeEventApi;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
@@ -16,6 +17,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class WeixinApiController extends ApiController {
+
+	static Log logger = Log.getLog(WeixinApiController.class);
 
 	public ApiConfig getApiConfig() {
 		ApiConfig ac = new ApiConfig();
@@ -260,9 +263,16 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getIds()
 	{
-		SnsAccessToken snsResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),getPara("code"));
+
+		logger.info("WeixinApiController.getIds start");
+		String code = getPara("code");
+		logger.info(String.format("WeixinApiController.getIds code:{}",code));
+
+		SnsAccessToken snsResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),code);
 		String openid = snsResult.getOpenid();
 		String unionid = snsResult.getUnionid();
+
+		logger.info(String.format("WeixinApiController.getIds openid:{} unionid:{}",openid,unionid));
 		if (unionid!=null){
 			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid,openid);
 			//结果
@@ -282,6 +292,8 @@ public class WeixinApiController extends ApiController {
 		}else{
 			renderText("{\"success\": 0 }");
 		}
+
+		logger.info("WeixinApiController.getIds end");
 	}
 
 	/**
