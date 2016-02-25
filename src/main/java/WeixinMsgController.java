@@ -47,7 +47,6 @@ public class WeixinMsgController extends MsgControllerAdapter {
 		OutCustomMsg outCustomMsg = new OutCustomMsg(inTextMsg);
 		outCustomMsg.setContent(helpStr);
 		render(outCustomMsg);
-        renderOutTextMsg("收到~");
 	}
 
 	@Override
