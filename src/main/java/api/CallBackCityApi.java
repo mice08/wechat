@@ -55,7 +55,7 @@ public class CallBackCityApi {
             status = searchJsonResult.getStr("status");
             infoCode = searchJsonResult.getStr("infocode");
             List<Object> poiList = (List<Object>) searchJsonResult.getList("pois");
-            if (poiList.size() > 0) {
+            if (poiList!= null && poiList.size() > 0) {
                 Map<String, String> poi = (Map<String, String>) poiList.get(0);
                 cityCode = poi.get("pcode");
             }
