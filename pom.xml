@@ -259,6 +259,41 @@
         </profile>
 
         <profile>
+            <id>bgp-simulation2</id>
+
+            <properties>
+                <label>product</label>
+                <debug>false</debug>
+                <spring.redis.sentinel.master>ots-smlt-bj-redis</spring.redis.sentinel.master>
+                <spring.redis.sentinel.nodes>10.10.134.221:6379</spring.redis.sentinel.nodes>
+                <jedis.pool.maxidl>20</jedis.pool.maxidl>
+                <jedis.pool.minidl>8</jedis.pool.minidl>
+                <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
+                <create.order.url>http://api.imike.com/ots/order/createByRoomType</create.order.url>
+                <modify.order.url>http://api.imike.com/ots/order/modifyByRoomType</modify.order.url>
+                <query.order.url>http://api.imike.com/ots/order/querylist</query.order.url>
+
+                <max.wallet.url>http://api.imike.com/ots/pay/create</max.wallet.url>
+                <wallet.url>http://api.imike.com/ots/redpacket/balance</wallet.url>
+                <walletWithFreeze.url>http://api.imike.com/ots/redpacket/balancewithfreeze</walletWithFreeze.url>
+
+                <create.pay.url>http://api.imike.com/ots/pay/create</create.pay.url>
+                <order.detail.url>/#!/orderdetail/</order.detail.url>
+                <hotel.detail.url>/#!/detail</hotel.detail.url>
+                <ots.url>http://api.imike.com/ots/</ots.url>
+                <wechat.myorder.url>http://weixin.imike.cn/#!/myorder/all</wechat.myorder.url>
+
+                <weixin.key>IAYG8HpT1f4tosODIryb2BqKSqxIod2S</weixin.key>
+                <weixin.token>ddc5f5e86d2f85e1b1ff763aff13ce0a</weixin.token>
+                <weixin.appid>wxb0f8a61e80048f38</weixin.appid>
+                <weixin.appsecret>fac035f62cdf1194935e9df1d0db406c</weixin.appsecret>
+
+
+            </properties>
+        </profile>
+
+
+        <profile>
             <id>bgp-clu</id>
             <properties>
                 <label>product</label>
