@@ -303,20 +303,20 @@
                 <jedis.pool.maxidl>20</jedis.pool.maxidl>
                 <jedis.pool.minidl>8</jedis.pool.minidl>
                 <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
-                <create.order.url>http://ots.imike.com/ots/order/createByRoomType</create.order.url>
-                <modify.order.url>http://ots.imike.com/ots/order/modifyByRoomType</modify.order.url>
-                <query.order.url>http://ots.imike.com/ots/order/querylist</query.order.url>
+                <create.order.url>http://api.imike.com/ots/order/createByRoomType</create.order.url>
+                <modify.order.url>http://api.imike.com/ots/order/modifyByRoomType</modify.order.url>
+                <query.order.url>http://api.imike.com/ots/order/querylist</query.order.url>
 
-                <max.wallet.url>http://ots.imike.com/ots/pay/create</max.wallet.url>
-                <wallet.url>http://ots.imike.com/ots/redpacket/balance</wallet.url>
-                <walletWithFreeze.url>http://ots.imike.com/ots/redpacket/balancewithfreeze</walletWithFreeze.url>
+                <max.wallet.url>http://api.imike.com/ots/pay/create</max.wallet.url>
+                <wallet.url>http://api.imike.com/ots/redpacket/balance</wallet.url>
+                <walletWithFreeze.url>http://api.imike.com/ots/redpacket/balancewithfreeze</walletWithFreeze.url>
 
-                <wechat.myorder.url>http://weixin.imike.cm/#!/myorder/all</wechat.myorder.url>
+                <wechat.myorder.url>http://weixin.imike.com/#!/myorder/all</wechat.myorder.url>
 
-                <create.pay.url>http://ots.imike.com/ots/pay/create</create.pay.url>
+                <create.pay.url>http://api.imike.com/ots/pay/create</create.pay.url>
                 <order.detail.url>/#!/orderdetail/</order.detail.url>
                 <hotel.detail.url>/#!/detail</hotel.detail.url>
-                <ots.url>http://ots.imike.com/ots/</ots.url>
+                <ots.url>http://api.imike.com/ots/</ots.url>
                 <weixin.key>WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7</weixin.key>
                 <weixin.token>5f2c093725a440efa1e8129c9de2dfe3</weixin.token>
                 <weixin.appid>wx2d9d3daf15496f60</weixin.appid>
