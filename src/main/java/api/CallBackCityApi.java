@@ -13,8 +13,8 @@ import java.util.Map;
  * Created by Mi on 16/1/12.
  */
 public class CallBackCityApi {
-    private static String geocodeApiUrl = "http://restapi.amap.com/v3/geocode/regeo?key=98e241d687a3ebf02ac2af0a8bbee272&location=";
-    private static String searchApiUrl = "http://restapi.amap.com/v3/place/text?key=98e241d687a3ebf02ac2af0a8bbee272&extensions=all&keywords=";
+    private static String geocodeApiUrl = "http://restapi.amap.com/v3/geocode/regeo?key=297acef28cce6c832242ffda80c13f8b&location=";
+    private static String searchApiUrl = "http://restapi.amap.com/v3/place/text?key=297acef28cce6c832242ffda80c13f8b&extensions=all&keywords=";
 
     public CallBackCityApi() {
     }
