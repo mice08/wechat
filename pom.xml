@@ -299,7 +299,7 @@
                 <label>product</label>
                 <debug>true</debug>
                 <spring.redis.sentinel.master>ots-redis</spring.redis.sentinel.master>
-                <spring.redis.sentinel.nodes>10.10.103.141:26379,10.10.104.151:26379</spring.redis.sentinel.nodes>
+                <spring.redis.sentinel.nodes>10.10.105.27:6379</spring.redis.sentinel.nodes>
                 <jedis.pool.maxidl>20</jedis.pool.maxidl>
                 <jedis.pool.minidl>8</jedis.pool.minidl>
                 <jedis.pool.maxtotal>1000</jedis.pool.maxtotal>
