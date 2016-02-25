@@ -62,10 +62,6 @@ public class WeixinApiController extends ApiController {
 				"\t\t\"name\": \"个人中心\",\n" +
 				"\t\t\"sub_button\": [{\n" +
 				"\t\t\t\"type\": \"view\",\n" +
-				"\t\t\t\"name\": \"下载APP\",\n" +
-				"\t\t\t\"url\": \"http://www.imike.com/xiazai.html\"\n" +
-				"\t\t}, {\n" +
-				"\t\t\t\"type\": \"view\",\n" +
 				"\t\t\t\"name\": \"验证手机\",\n" +
 				"\t\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2d9d3daf15496f60&redirect_uri=http%3a%2f%2fweixin.imike.com%2findex.html%23!%2fme&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\"\n" +
 				"\t\t} ,{\n" +
