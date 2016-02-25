@@ -215,6 +215,10 @@
                 <hotel.detail.url>/#!/detail</hotel.detail.url>
                 <ots.url>http://huidu.imike.cn/ots/</ots.url>
                 <weixin.key>IAYG8HpT1f4tosODIryb2BqKSqxIod2S</weixin.key>
+                <weixin.token>ddc5f5e86d2f85e1b1ff763aff13ce0a</weixin.token>
+                <weixin.appid>wxb0f8a61e80048f38</weixin.appid>
+                <weixin.appsecret>fac035f62cdf1194935e9df1d0db406c</weixin.appsecret>
+
             </properties>
         </profile>
 
@@ -246,6 +250,11 @@
                 <wechat.myorder.url>http://weixin.imike.cn/#!/myorder/all</wechat.myorder.url>
 
                 <weixin.key>IAYG8HpT1f4tosODIryb2BqKSqxIod2S</weixin.key>
+                <weixin.token>ddc5f5e86d2f85e1b1ff763aff13ce0a</weixin.token>
+                <weixin.appid>wxb0f8a61e80048f38</weixin.appid>
+                <weixin.appsecret>fac035f62cdf1194935e9df1d0db406c</weixin.appsecret>
+
+
             </properties>
         </profile>
 
@@ -274,6 +283,11 @@
                 <hotel.detail.url>/#!/detail</hotel.detail.url>
                 <ots.url>http://ots.imike.com/ots/</ots.url>
                 <weixin.key>WAdFh6c24MZ0HB4y0zpSC0zey4vfPZk7</weixin.key>
+                <weixin.token>5f2c093725a440efa1e8129c9de2dfe3</weixin.token>
+                <weixin.appid>wx2d9d3daf15496f60</weixin.appid>
+                <weixin.appsecret>b757b7bb2371fde17118ad25f0a8ebd2</weixin.appsecret>
+
+
             </properties>
         </profile>
     </profiles>
