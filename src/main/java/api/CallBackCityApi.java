@@ -149,7 +149,7 @@ public class CallBackCityApi {
         Integer pos = r.nextInt(size);
 
         String key = keys.get(pos );
-        String url = "http://restapi.amap.com/v3/geocode/regeo?key="+ key +"b&location=";
+        String url = "http://restapi.amap.com/v3/geocode/regeo?key="+ key +"&location=";
         return url;
     }
 
