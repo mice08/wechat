@@ -69,8 +69,8 @@ public class WeixinPayController extends Controller {
 		
 		Map<String, String> packageParams = new HashMap<String, String>();
 		packageParams.put("appId", appid);
-		packageParams.put("timeStamp", System.currentTimeMillis() / 1000 + "");
-		packageParams.put("nonceStr", System.currentTimeMillis() + "");
+		packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+		packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
 		packageParams.put("package", "prepay_id=" + prepay_id);
 		packageParams.put("signType", "MD5");
 		String packageSign = PaymentKit.createSign(packageParams, paternerKey);

@@ -1,0 +1,67 @@
+.redpackageCoverLayer{
+    display: block;
+}
+.redpackageCoverLayer>*{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    z-index: 9998;
+    padding: 0;
+    margin: 0;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.redpackageCoverLayer .redpackageCoverLayer-mask{
+    display: block;
+    background-color: rgba(0,0,0,0.7);
+}
+.redpackageCoverLayer .redpackageCoverLayer-container{
+    z-index: 9999;
+    top:3rem;
+    height: auto;
+}
+
+.redpackageCoverLayer .redpackageCoverLayer-container section{
+    width: 34rem;
+    margin: auto;
+    position: relative;
+}
+
+.redpackageCoverLayer .redpackageCoverLayer-container section img{
+    width: 100%;
+}
+.redpackageCoverLayer .redpackageCoverLayer-container section div{
+    position: absolute;
+    left: 50%;
+    bottom: 4.3rem;
+    width: 20rem;
+    height: auto;
+    margin-left:-10rem;
+}
+.redpackageCoverLayer .redpackageCoverLayer-container section p{
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 2rem;
+}
+.redpackageCoverLayer .redpackageCoverLayer-container section p:first-child{
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    margin-bottom: 1.8rem;
+}
+.redpackageCoverLayer .redpackageCoverLayer-container section a{
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    width: 14rem;
+    height: 3rem;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    background-color: #ffd200;
+    border-radius: 0.5rem;
+    color: #df3121;
+    margin: 0 1rem;
+    margin-top: 3.7rem;
+}

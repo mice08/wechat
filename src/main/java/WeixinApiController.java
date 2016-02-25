@@ -1,27 +1,31 @@
-
+import api.CallBackCityApi;
+import api.CallBackOTSToken;
+import api.OTSQrCodeEventApi;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.PropKit;
+import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
+import com.jfinal.weixin.sdk.utils.JsonUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class WeixinApiController extends ApiController {
-	
-	/**
-	 * 如果要支持多公众账号，只需要在此返回各个公众号对应的  ApiConfig 对象即可
-	 * 可以通过在请求 url 中挂参数来动态从数据库中获取 ApiConfig 属性值
-	 */
+
+	static Log logger = Log.getLog(WeixinApiController.class);
+
 	public ApiConfig getApiConfig() {
 		ApiConfig ac = new ApiConfig();
-		
 		// 配置微信 API 相关常量
 		ac.setToken(PropKit.get("token"));
 		ac.setAppId(PropKit.get("appId"));
 		ac.setAppSecret(PropKit.get("appSecret"));
-		
-		/**
-		 *  是否对消息进行加密，对应于微信平台的消息加解密方式：
-		 *  1：true进行加密且必须配置 encodingAesKey
-		 *  2：false采用明文模式，同时也支持混合模式
-		 */
 		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage", false));
 		ac.setEncodingAesKey(PropKit.get("encodingAesKey", "setting it in config file"));
 		return ac;
@@ -32,10 +36,12 @@ public class WeixinApiController extends ApiController {
 	 */
 	public void getMenu() {
 		ApiResult apiResult = MenuApi.getMenu();
-		if (apiResult.isSucceed())
+		if (apiResult.isSucceed()) {
 			renderText(apiResult.getJson());
-		else
+		}
+		else {
 			renderText(apiResult.getErrorMsg());
+		}
 	}
 
 	/**
@@ -44,23 +50,30 @@ public class WeixinApiController extends ApiController {
 	public void createMenu()
 	{
 		String str = "{\n" +
-				"    \"button\": [\n" +
-				"        {\n" +
-				"            \"name\": \"进入理财\",\n" +
-				"            \"url\": \"http://m.bajie8.com/bajie/enter\",\n" +
-				"            \"type\": \"view\"\n" +
-				"        },\n" +
-				"        {\n" +
-				"            \"name\": \"安全保障\",\n" +
-				"            \"key\": \"112\",\n" +
-				"\t    \"type\": \"click\"\n" +
-				"        },\n" +
-				"        {\n" +
-				"\t    \"name\": \"使用帮助\",\n" +
-				"\t    \"url\": \"http://m.bajie8.com/footer/cjwt\",\n" +
-				"\t    \"type\": \"view\"\n" +
-				"        }\n" +
-				"    ]\n" +
+				"\t\"button\": [{\n" +
+				"\t\t\"type\": \"view\",\n" +
+				"\t\t\"name\": \"我要预订\",\n" +
+				"\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2findex&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\"\n" +
+				"\t}, {\n" +
+				"\t\t\"type\": \"view\",\n" +
+				"\t\t\"name\": \"我的订单\",\n" +
+				"\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fmyorder%2fall&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\"\n" +
+				"\t}, {\n" +
+				"\t\t\"name\": \"个人中心\",\n" +
+				"\t\t\"sub_button\": [{\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"下载APP\",\n" +
+				"\t\t\t\"url\": \"http://weixin.imike.com/app\"\n" +
+				"\t\t}, {\n" +
+				"\t\t\t\"type\": \"view\",\n" +
+				"\t\t\t\"name\": \"验证手机\",\n" +
+				"\t\t\t\"url\": \"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\"\n" +
+				"\t\t}, {\n" +
+				"\t\t\t\"type\": \"click\",\n" +
+				"\t\t\t\"name\": \"联系客服\",\n" +
+				"\t\t\t\"key\": \"CUSTOM_SERVICE\"\n" +
+				"\t\t}]\n" +
+				"\t}]\n" +
 				"}";
 		ApiResult apiResult = MenuApi.createMenu(str);
 		if (apiResult.isSucceed())
@@ -121,17 +134,28 @@ public class WeixinApiController extends ApiController {
 	}
 
 	/**
-	 * 获取参数二维码
+	 * 获取临时参数二维码
+	 * expire 时间
+	 * sceneid 内容
+	 */
+	public void getExpireQrcode()
+	{
+		//临时二维码
+//		String str = "{\"expire_seconds\": "+getPara("expire")+", \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": "+getPara("sceneid")+"}}}";
+		ApiResult apiResult = QrcodeApi.createTemporary(getParaToInt("expire"),getParaToInt("sceneid"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取永久参数二维码
+	 * sceneid 内容
 	 */
 	public void getQrcode()
 	{
-		String str = "{\"expire_seconds\": 604800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": 123}}}";
-		ApiResult apiResult = QrcodeApi.create(str);
-		renderText(apiResult.getJson());
-
-//        String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"123\"}}}";
-//        ApiResult apiResult = QrcodeApi.create(str);
-//        renderText(apiResult.getJson());
+		//永久二维码
+//		String str = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": "+getPara("sceneid")+"}}}";
+        ApiResult apiResult = QrcodeApi.createPermanent(getPara("sceneid"));
+        renderText(apiResult.getJson());
 	}
 
 	/**
@@ -166,6 +190,226 @@ public class WeixinApiController extends ApiController {
 	public void getCallbackIp()
 	{
 		ApiResult apiResult = CallbackIpApi.getCallbackIp();
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取城市名和城市Code
+	 * 入参
+	 * longitude 经度
+	 * latitude 维度
+	 */
+	public void getCallbackCity()
+	{
+		ApiResult apiResult = CallBackCityApi.getCallBackCity(getPara("longitude"),getPara("latitude"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取签名
+	 */
+	public void getSignature()
+	{
+		String timestamp = Long.toString(System.currentTimeMillis()/1000);
+		String appId = getApiConfig().getAppId();
+		String nonceStr = UUID.randomUUID().toString();
+		nonceStr = nonceStr.replace("-","").toLowerCase();
+		String signature = null;
+		String url = null;
+		try {
+			url = java.net.URLDecoder.decode(getPara("url"),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		JsTicket jsTicket = JsTicketApi.getTicket(JsTicketApi.JsApiType.jsapi);
+		if (jsTicket.isAvailable()) {
+			String encryptStr = "jsapi_ticket=" + jsTicket.getTicket() + "&noncestr=" + nonceStr
+					+ "&timestamp=" + timestamp + "&url=" + url;
+			signature = SHA1(encryptStr);
+		}
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("timestamp", timestamp);
+		result.put("appId", appId);
+		result.put("nonceStr", nonceStr);
+		result.put("signature", signature);
+		renderJson(result);
+	}
+
+	public static String SHA1(String decript) {
+		try {
+			MessageDigest digest = java.security.MessageDigest
+					.getInstance("SHA-1");
+			digest.update(decript.getBytes());
+			byte messageDigest[] = digest.digest();
+			// Create Hex String
+			StringBuffer hexString = new StringBuffer();
+			// 字节数组转换为 十六进制 数
+			for (int i = 0; i < messageDigest.length; i++) {
+				String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
+				if (shaHex.length() < 2) {
+					hexString.append(0);
+				}
+				hexString.append(shaHex);
+			}
+			return hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 获取Id
+	 */
+	public void getIds()
+	{
+
+		logger.info("WeixinApiController.getIds start");
+		String code = getPara("code");
+		logger.info("WeixinApiController.getIds code:"+ code);
+
+		SnsAccessToken snsResult = SnsAccessTokenApi.getSnsAccessToken(PropKit.get("appId"),PropKit.get("appSecret"),code);
+		String openid = snsResult.getOpenid();
+		String unionid = snsResult.getUnionid();
+
+		logger.info("WeixinApiController.getIds openid:"+openid + " unionid:"+unionid);
+		if (unionid!=null){
+			ApiResult apiResult = CallBackOTSToken.getCallBackToken(unionid,openid);
+			//结果
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("unionid", unionid);
+			result.put("openid", openid);
+			Boolean success = apiResult.getBoolean("success");
+			if (success){
+				result.put("success",1);
+			}else{
+				result.put("success",0);
+			}
+			result.put("phone",apiResult.getStr("phone"));
+			result.put("check",apiResult.getStr("check"));
+			result.put("token",apiResult.getStr("token"));
+			renderText(JsonUtils.toJson(result));
+		}else{
+			renderText("{\"success\": 0 }");
+		}
+
+		logger.info("WeixinApiController.getIds end");
+	}
+
+	/**
+	 * 发送模板
+	 */
+	public void sendTemplateMsg()
+	{
+		logger.info("WeixinApiController.sendTemplateMsg start");
+
+		TemplateData templateData=TemplateData.New();
+		templateData.setTemplate_id(getPara("templateid"));
+		templateData.setTouser(getPara("openid"));
+		templateData.setUrl(getPara("url"));
+
+		String paramData = getPara("data");
+		logger.info("WeixinApiController.sendTemplateMsg paramData:"+paramData);
+		Map<String,Object> dataMap = (Map<String,Object>)JSON.parse(paramData);
+		logger.info("WeixinApiController.sendTemplateMsg dataMap:"+dataMap);
+
+		Object key[] = dataMap.keySet().toArray();
+		for(int i = 0; i < dataMap.size(); i++) {
+			Map<String,String> data = (Map<String,String>) dataMap.get(key[i]);
+			templateData.add((String)key[i],data.get("value"),data.get("color"));
+		}
+		ApiResult apiResult = TemplateMsgApi.send(templateData.build());
+		logger.info("WeixinApiController.sendTemplateMsg apiResult:"+apiResult.getJson());
+		renderText(apiResult.getJson());
+
+		logger.info("WeixinApiController.sendTemplateMsg end");
+	}
+	
+	/**
+	 * 获取用户增减数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getUserSummary(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取累计用户数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserCumulate()
+	{
+		ApiResult apiResult = DatacubeApi.getUserCumulate(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文群发每日数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticleSummary()
+	{
+		ApiResult apiResult = DatacubeApi.getArticleSummary(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文群发总数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getArticlEtotal()
+	{
+		ApiResult apiResult = DatacubeApi.getArticlEtotal(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserRead()
+	{
+		ApiResult apiResult = DatacubeApi.getUserRead(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文统计分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserReadHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserReadHour(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShare()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShare(getPara("begin_date"),getPara("end_date"));
+		renderText(apiResult.getJson());
+	}
+
+	/**
+	 * 获取图文分享转发分时数据
+	 * begin_date 开始时间
+	 * end_date 结束时间
+	 */
+	public void getUserShareHour()
+	{
+		ApiResult apiResult = DatacubeApi.getUserShareHour(getPara("begin_date"),getPara("end_date"));
 		renderText(apiResult.getJson());
 	}
 }

@@ -4,24 +4,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
+import api.BIFollowEventApi;
+import api.BIQrCodeEventApi;
+import api.OTSQrCodeEventApi;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.jfinal.MsgControllerAdapter;
-import com.jfinal.weixin.sdk.msg.in.InImageMsg;
-import com.jfinal.weixin.sdk.msg.in.InLinkMsg;
-import com.jfinal.weixin.sdk.msg.in.InLocationMsg;
-import com.jfinal.weixin.sdk.msg.in.InShortVideoMsg;
-import com.jfinal.weixin.sdk.msg.in.InTextMsg;
-import com.jfinal.weixin.sdk.msg.in.InVideoMsg;
-import com.jfinal.weixin.sdk.msg.in.InVoiceMsg;
-import com.jfinal.weixin.sdk.msg.in.event.InCustomEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InFollowEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InLocationEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InMassEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InMenuEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InQrCodeEvent;
-import com.jfinal.weixin.sdk.msg.in.event.InTemplateMsgEvent;
+import com.jfinal.weixin.sdk.msg.in.*;
+import com.jfinal.weixin.sdk.msg.in.event.*;
 import com.jfinal.weixin.sdk.msg.in.speech_recognition.InSpeechRecognitionResults;
 import com.jfinal.weixin.sdk.msg.out.OutCustomMsg;
 import com.jfinal.weixin.sdk.msg.out.OutTextMsg;
@@ -37,34 +28,26 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	static Log logger = Log.getLog(WeixinMsgController.class);
 	private static final String helpStr = "\t发送 help 可获得帮助，发送\"视频\" 可获取视频教程，发送 \"美女\" 可看美女，发送 music 可听音乐 ，发送新闻可看JFinal新版本消息。公众号功能持续完善中";
 
-	/**
-	 * 如果要支持多公众账号，只需要在此返回各个公众号对应的  ApiConfig 对象即可
-	 * 可以通过在请求 url 中挂参数来动态从数据库中获取 ApiConfig 属性值
-	 */
 	public ApiConfig getApiConfig() {
-		ApiConfig ac = new ApiConfig();
 
+		ApiConfig ac = new ApiConfig();
 		// 配置微信 API 相关常量
 		ac.setToken(PropKit.get("token"));
 		ac.setAppId(PropKit.get("appId"));
 		ac.setAppSecret(PropKit.get("appSecret"));
-
-		/**
-		 *  是否对消息进行加密，对应于微信平台的消息加解密方式：
-		 *  1：true进行加密且必须配置 encodingAesKey
-		 *  2：false采用明文模式，同时也支持混合模式
-		 */
-		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage", false));
-		ac.setEncodingAesKey(PropKit.get("encodingAesKey", "setting it in config file"));
+		ac.setEncryptMessage(PropKit.getBoolean("encryptMessage"));
+		ac.setEncodingAesKey(PropKit.get("encodingAesKey"));
 		return ac;
 	}
 
 	protected void processInTextMsg(InTextMsg inTextMsg)
 	{
+		System.out.println(inTextMsg.toString());
 		//转发给多客服PC客户端
 		OutCustomMsg outCustomMsg = new OutCustomMsg(inTextMsg);
 		outCustomMsg.setContent(helpStr);
 		render(outCustomMsg);
+        renderOutTextMsg("收到~");
 	}
 
 	@Override
@@ -110,8 +93,13 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	@Override
 	protected void processInCustomEvent(InCustomEvent inCustomEvent)
 	{
-		logger.debug("测试方法：processInCustomEvent()");
-		renderNull();
+//		logger.info("测试方法：processInCustomEvent()");
+//		renderNull();
+		if(inCustomEvent.getEvent().equals("subscribe")) {
+			renderOutTextMsg("亲你好");
+		}else{
+			renderNull();
+		}
 	}
 
 	protected void processInImageMsg(InImageMsg inImageMsg)
@@ -124,14 +112,23 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	/**
 	 * 实现父类抽方法，处理关注/取消关注消息
 	 */
-	protected void processInFollowEvent(InFollowEvent inFollowEvent)
+	protected void processInFollowEvent(final InFollowEvent inFollowEvent)
 	{
+		//BI统计
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIFollowEventApi.sendFollowEvent(inFollowEvent);
+            }
+        }).start();
+
+		//处理
 		if (InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent()))
 		{
 			logger.debug("关注：" + inFollowEvent.getFromUserName());
-			OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
-			outMsg.setContent("这是Jfinal-weixin测试服务</br>\r\n感谢您的关注");
-			render(outMsg);
+//			String text = "【眯客】感谢关注眯客~\r\n\r\n注册眯客,全天特价,住酒店30元起,下载app评价还有返现哦~\r\n\r\n<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\">现在验证手机,即可获酒店大红包。</a>";
+			String text = "【眯客】感谢关注眯客~\r\n\r\n现在验证手机,即可享受眯客优惠。注册眯客,全天特价,<a href=\\\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb0f8a61e80048f38&redirect_uri=http%3a%2f%2fweixin.imike.cn%2findex.html%23!%2fme&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\\\">住酒店30元起</a>";
+			renderOutTextMsg(text);
 		}
 		// 如果为取消关注事件，将无法接收到传回的信息
 		if (InFollowEvent.EVENT_INFOLLOW_UNSUBSCRIBE.equals(inFollowEvent.getEvent()))
@@ -141,13 +138,28 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	}
 
 	@Override
-	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent)
+	protected void processInQrCodeEvent(final InQrCodeEvent inQrCodeEvent)
 	{
+		//BI统计
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BIQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+            }
+        }).start();
+		//OTS统计
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				OTSQrCodeEventApi.sendQrCodeEvent(inQrCodeEvent);
+			}
+		}).start();
+		//处理
 		if (InQrCodeEvent.EVENT_INQRCODE_SUBSCRIBE.equals(inQrCodeEvent.getEvent()))
 		{
 			logger.debug("扫码未关注：" + inQrCodeEvent.getFromUserName());
 			OutTextMsg outMsg = new OutTextMsg(inQrCodeEvent);
-			outMsg.setContent("感谢您的关注，二维码内容：" + inQrCodeEvent.getEventKey());
+			outMsg.setContent("感谢您的关注");
 			render(outMsg);
 		}
 		if (InQrCodeEvent.EVENT_INQRCODE_SCAN.equals(inQrCodeEvent.getEvent()))
@@ -159,10 +171,11 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	@Override
 	protected void processInLocationEvent(InLocationEvent inLocationEvent)
 	{
-		logger.debug("发送地理位置事件：" + inLocationEvent.getFromUserName());
-		OutTextMsg outMsg = new OutTextMsg(inLocationEvent);
-		outMsg.setContent("地理位置是：" + inLocationEvent.getLatitude());
-		render(outMsg);
+//		logger.debug("发送地理位置事件:::：" + inLocationEvent.getFromUserName());
+//		OutTextMsg outMsg = new OutTextMsg(inLocationEvent);
+//		outMsg.setContent("地理位置是：" + inLocationEvent.getLatitude()+inLocationEvent.getLongitude());
+//		render(outMsg);
+		renderNull();
 	}
 
 	@Override
@@ -178,9 +191,17 @@ public class WeixinMsgController extends MsgControllerAdapter {
 	protected void processInMenuEvent(InMenuEvent inMenuEvent)
 	{
 		logger.debug("菜单事件：" + inMenuEvent.getFromUserName());
-		OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
-		outMsg.setContent("菜单事件内容是：" + inMenuEvent.getEventKey());
-		render(outMsg);
+        if(inMenuEvent.getEventKey().equals("CUSTOM_SERVICE")){
+            String content = "遇到问题可随时骚扰↓↓\n" +
+                    "美女客服电话：<a href=\"tel:4001-888-733\">4001-888-733</a>\n" +
+                    "客服美眉在线时间：\n" +
+                    "9:00~ 02:00";
+            renderOutTextMsg(content);
+        }else {
+            OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
+            outMsg.setContent("菜单事件内容是：" + inMenuEvent.getEventKey());
+            render(outMsg);
+        }
 	}
 
 	@Override
@@ -315,7 +336,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
 //	 */
 //	protected void processInLinkMsg(InLinkMsg inLinkMsg) {
 //		OutNewsMsg outMsg = new OutNewsMsg(inLinkMsg);
-//		outMsg.addNews("链接消息已成功接收", "链接使用图文消息的方式发回给你，还可以使用文本方式发回。点击图文消息可跳转到链接地址页面，是不是很好玩 :)" , "http://mmbiz.qpic.cn/mmbiz/zz3Q6WSrzq1ibBkhSA1BibMuMxLuHIvUfiaGsK7CC4kIzeh178IYSHbYQ5eg9tVxgEcbegAu22Qhwgl5IhZFWWXUw/0", inLinkMsg.getUrl());
+//		outMsg.addNews("链接消息已成功接收", "链接使用图文消息的方式发回给你，还可以使用文本方式发回。点击图文消息可跳转到链接地址页面，是不是很好玩 :)" , "http://mmbiz.qpic.cn/mmbiz/zz3Q6WSrzq1ibBkhSA1BibMuMxLuHIvUfiaGsK7CC4kIzeh178IYSHbYQ5eg9tVxgEcbegAu22Qhwgl5IhZFWWXUw/0", inLinkMsg.getValue());
 //		render(outMsg);
 //	}
 //

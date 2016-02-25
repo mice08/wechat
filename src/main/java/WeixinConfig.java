@@ -11,13 +11,16 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.weixin.sdk.api.ApiConfigKit;
+import com.jfinal.weixin.sdk.cache.RedisAccessTokenCache;
 
 public class WeixinConfig extends JFinalConfig {
 
 	public void configConstant(Constants me) {
-		PropKit.use("a_little_config.txt");
+		PropKit.use("weixin_config.properties");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
 		
 		// ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
@@ -25,21 +28,31 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/", TokenController.class);
-		me.add("/msg", WeixinMsgController.class);
-		me.add("/api", WeixinApiController.class, "/api");
+		me.add("/", WeixinMsgController.class);
+		me.add("/api", WeixinApiController.class);
 		me.add("/pay", WeixinPayController.class);
 	}
 	
 	public void configPlugin(Plugins me) {
+//		//定时任务
+//		QuartzPlugin quzrtz = new QuartzPlugin();
+//		quzrtz.setJobs("quartzJob.properties");
+//		me.add(quzrtz);
+
 		// C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
 		// me.add(c3p0Plugin);
 		
 		// EhCachePlugin ecp = new EhCachePlugin();
 		// me.add(ecp);
-		
-		// RedisPlugin redisPlugin = new RedisPlugin("weixin", "127.0.0.1");
-		// me.add(redisPlugin);
+
+        Prop result = new Prop("redis.properties", "UTF-8");
+        String nodes = result.get("spring.redis.sentinel.nodes");
+        String[] addresses = nodes.split(",");
+        String[] addressAndPort = addresses[0].split(":");
+        RedisPlugin redisPlugin = new RedisPlugin("weixin", addressAndPort[0], Integer.valueOf(addressAndPort[1]));
+        redisPlugin.start();
+        ApiConfigKit.setAccessTokenCache(new RedisAccessTokenCache());
+//        me.add(redisPlugin);
 	}
 	
 	public void configInterceptor(Interceptors me) {
