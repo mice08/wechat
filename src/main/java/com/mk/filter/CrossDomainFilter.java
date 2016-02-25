@@ -50,6 +50,9 @@ public class CrossDomainFilter implements Filter {
     public boolean matchCrossDomainPatterns(String contextpath, String url) {
         boolean isExist = false;
         for (String prefix : this.crossDomainPatterns) {
+            if ("*".equals(prefix)) {
+                return true;
+            }
             if (url.startsWith(contextpath + prefix)) {
                 isExist = true;
                 break;
