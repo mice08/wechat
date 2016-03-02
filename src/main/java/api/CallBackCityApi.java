@@ -12,19 +12,17 @@ import java.util.*;
  * Created by Mi on 16/1/12.
  */
 public class CallBackCityApi {
-//    static LinkedList<String> keys =  new LinkedList<String>();
-//    static {
-//        keys.add("98e241d687a3ebf02ac2af0a8bbee272");
-//
-//        keys.add("297acef28cce6c832242ffda80c13f8b");
-//
+    static LinkedList<String> keys =  new LinkedList<String>();
+    static {
+        //乐住企业key
+        keys.add("37c3b7fed2f0d2b7fbcc42a07c2a0604");
+        keys.add("297acef28cce6c832242ffda80c13f8b");
+        keys.add("98e241d687a3ebf02ac2af0a8bbee272");
+
+        //以下为 个人账号key
 //        keys.add("000a4347e075614fb2501f5930b7124e");
-//
 //        keys.add("685900fcfc9a689a6a6dc7444d513ff1");
-//
-//        keys.add("37c3b7fed2f0d2b7fbcc42a07c2a0604");
 //        keys.add("df3cf793df1bd2c257483c11e7176923");
-//
 //        keys.add("f8f3fd85e51b484bd18de839f1082429");
 //        keys.add("43465b9cd5ff31de9c4f5a47e981b6fd");
 //        keys.add("06a34962107188c622392ceeb27a6849");
@@ -44,9 +42,8 @@ public class CallBackCityApi {
 //        keys.add("043780f0250f8c507061cfdfcf47cdec");
 //        keys.add("876632264b93a53559c5eb23a815e492");
 //        keys.add("83a19a22b96e591d17052d4df44c3ac3");
-//    }
+    }
 
-    private static String key = "37c3b7fed2f0d2b7fbcc42a07c2a0604";
 //    private static String geocodeApiUrl = "http://restapi.amap.com/v3/geocode/regeo?key=297acef28cce6c832242ffda80c13f8b&location=";
 //    private static String searchApiUrl = "http://restapi.amap.com/v3/place/text?key=297acef28cce6c832242ffda80c13f8b&extensions=all&keywords=";
 
@@ -145,21 +142,21 @@ public class CallBackCityApi {
     }
 
     public static String getGeocodeApiUrl() {
-//        int size =  keys.size();
-//        Random r = new Random();
-//        Integer pos = r.nextInt(size);
-//
-//        String key = keys.get(pos );
+        int size =  keys.size();
+        Random r = new Random();
+        Integer pos = r.nextInt(size);
+
+        String key = keys.get(pos );
         String url = "http://restapi.amap.com/v3/geocode/regeo?key="+ key +"&location=";
         return url;
     }
 
     public static String searchApiUrl() {
-//        int size =  keys.size();
-//        Random r = new Random();
-//        Integer pos = r.nextInt(size);
-//
-//        String key = keys.get(pos );
+        int size =  keys.size();
+        Random r = new Random();
+        Integer pos = r.nextInt(size);
+
+        String key = keys.get(pos );
         String url = "http://restapi.amap.com/v3/place/text?key=" + key + "&extensions=all&keywords=";
         return url;
     }
