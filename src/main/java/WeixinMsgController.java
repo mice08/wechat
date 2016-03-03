@@ -194,7 +194,7 @@ public class WeixinMsgController extends MsgControllerAdapter {
             String content = "遇到问题可随时骚扰↓↓\n" +
                     "美女客服电话：<a href=\"tel:021-31236306\">021-31236306</a>\n" +
                     "客服美眉在线时间：\n" +
-                    "9:00~ 02:00";
+                    "9:30~ 18:30";
             renderOutTextMsg(content);
         }else {
             OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
